@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-macaron-cream text-macaron-text antialiased selection:bg-macaron-pink selection:text-macaron-text;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply bg-white/70 backdrop-blur-lg border border-white/50 shadow-lg;
+  }
+  
+  .text-gradient-macaron {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-macaron-pinkHover via-macaron-blue to-macaron-purple animate-gradient;
+  }
+  
+  .card-macaron {
+    @apply bg-white/80 backdrop-blur-sm border border-white/60 shadow-sm hover:shadow-md hover:border-macaron-blue transition-all duration-300;
+  }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient {
+  background-size: 200% auto;
+  animation: gradient 4s linear infinite;
+}
+
+/* Wave Animations */
+@keyframes wave-slow {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+@keyframes wave-medium {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+@keyframes wave-fast {
+  0% { transform: translateX(0) translateZ(0) scaleY(1); }
+  50% { transform: translateX(-25%) translateZ(0) scaleY(0.55); }
+  100% { transform: translateX(-50%) translateZ(0) scaleY(1); }
+}
+
+.animate-wave-slow {
+  animation: wave-slow 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+  transform-origin: bottom center;
+}
+
+.animate-wave-medium {
+  animation: wave-medium 12s cubic-bezier(0.36, 0.45, 0.63, 0.53) -2s infinite;
+  transform-origin: bottom center;
+}
+
+.animate-wave-fast {
+  animation: wave-fast 8s cubic-bezier(0.36, 0.45, 0.63, 0.53) -4s infinite;
+  transform-origin: bottom center;
+}
+
+/* Custom Scrollbar for Macaron Theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFBF0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FFC8DD;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFAFCC;
+}
