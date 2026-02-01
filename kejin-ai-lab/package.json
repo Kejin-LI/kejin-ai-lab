@@ -2,6 +2,7 @@
   "name": "kejin-ai-lab",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://Kejin-LI.github.io/kejin-ai-lab/",
   "type": "module",
   "scripts": {
     "dev": "vite",
