@@ -3,8 +3,11 @@ import { Mail, Linkedin, Twitter, Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 import { CommentSection } from './CommentSection';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 export const ContactSection: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <section id="contact" className="p-12 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm relative overflow-hidden">
       {/* Background decoration */}
@@ -21,14 +24,13 @@ export const ContactSection: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-macaron-text">
-            Let's Build Something <span className="text-macaron-pinkHover">Amazing</span>
+            {t('contact.title')} <span className="text-macaron-pinkHover">{t('contact.titleHighlight')}</span>
           </h2>
           <p className="text-macaron-textLight text-xl max-w-xl mx-auto mb-12">
-            Whether you're looking for a product manager who speaks code, 
-            or just want to chat about the future of AI, I'd love to hear from you.
+            {t('contact.subtitle')}
           </p>
           
-          <div className="flex justify-center gap-6">
+          <div className="flex justify-center gap-6 mb-16">
             {[
               { icon: Mail, href: "mailto:likejin2019@gmail.com", color: "hover:text-macaron-pinkHover hover:border-macaron-pinkHover" },
               { icon: Linkedin, href: "https://www.linkedin.com/in/kejin-li/", color: "hover:text-macaron-blueHover hover:border-macaron-blueHover" }
@@ -48,8 +50,10 @@ export const ContactSection: React.FC = () => {
           </div>
         </motion.div>
 
-        {/* Nested Comment Section */}
-        <CommentSection />
+        {/* Embedded Comment Section */}
+        <div className="text-left">
+          <CommentSection pageId="home" />
+        </div>
       </div>
     </section>
   );

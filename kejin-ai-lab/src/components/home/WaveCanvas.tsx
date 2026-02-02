@@ -85,7 +85,7 @@ export const WaveCanvas: React.FC = () => {
       // Style
       ctx.lineWidth = 3;
       ctx.strokeStyle = '#FFAFCC'; // macaron-pinkHover
-      ctx.fillStyle = 'rgba(255, 175, 204, 0.2)'; // macaron-pinkHover with opacity
+      ctx.fillStyle = 'rgba(255, 175, 204, 0.4)'; // macaron-pinkHover with higher opacity for visibility
       
       // 1. Draw Wave
       ctx.beginPath();
@@ -101,14 +101,6 @@ export const WaveCanvas: React.FC = () => {
       ctx.closePath();
       ctx.fill();
       
-      // Draw Stroke (Removed for cleaner look)
-      // ctx.beginPath();
-      // ctx.moveTo(0, getWaveY(0));
-      // for (let x = 0; x <= width; x += segmentWidth) {
-      //   ctx.lineTo(x, getWaveY(x));
-      // }
-      // ctx.stroke();
-
       // 2. Update Duck Position
       // Lerp X for smooth "chasing" effect
       // If mouse is off-screen (initial), duck stays off-screen or goes to center

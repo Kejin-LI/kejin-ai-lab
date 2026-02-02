@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircleHeart, Send, User, Lock, Trash2, X, QrCode, CheckCircle, AlertCircle, Unlock, Reply } from 'lucide-react';
+import { supabase } from '../../utils/supabase';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 interface Comment {
   id: number;
@@ -10,6 +12,7 @@ interface Comment {
   date: string;
   email?: string;
   phone?: string;
+  parent_id?: number | null;
   replies?: Comment[];
 }
 
@@ -52,6 +55,7 @@ const AdminLoginModal: React.FC<{
   onLogin: () => void;
   onNotify: (message: string, type: 'success' | 'error') => void;
 }> = ({ isOpen, onClose, onLogin, onNotify }) => {
+  const { t } = useLanguage();
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
@@ -131,13 +135,13 @@ const AdminLoginModal: React.FC<{
         </button>
 
         <h3 className="text-xl font-bold text-macaron-text mb-6 text-center">
-          Admin Login
+          {t('comments.adminLogin')}
         </h3>
 
         <form onSubmit={handlePasswordSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-macaron-textLight mb-1">
-              Password
+              {t('comments.password')}
             </label>
             <div className="flex items-center bg-gray-50 rounded-lg border border-gray-200 focus-within:border-macaron-blue focus-within:ring-2 focus-within:ring-macaron-blue/20 transition-all px-3 py-2">
               <Lock className="w-4 h-4 text-gray-400 mr-2" />
@@ -146,7 +150,7 @@ const AdminLoginModal: React.FC<{
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 className="bg-transparent w-full outline-none text-macaron-text"
-                placeholder="Enter admin password"
+                placeholder={t('comments.password')}
                 autoFocus
               />
             </div>
@@ -156,7 +160,7 @@ const AdminLoginModal: React.FC<{
             type="submit"
             className="w-full py-2 bg-black text-white rounded-lg font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100"
           >
-            Login
+            {t('comments.login')}
           </button>
         </form>
       </motion.div>
@@ -164,22 +168,111 @@ const AdminLoginModal: React.FC<{
   );
 };
 
-export const CommentSection: React.FC = () => {
-  const [comments, setComments] = useState<Comment[]>(() => {
-    // Initialize from local storage
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('kejin_comments_data');
-      return stored ? JSON.parse(stored) : [];
-    }
-    return [];
-  });
+export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' }) => {
+  const { t } = useLanguage();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Save comments to local storage whenever they change
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('kejin_comments_data', JSON.stringify(comments));
+  // Helper to build comment tree from flat list
+  const buildCommentTree = (flatComments: any[]): Comment[] => {
+    const commentMap = new Map();
+    const roots: Comment[] = [];
+
+    // First pass: create comment objects
+    flatComments.forEach(c => {
+      commentMap.set(c.id, {
+        id: c.id,
+        nickname: c.nickname,
+        content: c.content,
+        avatar: c.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${c.email || c.nickname}`,
+        date: new Date(c.created_at).toLocaleString(),
+        email: c.email,
+        phone: c.phone,
+        parent_id: c.parent_id,
+        is_hidden: c.is_hidden, // Map is_hidden
+        replies: []
+      });
+    });
+
+    // Second pass: link parents and children
+    flatComments.forEach(c => {
+      const comment = commentMap.get(c.id);
+      if (c.parent_id) {
+        const parent = commentMap.get(c.parent_id);
+        if (parent) {
+          parent.replies.push(comment);
+        } else {
+          roots.push(comment);
+        }
+      } else {
+        roots.push(comment);
+      }
+    });
+
+    // Sort by date descending for roots, ascending for replies usually (or desc)
+    return roots.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  };
+
+  const fetchComments = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('comments')
+        .select('*')
+        .eq('page_id', pageId) // Filter by pageId
+        .order('created_at', { ascending: true }); // Get all, sort later
+
+      if (error) {
+        // If error is 404, table might not exist or RLS issue
+        // But for 'No rows', error is usually null and data is []
+        throw error;
+      }
+
+      if (data) {
+        setComments(buildCommentTree(data));
+      }
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      // Don't show toast for initial fetch error to avoid annoyance if it's just empty
+      // showToast('Failed to load comments', 'error'); 
+    } finally {
+      setIsLoading(false);
     }
-  }, [comments]);
+  };
+
+  // Subscribe to Realtime changes
+  useEffect(() => {
+    fetchComments();
+
+    const channel = supabase
+      .channel(`public:comments:${pageId}`) // Unique channel per page
+      .on('postgres_changes', { 
+        event: '*', 
+        schema: 'public', 
+        table: 'comments' 
+        // Filter removed to ensure reliability. We filter manually below.
+      }, (payload) => {
+        // Optimistic update or refetch
+        // Since we need to rebuild the tree, refetch is safer
+        // Only refetch if the change is relevant to this page
+        const newData = payload.new as any;
+        const oldData = payload.old as any;
+        
+        // If inserted/updated record belongs to this page
+        if (newData && newData.page_id === pageId) {
+          fetchComments();
+        } 
+        // If deleted record (we might not know its page_id if payload.old is empty, but usually it has ID)
+        // For safety, just refetch if it's a delete event or if we are unsure
+        else if (payload.eventType === 'DELETE' || !newData) {
+           fetchComments();
+        }
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [pageId]); // Re-subscribe when pageId changes
 
   const [visibleComments, setVisibleComments] = useState(3);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -359,7 +452,7 @@ export const CommentSection: React.FC = () => {
             <span className="pl-3 text-sm text-macaron-text font-medium border-r border-macaron-text/10 pr-2">+86</span>
             <input 
               type="tel" 
-              placeholder="Phone" 
+              placeholder={t('comments.phone')}
               className="w-full bg-transparent px-3 py-2 outline-none text-sm text-macaron-text placeholder:text-macaron-textLight/70"
               value={localFormData.phone}
               onChange={e => {
@@ -437,107 +530,102 @@ export const CommentSection: React.FC = () => {
     setVisibleComments(prev => prev + 5);
   };
 
-  const handleDeleteComment = (id: number) => {
-    const deleteFromList = (list: Comment[]): Comment[] => {
-      return list.filter(c => c.id !== id).map(c => ({
-        ...c,
-        replies: c.replies ? deleteFromList(c.replies) : undefined
-      }));
-    };
-    setComments(deleteFromList(comments));
+  const handleDeleteComment = async (id: number) => {
+    if (!confirm('Are you sure you want to delete this comment?')) return;
+
+    try {
+      if (isAdmin) {
+        // Admin: Hard delete (actually remove from DB)
+        const { error } = await supabase
+          .from('comments')
+          .delete()
+          .eq('id', id);
+        if (error) throw error;
+      } else {
+        // User: Soft delete (hide it)
+        // Note: This requires 'is_hidden' column in DB and Policy allowing update
+        const { error } = await supabase
+          .from('comments')
+          .update({ is_hidden: true })
+          .eq('id', id);
+          
+        if (error) {
+          console.error("Soft delete error:", error);
+          // Fallback if column doesn't exist yet or policy fails: 
+          // Just remove locally to give immediate feedback (fake delete)
+          // But since we use Realtime, it might pop back if we don't handle it right.
+          // Let's assume user has run the SQL.
+          throw error;
+        }
+      }
+
+      showToast('Comment deleted', 'success');
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+      showToast('Failed to delete comment', 'error');
+    }
   };
 
   const currentComments = comments.slice(0, visibleComments);
   const hasMoreComments = comments.length > visibleComments;
 
   // Helper to find a comment recursively
-  const findComment = (list: Comment[], id: number): Comment | undefined => {
-    for (const comment of list) {
-      if (comment.id === id) return comment;
-      if (comment.replies) {
-        const found = findComment(comment.replies, id);
-        if (found) return found;
-      }
-    }
-    return undefined;
-  };
+  // const findComment = (list: Comment[], id: number): Comment | undefined => { ... } // No longer needed for Supabase version logic simplification
 
-  const handleCommentSubmit = (data: any, parentId?: number) => {
-    const newComment: Comment = {
-      id: Date.now(),
-      nickname: data.nickname,
-      content: data.content,
-      // Use custom avatar for Admin, otherwise generate from email
-      avatar: isAdmin 
-        ? "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3D%20pixar%20style%20cute%20cartoon%20girl%20upper%20body%20portrait%20long%20brown%20hair%20no%20bangs%20exposed%20forehead%20bright%20smile%20wearing%20plain%20beige%20scarf%20grey%20top%20background%20sea%20horizon%20above%20head%20distant%20small%20mountains%20across%20the%20sea%20soft%20lighting&image_size=square"
-        : `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.email.trim().toLowerCase()}`,
-      date: new Date().toLocaleString(),
-      email: data.email,
-      phone: data.phone
-    };
-    
-    // Update local storage with new comment ID only if NOT admin
-    if (!isAdmin) {
-      const newOwnedIds = new Set(ownedCommentIds);
-      newOwnedIds.add(newComment.id);
-      setOwnedCommentIds(newOwnedIds);
-      localStorage.setItem('kejin_owned_comments', JSON.stringify(Array.from(newOwnedIds)));
-      
-      // Save user info to local storage for auto-fill
-      const newUserInfo = {
-        nickname: data.nickname,
-        email: data.email,
-        phone: data.phone
-      };
-      setUserInfo(newUserInfo);
-      localStorage.setItem('kejin_user_info', JSON.stringify(newUserInfo));
-    }
-    
-    if (parentId) {
-      // Find the parent comment recursively
-      const parentComment = findComment(comments, parentId);
-      if (parentComment) {
-        // Add reply prefix
-        newComment.content = `@${parentComment.nickname} ${newComment.content}`;
-      }
 
-      // Add the new comment as a reply to the TOP-LEVEL parent if possible,
-      // OR just add it to the current parent but visual rendering will handle the indentation.
-      // To implement "all replies are at level 2", we need to find the root comment.
-      
-      // However, the current data structure is nested (replies inside replies).
-      // If we want to FLATTEN the visual structure, we can keep the nested data structure
-      // but change how we add the reply.
-      
-      // OPTION 1: Add reply to the ROOT comment's replies array.
-      // We need to find which root comment this parentId belongs to.
-      
-      const addReplyToRoot = (list: Comment[]): Comment[] => {
-        return list.map(c => {
-          // If this is the comment we are replying to (it's a root comment)
-          if (c.id === parentId) {
-            return {
-              ...c,
-              replies: [...(c.replies || []), newComment]
-            };
-          }
-          
-          // If the comment we are replying to is INSIDE this root comment
-          if (findComment(c.replies || [], parentId!)) {
-             return {
-              ...c,
-              replies: [...(c.replies || []), newComment]
-            };
-          }
-          
-          return c;
-        });
-      };
-      
-      setComments(addReplyToRoot(comments));
+  const handleCommentSubmit = async (data: any, parentId?: number) => {
+    const avatar = isAdmin 
+      ? "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3D%20pixar%20style%20cute%20cartoon%20girl%20upper%20body%20portrait%20long%20brown%20hair%20no%20bangs%20exposed%20forehead%20bright%20smile%20wearing%20plain%20beige%20scarf%20grey%20top%20background%20sea%20horizon%20above%20head%20distant%20small%20mountains%20across%20the%20sea%20soft%20lighting&image_size=square"
+      : `https://api.dicebear.com/7.x/avataaars/svg?seed=${data.email.trim().toLowerCase()}`;
+
+    try {
+      const { data: insertedData, error } = await supabase
+        .from('comments')
+        .insert({
+          nickname: data.nickname,
+          content: data.content,
+          email: data.email,
+          phone: data.phone,
+          avatar: avatar,
+          parent_id: parentId || null,
+          page_id: pageId
+        })
+        .select() // Important: return the inserted row so we get the ID
+        .single();
+
+      if (error) throw error;
+
+      showToast('Comment submitted successfully', 'success');
       setReplyingToId(null);
-    } else {
-      setComments([newComment, ...comments]);
+      
+      // Save user info locally
+      if (!isAdmin) {
+        // Track owned comments for deletion permission
+        if (insertedData) {
+          setOwnedCommentIds(prev => {
+            const next = new Set(prev);
+            next.add(insertedData.id);
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('kejin_owned_comments', JSON.stringify(Array.from(next)));
+            }
+            return next;
+          });
+        }
+
+        const newUserInfo = {
+          nickname: data.nickname,
+          email: data.email,
+          phone: data.phone
+        };
+        setUserInfo(newUserInfo);
+        localStorage.setItem('kejin_user_info', JSON.stringify(newUserInfo));
+      }
+
+      // Manually refresh comments to ensure UI updates immediately even if Realtime is slow
+      fetchComments();
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+      showToast('Failed to submit comment', 'error');
     }
   };
 
@@ -587,11 +675,11 @@ export const CommentSection: React.FC = () => {
           {isAdmin && comment.email && (
             <div className="flex flex-wrap gap-x-4 gap-y-1 mb-2 text-[11px] text-macaron-textLight/70 bg-macaron-text/5 rounded-md px-2 py-1 w-fit">
               <span className="flex items-center gap-1">
-                <span className="opacity-70">Email:</span> {comment.email}
+                <span className="opacity-70">{t('comments.email')}:</span> {comment.email}
               </span>
               {comment.phone && (
                 <span className="flex items-center gap-1">
-                  <span className="opacity-70">Phone:</span> {comment.phone}
+                  <span className="opacity-70">{t('comments.phone')}:</span> {comment.phone}
                 </span>
               )}
             </div>
@@ -647,7 +735,7 @@ export const CommentSection: React.FC = () => {
         <div className="p-2 bg-macaron-pink rounded-full animate-bounce-slow shadow-md hover:scale-110 hover:rotate-12 transition-transform duration-300">
           <MessageCircleHeart className="w-6 h-6 text-white fill-white/20" />
         </div>
-        <h2 className="text-2xl font-bold text-macaron-text">Comments</h2>
+        <h2 className="text-2xl font-bold text-macaron-text">{t('comments.title')}</h2>
         <button 
           onClick={handleAdminClick}
           className="ml-2 p-1 text-macaron-textLight/30 hover:text-macaron-blue transition-colors"
@@ -689,7 +777,7 @@ export const CommentSection: React.FC = () => {
         <div className="mt-12 border-t border-macaron-text/5 pt-8">
           {comments.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-macaron-textLight font-medium">No comments yet</p>
+              <p className="text-macaron-textLight font-medium">{t('comments.noComments')}</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -703,7 +791,7 @@ export const CommentSection: React.FC = () => {
                 onClick={handleLoadMore}
                 className="text-sm text-macaron-textLight hover:text-macaron-pinkHover font-medium transition-colors"
               >
-                Load more
+                {t('comments.loadMore')}
               </button>
             </div>
           )}

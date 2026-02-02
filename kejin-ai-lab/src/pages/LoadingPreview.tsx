@@ -1,43 +1,23 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Trae Project</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Outfit:wght@100..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
-    <script type="module">
-      if (import.meta.hot?.on) {
-        import.meta.hot.on('vite:error', (error) => {
-          if (error.err) {
-            console.error(
-              [error.err.message, error.err.frame].filter(Boolean).join('\n'),
-            )
-          }
-        })
-      }
-    </script>
-  </head>
-  <body>
-    <div id="root">
-      <style>
-        .initial-loader {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          width: 100vw;
-          background-color: #FFFBF0;
-          color: #2D3436;
-          font-family: 'Fredoka', 'Outfit', sans-serif;
-          flex-direction: column;
-          gap: 32px;
-          position: relative;
-          overflow: hidden;
-        }
+import React from 'react';
 
+// This component replicates the HTML/CSS from index.html for preview purposes
+const LoadingPreview: React.FC = () => {
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100vh',
+      width: '100vw',
+      backgroundColor: '#FFFBF0',
+      color: '#2D3436',
+      fontFamily: "'Fredoka', 'Outfit', sans-serif",
+      flexDirection: 'column',
+      gap: '32px',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      <style>{`
         .avatar-container {
           position: relative;
           width: 120px;
@@ -135,20 +115,20 @@
           50% { width: 100%; left: 0; }
           100% { width: 0%; left: 100%; }
         }
-      </style>
-      <div class="initial-loader">
-        <div class="avatar-container">
-          <div class="glow-ring"></div>
-          <div class="glow-ring"></div>
-          <div class="glow-ring"></div>
-          <img class="avatar-img" src="https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3D%20pixar%20style%20cute%20cartoon%20girl%20upper%20body%20portrait%20long%20brown%20hair%20no%20bangs%20exposed%20forehead%20bright%20smile%20wearing%20plain%20beige%20scarf%20grey%20top%20background%20sea%20horizon%20above%20head%20distant%20small%20mountains%20across%20the%20sea%20soft%20lighting&image_size=square" alt="Loading...">
-        </div>
-        <p class="loading-text">Loading Kejin AI Lab...</p>
-        <div class="progress-bar-container">
-          <div class="progress-bar"></div>
-        </div>
+      `}</style>
+      
+      <div className="avatar-container">
+        <div className="glow-ring"></div>
+        <div className="glow-ring"></div>
+        <div className="glow-ring"></div>
+        <img className="avatar-img" src="https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3D%20pixar%20style%20cute%20cartoon%20girl%20upper%20body%20portrait%20long%20brown%20hair%20no%20bangs%20exposed%20forehead%20bright%20smile%20wearing%20plain%20beige%20scarf%20grey%20top%20background%20sea%20horizon%20above%20head%20distant%20small%20mountains%20across%20the%20sea%20soft%20lighting&image_size=square" alt="Loading..." />
+      </div>
+      <p className="loading-text">Loading Kejin AI Lab...</p>
+      <div className="progress-bar-container">
+        <div className="progress-bar"></div>
       </div>
     </div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+  );
+};
+
+export default LoadingPreview;

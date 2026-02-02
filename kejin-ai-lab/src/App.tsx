@@ -1,16 +1,67 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import ProjectDetailPage from './pages/ProjectDetailPage';
 import { ClickSparkles } from './components/common/ClickSparkles';
+
+// Lazy load pages to reduce initial bundle size
+const Home = lazy(() => import('./pages/Home'));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
+const LoadingPreview = lazy(() => import('./pages/LoadingPreview'));
+
+// Reusing the same loading style from index.html for consistency during React hydration
+const LoadingFallback = () => (
+  <div style={{
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh',
+    width: '100vw',
+    backgroundColor: '#FFFBF0',
+    color: '#2D3436',
+    fontFamily: "'Fredoka', 'Outfit', sans-serif",
+    flexDirection: 'column',
+    gap: '32px',
+    position: 'relative',
+    overflow: 'hidden'
+  }}>
+    <style>{`
+      .avatar-container { position: relative; width: 120px; height: 120px; border-radius: 50%; display: flex; justifyContent: center; alignItems: center; }
+      .avatar-img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 4px solid rgba(255, 255, 255, 0.8); position: relative; z-index: 10; box-shadow: 0 10px 25px rgba(255, 175, 204, 0.3); animation: float 6s ease-in-out infinite; }
+      .glow-ring { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle, rgba(255, 175, 204, 0.4) 0%, rgba(162, 210, 255, 0) 70%); z-index: 1; animation: breathe 3s ease-in-out infinite; }
+      .glow-ring:nth-child(2) { width: 140%; height: 140%; animation-delay: -1s; opacity: 0.6; }
+      .glow-ring:nth-child(3) { width: 180%; height: 180%; animation-delay: -2s; opacity: 0.3; }
+      .loading-text { font-size: 18px; font-weight: 500; color: #636E72; letter-spacing: 1px; animation: pulse 2s ease-in-out infinite; }
+      .progress-bar-container { width: 200px; height: 6px; background: rgba(45, 52, 54, 0.05); border-radius: 10px; overflow: hidden; position: relative; }
+      .progress-bar { height: 100%; width: 30%; background: linear-gradient(90deg, #FFC8DD, #A2D2FF); border-radius: 10px; position: absolute; left: 0; top: 0; animation: progress 2s ease-in-out infinite; }
+      @keyframes breathe { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.6; } }
+      @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+      @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+      @keyframes progress { 0% { width: 0%; left: 0; } 50% { width: 100%; left: 0; } 100% { width: 0%; left: 100%; } }
+    `}</style>
+    
+    <div className="avatar-container">
+      <div className="glow-ring"></div>
+      <div className="glow-ring"></div>
+      <div className="glow-ring"></div>
+      <img className="avatar-img" src="https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3D%20pixar%20style%20cute%20cartoon%20girl%20upper%20body%20portrait%20long%20brown%20hair%20no%20bangs%20exposed%20forehead%20bright%20smile%20wearing%20plain%20beige%20scarf%20grey%20top%20background%20sea%20horizon%20above%20head%20distant%20small%20mountains%20across%20the%20sea%20soft%20lighting&image_size=square" alt="Loading..." />
+    </div>
+    <p className="loading-text">Loading Kejin AI Lab...</p>
+    <div className="progress-bar-container">
+      <div className="progress-bar"></div>
+    </div>
+  </div>
+);
 
 function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <ClickSparkles />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/project/:id" element={<ProjectDetailPage />} />
-      </Routes>
+      <Suspense fallback={<LoadingFallback />}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/project/:id" element={<ProjectDetailPage />} />
+          <Route path="/loading-preview" element={<LoadingPreview />} />
+        </Routes>
+      </Suspense>
     </Router>
   );
 }

@@ -6,6 +6,7 @@ import { HeroSection } from '../components/home/HeroSection';
 import { ProjectsGrid } from '../components/home/ProjectsGrid';
 import { ThoughtsSection } from '../components/home/ThoughtsSection';
 import { ContactSection } from '../components/home/ContactSection';
+import { CommentSection } from '../components/home/CommentSection';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const DEFAULT_BG = "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=minimalist%20landscape%20soft%20pastel%20colors%20dreamy%20sky%20mountains%20clean%20composition&image_size=landscape_16_9";

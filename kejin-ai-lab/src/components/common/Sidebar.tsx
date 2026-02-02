@@ -4,8 +4,10 @@ import { motion } from 'framer-motion';
 import { MOCK_PROJECTS } from '../home/ProjectsGrid';
 import { thoughts } from '../home/ThoughtsSection';
 import profileImg from '../../assets/profile.jpg';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 export const Sidebar: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <aside className="w-full lg:w-[280px] space-y-6">
       {/* Profile Card */}
@@ -25,20 +27,20 @@ export const Sidebar: React.FC = () => {
         </div>
         
         <h2 className="text-2xl font-bold text-macaron-text mb-2">Kejin.AI</h2>
-        <p className="text-macaron-textLight text-sm mb-6">AI Product Manager & Builder</p>
+        <p className="text-macaron-textLight text-sm mb-6">{t('sidebar.role')}</p>
         
         <div className="flex justify-around mb-6 text-center">
           <div>
             <div className="font-bold text-lg text-macaron-text">{MOCK_PROJECTS.length}</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">Projects</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.projects')}</div>
           </div>
           <div>
             <div className="font-bold text-lg text-macaron-text">{thoughts.length}+</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">INSIGHTS</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.insights')}</div>
           </div>
           <div>
             <div className="font-bold text-lg text-macaron-text">∞</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">TEA</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.tea')}</div>
           </div>
         </div>
         
@@ -47,7 +49,7 @@ export const Sidebar: React.FC = () => {
           className="block w-full py-3 rounded-full bg-macaron-text text-white font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 flex items-center justify-center gap-2 mb-4 shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30"
         >
           <MessageCircle className="w-4 h-4" />
-          <span>Let's Talk</span>
+          <span>{t('sidebar.talk')}</span>
         </button>
         
         <div className="flex justify-center gap-4 text-macaron-textLight">
@@ -63,13 +65,13 @@ export const Sidebar: React.FC = () => {
       >
         <h3 className="flex items-center gap-2 font-bold text-macaron-text mb-4">
           <MapPin className="w-4 h-4 text-macaron-blue" />
-          <span>Location</span>
+          <span>{t('sidebar.location')}</span>
         </h3>
-        <p className="text-macaron-textLight text-sm mb-4">Shenzhen & Chengdu, China</p>
+        <p className="text-macaron-textLight text-sm mb-4">{t('sidebar.locationText')}</p>
         
         <h3 className="flex items-center gap-2 font-bold text-macaron-text mb-4 border-t border-white/30 pt-4">
           <LinkIcon className="w-4 h-4 text-macaron-blue" />
-          <span>Links</span>
+          <span>{t('sidebar.links')}</span>
         </h3>
         <ul className="space-y-2 text-sm text-macaron-textLight">
           <li>
@@ -79,7 +81,7 @@ export const Sidebar: React.FC = () => {
               rel="noopener noreferrer" 
               className="hover:text-macaron-pinkHover transition-colors"
             >
-              My Linkedin
+              {t('sidebar.myLinkedin')}
             </a>
           </li>
         </ul>
@@ -94,10 +96,10 @@ export const Sidebar: React.FC = () => {
       >
         <h3 className="flex items-center gap-2 font-bold text-macaron-text mb-4">
           <Hash className="w-4 h-4 text-macaron-yellow" />
-          <span>Skills</span>
+          <span>{t('sidebar.skills')}</span>
         </h3>
         <div className="flex flex-wrap gap-2">
-          {['Product', 'AI Coding'].map((skill) => (
+          {[t('sidebar.skillProduct'), t('sidebar.skillAICoding')].map((skill) => (
             <span key={skill} className="px-3 py-1 bg-macaron-cream rounded-lg text-xs text-macaron-textLight border border-macaron-yellow/50 hover:bg-macaron-yellow hover:text-macaron-text transition-colors cursor-pointer">
               {skill}
             </span>

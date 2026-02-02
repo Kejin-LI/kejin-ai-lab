@@ -3,9 +3,11 @@ import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'fram
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { WaveCanvas } from './WaveCanvas';
 import { FloatingBubbles } from './FloatingBubbles';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 export const HeroSection: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { t, language } = useLanguage();
   
   // Parallax effects
   const { scrollY } = useScroll();
@@ -30,12 +32,19 @@ export const HeroSection: React.FC = () => {
   const moveY2 = useSpring(useTransform(mouseY, [-0.5, 0.5], [120, -120]), springConfig);
 
   const [displayText, setDisplayText] = React.useState("");
-  const fullText = "Turning wild ideas into reality using AI.";
+  // const fullText = "Turning wild ideas into reality using AI.";
   
   React.useEffect(() => {
+    const fullText = language === 'en' 
+      ? "Turning wild ideas into reality using AI." 
+      : "用 AI Agents 将狂野的想法变为现实";
+      
     let isDeleting = false;
     let currentIndex = 0;
     let pauseCounter = 0;
+    
+    // Reset when language changes
+    setDisplayText("");
     
     const interval = setInterval(() => {
       // Pause handling at ends
@@ -68,7 +77,7 @@ export const HeroSection: React.FC = () => {
     }, isDeleting ? 50 : 80); // 50ms deleting, 80ms typing
 
     return () => clearInterval(interval);
-  }, []);
+  }, [language]);
 
   return (
     <section 
@@ -98,12 +107,12 @@ export const HeroSection: React.FC = () => {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-macaron-pink text-sm text-macaron-text mb-8 shadow-sm"
           >
             <Sparkles className="w-4 h-4 text-macaron-pinkHover" />
-            <span className="font-medium">AI Product Manager & Builder</span>
+            <span className="font-medium">{t('hero.role')}</span>
           </motion.div>
           
           <h1 className="text-6xl md:text-8xl font-playful font-bold mb-8 tracking-tight leading-tight min-h-[1.5em] cursor-default flex justify-center items-center overflow-visible">
             <span className="flex flex-wrap justify-center gap-[2px]">
-              {"Whimsical Ideas".split("").map((char, index) => (
+              {(language === 'en' ? "Whimsical Ideas" : "奇思妙想").split("").map((char, index) => (
                 <motion.span 
                   key={index}
                   whileHover={{ 
@@ -137,7 +146,7 @@ export const HeroSection: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-lg hover:shadow-xl hover:shadow-macaron-pinkHover/30 flex items-center gap-2"
             >
-              View My Projects
+              {t('projects.viewProject')}
               <ArrowRight className="w-4 h-4" />
             </motion.a>
             <motion.a 
@@ -146,7 +155,7 @@ export const HeroSection: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-white/50 text-macaron-text border border-white rounded-full font-medium transition-all shadow-sm hover:shadow-md backdrop-blur-sm hover:backdrop-blur-none hover:bg-transparent hover:text-macaron-pinkHover hover:border-macaron-pinkHover duration-300"
             >
-              Contact Me
+              {t('hero.contact')}
             </motion.a>
           </div>
         </motion.div>

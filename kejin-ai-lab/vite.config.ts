@@ -8,6 +8,14 @@ export default defineConfig({
   base: '/kejin-ai-lab/',
   build: {
     sourcemap: 'hidden',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+          ui: ['lucide-react', 'clsx', 'tailwind-merge']
+        }
+      }
+    }
   },
   plugins: [
     react({

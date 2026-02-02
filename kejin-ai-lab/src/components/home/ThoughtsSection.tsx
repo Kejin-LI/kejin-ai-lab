@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 export const thoughts = [
   {
@@ -31,6 +32,7 @@ export const thoughts = [
 ];
 
 export const ThoughtsSection: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <div id="thoughts" className="mb-16">
       <div className="flex items-center justify-between mb-8">
@@ -38,10 +40,10 @@ export const ThoughtsSection: React.FC = () => {
           <div className="p-2 bg-macaron-yellow rounded-full animate-bounce-slow shadow-md hover:scale-110 hover:rotate-12 transition-transform duration-300">
             <Sparkles className="w-6 h-6 text-white fill-white/20" />
           </div>
-          <h2 className="text-2xl font-bold text-macaron-text">Thoughts & Insights</h2>
+          <h2 className="text-2xl font-bold text-macaron-text">{t('thoughts.title')}</h2>
         </div>
         <a href="#" className="text-macaron-textLight hover:text-macaron-pinkHover flex items-center gap-2 text-sm font-medium transition-colors">
-          View All <ArrowRight className="w-4 h-4" />
+          {t('thoughts.viewAll')} <ArrowRight className="w-4 h-4" />
         </a>
       </div>
       

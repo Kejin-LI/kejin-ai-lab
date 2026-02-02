@@ -206,7 +206,7 @@ const ProjectDetailPage: React.FC = () => {
               </div>
   
               {/* Project-specific Comments Section */}
-              <CommentSection />
+              <CommentSection pageId={`project_${id}`} />
             </div>
           </div>
 

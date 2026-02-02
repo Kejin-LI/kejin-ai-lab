@@ -1,6 +1,7 @@
 import React from 'react';
 import { ProjectCard, Project } from './ProjectCard';
 import { Laptop } from 'lucide-react';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 export const MOCK_PROJECTS: Project[] = [
   {
@@ -19,13 +20,14 @@ interface ProjectsGridProps {
 }
 
 export const ProjectsGrid: React.FC<ProjectsGridProps> = ({ onProjectHover, defaultBg }) => {
+  const { t } = useLanguage();
   return (
     <div id="projects" className="mb-16">
       <div className="flex items-center gap-2 mb-8">
         <div className="p-2 bg-macaron-blue rounded-full animate-bounce-slow shadow-md hover:scale-110 hover:rotate-12 transition-transform duration-300">
           <Laptop className="w-6 h-6 text-white fill-white/20" />
         </div>
-        <h2 className="text-2xl font-bold text-macaron-text">Featured Projects</h2>
+        <h2 className="text-2xl font-bold text-macaron-text">{t('projects.title')}</h2>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
