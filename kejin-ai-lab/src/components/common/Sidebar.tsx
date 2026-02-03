@@ -9,7 +9,7 @@ import { useLanguage } from '../../i18n/LanguageContext';
 export const Sidebar: React.FC = () => {
   const { t } = useLanguage();
   return (
-    <aside className="w-full lg:w-[280px] space-y-6">
+    <aside className="w-full lg:w-[280px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-6">
       {/* Profile Card */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
@@ -99,8 +99,8 @@ export const Sidebar: React.FC = () => {
           <span>{t('sidebar.skills')}</span>
         </h3>
         <div className="flex flex-wrap gap-2">
-          {[t('sidebar.skillProduct'), t('sidebar.skillAICoding')].map((skill) => (
-            <span key={skill} className="px-3 py-1 bg-macaron-cream rounded-lg text-xs text-macaron-textLight border border-macaron-yellow/50 hover:bg-macaron-yellow hover:text-macaron-text transition-colors cursor-pointer">
+          {[t('sidebar.skillProduct'), t('sidebar.skillAICoding')].map((skill, index) => (
+            <span key={index} className="px-3 py-1 bg-macaron-cream rounded-lg text-xs text-macaron-textLight border border-macaron-yellow/50 hover:bg-macaron-yellow hover:text-macaron-text transition-colors cursor-pointer">
               {skill}
             </span>
           ))}

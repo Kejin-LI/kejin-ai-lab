@@ -386,7 +386,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
         setShakingFields(new Set());
         setTimeout(() => {
           setShakingFields(newErrors);
-          setTimeout(() => setShakingFields(new Set()), 1500);
+          setTimeout(() => setShakingFields(new Set()), 200);
         }, 10);
         return;
       }

@@ -7,7 +7,7 @@ export const translations = {
       contact: "Contact"
     },
     hero: {
-      role: "AI Product Manager & Builder",
+      role: "AI Product Engineer",
       slogan: "Turning wild ideas into reality using",
       sloganHighlight: "AI Agents",
       cta: "Let's Build Something Amazing",
@@ -32,7 +32,7 @@ export const translations = {
     contact: {
       title: "Let's Build Something",
       titleHighlight: "Amazing",
-      subtitle: "Whether you're looking for a product manager who speaks code, or just want to chat about the future of AI, I'd love to hear from you."
+      subtitle: "Whether you're seeking an AI Product Engineer capable of delivering end-to-end solutions, or want to discuss the future of AI, I'd love to hear from you."
     },
     comments: {
       title: "Comments",
@@ -56,7 +56,7 @@ export const translations = {
       text: "Loading Kejin AI Lab..."
     },
     sidebar: {
-      role: "AI Product Manager & Builder",
+      role: "AI Product Engineer",
       projects: "Projects",
       insights: "INSIGHTS",
       tea: "TEA",
@@ -103,7 +103,7 @@ export const translations = {
     contact: {
       title: "让我们创造",
       titleHighlight: "无限可能",
-      subtitle: "无论您是在寻找一位懂代码的产品经理，还是只想聊聊 AI 的未来，我都期待您的来信。"
+      subtitle: "无论您是在寻找一位能独立闭环的 AI 产品工程师，还是想探讨 AI 的未来，期待您的来信。"
     },
     comments: {
       title: "留言板",

@@ -110,7 +110,7 @@ export const HeroSection: React.FC = () => {
             <span className="font-medium">{t('hero.role')}</span>
           </motion.div>
           
-          <h1 className="text-6xl md:text-8xl font-playful font-bold mb-8 tracking-tight leading-tight min-h-[1.5em] cursor-default flex justify-center items-center overflow-visible">
+          <h1 className="text-4xl sm:text-6xl md:text-8xl font-playful font-bold mb-8 tracking-tight leading-tight min-h-[1.5em] cursor-default flex justify-center items-center overflow-visible">
             <span className="flex flex-wrap justify-center gap-[2px]">
               {(language === 'en' ? "Whimsical Ideas" : "奇思妙想").split("").map((char, index) => (
                 <motion.span 
@@ -134,7 +134,7 @@ export const HeroSection: React.FC = () => {
             </span>
           </h1>
           
-          <p className="text-macaron-textLight text-xl max-w-2xl mx-auto mb-12 leading-relaxed min-h-[1.5em]">
+          <p className="text-macaron-textLight text-lg sm:text-xl max-w-2xl mx-auto mb-12 leading-relaxed min-h-[1.5em]">
           {displayText}
           <span className="animate-pulse inline-block w-1 h-5 bg-macaron-text ml-1 align-middle"></span>
         </p>

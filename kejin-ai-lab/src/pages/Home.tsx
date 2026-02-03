@@ -46,11 +46,11 @@ const Home: React.FC = () => {
         <Header />
         <HeroSection />
         
-        <main className="container mx-auto px-6 py-12 relative z-10 max-w-[1400px]">
-          <div className="flex flex-col lg:flex-row gap-16">
+        <main className="container mx-auto px-4 sm:px-6 py-8 lg:py-12 relative z-10 max-w-[1400px]">
+          <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
             
             {/* Main Content (Left) */}
-            <div className="flex-1 min-w-0 space-y-16">
+            <div className="flex-1 min-w-0 space-y-12 lg:space-y-16">
               <ProjectsGrid onProjectHover={setCurrentBg} defaultBg={DEFAULT_BG} />
               <ThoughtsSection />
               <ContactSection />
