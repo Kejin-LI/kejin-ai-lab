@@ -52,15 +52,26 @@ export const FloatingBubbles: React.FC<FloatingBubblesProps> = ({
       lastTime: 0 // Track last interaction time
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent | TouchEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        mouseRef.x = e.clientX - rect.left;
-        mouseRef.y = e.clientY - rect.top;
+        let clientX, clientY;
+        
+        if ('touches' in e) {
+          clientX = e.touches[0].clientX;
+          clientY = e.touches[0].clientY;
+        } else {
+          clientX = (e as MouseEvent).clientX;
+          clientY = (e as MouseEvent).clientY;
+        }
+
+        mouseRef.x = clientX - rect.left;
+        mouseRef.y = clientY - rect.top;
         mouseRef.lastTime = Date.now(); // Update timestamp
       }
     };
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('touchmove', handleMouseMove);
 
     // Define colors (bg and border)
     const defaultThemes = [
@@ -85,8 +96,14 @@ export const FloatingBubbles: React.FC<FloatingBubblesProps> = ({
     const newPhysics: BubblePhysics[] = [];
     const newVisuals: BubbleVisual[] = [];
 
+    // Scale down bubbles on small screens
+    const isMobile = window.innerWidth < 768;
+    const scaleFactor = isMobile ? 0.6 : 1;
+    const effectiveMinRadius = minRadius * scaleFactor;
+    const effectiveMaxRadius = maxRadius * scaleFactor;
+
     for (let i = 0; i < count; i++) {
-      const radius = minRadius + Math.random() * (maxRadius - minRadius);
+      const radius = effectiveMinRadius + Math.random() * (effectiveMaxRadius - effectiveMinRadius);
       // Ensure we spawn inside
       const x = radius + Math.random() * (width - 2 * radius);
       const y = radius + Math.random() * (height - 2 * radius);
@@ -214,6 +231,7 @@ export const FloatingBubbles: React.FC<FloatingBubblesProps> = ({
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('touchmove', handleMouseMove);
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
     };
   }, []);

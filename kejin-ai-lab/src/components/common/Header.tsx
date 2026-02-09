@@ -65,7 +65,7 @@ export const Header: React.FC = () => {
               title={language === 'en' ? 'Switch to Chinese' : 'Switch to English'}
             >
               <Globe className="w-4 h-4" />
-              <span>{language === 'en' ? 'EN' : '中'}</span>
+              <span>{language === 'en' ? '中' : 'EN'}</span>
             </button>
             <a href="#contact" className="px-5 py-2 bg-macaron-text text-white rounded-full text-sm font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30 transform hover:-translate-y-0.5">
               {t('hero.contact')}
@@ -78,7 +78,7 @@ export const Header: React.FC = () => {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <span className="text-xs font-bold" onClick={(e) => { e.stopPropagation(); toggleLanguage(); }}>
-              {language === 'en' ? 'EN' : '中'}
+              {language === 'en' ? '中' : 'EN'}
             </span>
             {isMobileMenuOpen ? <X /> : <Menu />}
           </button>

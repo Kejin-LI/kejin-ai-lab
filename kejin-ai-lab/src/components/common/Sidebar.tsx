@@ -99,7 +99,7 @@ export const Sidebar: React.FC = () => {
           <span>{t('sidebar.skills')}</span>
         </h3>
         <div className="flex flex-wrap gap-2">
-          {[t('sidebar.skillProduct'), t('sidebar.skillAICoding')].map((skill, index) => (
+          {[t('sidebar.skillProduct'), t('sidebar.skillIdeas'), t('sidebar.skillAICoding')].map((skill, index) => (
             <span key={index} className="px-3 py-1 bg-macaron-cream rounded-lg text-xs text-macaron-textLight border border-macaron-yellow/50 hover:bg-macaron-yellow hover:text-macaron-text transition-colors cursor-pointer">
               {skill}
             </span>

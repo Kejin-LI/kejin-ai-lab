@@ -413,7 +413,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
           <div className={`flex-1 min-w-[140px] relative flex items-center bg-white/50 rounded-lg border focus-within:ring-2 transition-all ${errorFields.has('nickname') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus-within:border-macaron-blue focus-within:ring-macaron-blue/20'} ${shakingFields.has('nickname') ? 'animate-shake' : ''}`}>
             <input 
               type="text" 
-              placeholder="Nickname" 
+              placeholder={t('comments.nickname')}
               className={`w-full bg-transparent px-3 py-2 outline-none text-sm text-macaron-text placeholder:text-macaron-textLight/70 ${isAdmin ? 'cursor-not-allowed opacity-70' : ''}`}
               value={localFormData.nickname}
               onChange={e => {
@@ -430,10 +430,10 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
             />
           </div>
 
-          <div className={`flex-1 min-w-[140px] relative flex items-center bg-white/50 rounded-lg border focus-within:ring-2 transition-all ${errorFields.has('email') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus-within:border-macaron-blue focus-within:ring-macaron-blue/20'} ${shakingFields.has('email') ? 'animate-shake' : ''}`}>
+          <div className={`w-full sm:flex-1 sm:w-auto min-w-[140px] relative flex items-center bg-white/50 rounded-lg border focus-within:ring-2 transition-all ${errorFields.has('email') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus-within:border-macaron-blue focus-within:ring-macaron-blue/20'} ${shakingFields.has('email') ? 'animate-shake' : ''}`}>
             <input 
               type="email" 
-              placeholder="Email" 
+              placeholder={t('comments.email')}
               className="w-full bg-transparent px-3 py-2 outline-none text-sm text-macaron-text placeholder:text-macaron-textLight/70"
               value={localFormData.email}
               onChange={e => {
@@ -448,7 +448,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
             />
           </div>
 
-          <div className={`flex-1 min-w-[140px] flex items-center bg-white/50 rounded-lg border transition-all ${errorFields.has('phone') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus-within:border-macaron-blue focus-within:ring-2 focus-within:ring-macaron-blue/20'} ${shakingFields.has('phone') ? 'animate-shake' : ''}`}>
+          <div className={`w-full sm:flex-1 sm:w-auto min-w-[140px] flex items-center bg-white/50 rounded-lg border transition-all ${errorFields.has('phone') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus-within:border-macaron-blue focus-within:ring-2 focus-within:ring-macaron-blue/20'} ${shakingFields.has('phone') ? 'animate-shake' : ''}`}>
             <span className="pl-3 text-sm text-macaron-text font-medium border-r border-macaron-text/10 pr-2">+86</span>
             <input 
               type="tel" 
@@ -472,7 +472,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
         {/* Textarea */}
         <div className="relative group">
           <textarea
-            placeholder={isReply ? "Write a reply..." : "What are your thoughts?"}
+            placeholder={isReply ? t('comments.reply') : t('comments.placeholder')}
             rows={isReply ? 3 : 4}
             className={`w-full bg-white/80 rounded-xl border p-3 outline-none resize-y min-h-[80px] max-h-[300px] focus:ring-2 transition-all text-macaron-text placeholder:text-macaron-textLight/50 ${errorFields.has('content') ? 'border-macaron-pink ring-2 ring-macaron-pink/20' : 'border-macaron-text/10 focus:border-macaron-blue focus:ring-macaron-blue/20'} ${shakingFields.has('content') ? 'animate-shake' : ''}`}
             value={localFormData.content}
@@ -501,7 +501,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
               onClick={onCancel}
               className="text-sm text-macaron-textLight hover:text-macaron-text transition-colors"
             >
-              Cancel
+              {t('comments.cancel')}
             </button>
           )}
           <button 
@@ -509,7 +509,7 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
             disabled={isSubmitting}
             className={`px-6 py-2 bg-macaron-text text-white rounded-lg text-sm font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30 flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed ${isReply ? 'py-1.5 px-4 text-xs' : ''}`}
           >
-            {isSubmitting ? 'Sending...' : (isReply ? 'Reply' : 'Send')}
+            {isSubmitting ? t('comments.sending') : (isReply ? t('comments.reply') : t('comments.send'))}
             {!isSubmitting && <Send className={isReply ? "w-3 h-3" : "w-3 h-3"} />}
           </button>
         </div>
@@ -763,18 +763,20 @@ export const CommentSection: React.FC<{ pageId?: string }> = ({ pageId = 'home' 
         )}
       </AnimatePresence>
 
-      <div className="rounded-3xl p-8 relative overflow-hidden">
+      <div className="rounded-3xl p-4 sm:p-8 relative overflow-hidden -mx-4 sm:mx-0">
         {/* Background Decoration */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-macaron-pink/10 rounded-full blur-3xl -z-10" />
         
-        <CommentForm 
-          onSubmit={(data) => handleCommentSubmit(data)} 
-          initialUserInfo={userInfo} 
-          isAdmin={isAdmin} 
-        />
+        <div className="px-4 sm:px-0">
+          <CommentForm 
+            onSubmit={(data) => handleCommentSubmit(data)} 
+            initialUserInfo={userInfo} 
+            isAdmin={isAdmin} 
+          />
+        </div>
 
         {/* Comments List */}
-        <div className="mt-12 border-t border-macaron-text/5 pt-8">
+        <div className="mt-12 border-t border-macaron-text/5 pt-8 px-4 sm:px-0">
           {comments.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-macaron-textLight font-medium">{t('comments.noComments')}</p>

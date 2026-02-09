@@ -7,7 +7,7 @@ export const translations = {
       contact: "Contact"
     },
     hero: {
-      role: "AI Product Engineer",
+      role: "AI Product Engineer = Ideas + AI Coding",
       slogan: "Turning wild ideas into reality using",
       sloganHighlight: "AI Agents",
       cta: "Let's Build Something Amazing",
@@ -67,6 +67,7 @@ export const translations = {
       myLinkedin: "My Linkedin",
       skills: "Skills",
       skillProduct: "Product",
+      skillIdeas: "Ideas",
       skillAICoding: "AI Coding"
     }
   },
@@ -78,7 +79,7 @@ export const translations = {
       contact: "联系"
     },
     hero: {
-      role: "AI 产品工程师",
+      role: "AI 产品工程师 = 想法 + AI编程",
       slogan: "用 AI Agents 将狂野的想法",
       sloganHighlight: "变为现实",
       cta: "让我们共创未来",
@@ -138,6 +139,7 @@ export const translations = {
       myLinkedin: "我的领英",
       skills: "技能",
       skillProduct: "产品",
+      skillIdeas: "想法",
       skillAICoding: "AI 编程"
     }
   }

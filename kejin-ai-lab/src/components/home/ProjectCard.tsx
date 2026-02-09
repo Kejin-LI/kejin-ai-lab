@@ -28,19 +28,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onHove
       transition={{ delay: index * 0.1 }}
       viewport={{ once: true }}
       whileHover={{ y: -15, scale: 1.02, rotate: index % 2 === 0 ? 1 : -1 }}
+      whileTap={{ y: -5, scale: 0.98 }} // Add tap animation for mobile
       onMouseEnter={() => onHover(project.preview_image_url)}
       onMouseLeave={onLeave}
       className="group relative rounded-3xl overflow-hidden bg-white/80 border border-white/60 shadow-sm hover:shadow-2xl transition-all duration-300 backdrop-blur-sm"
     >
-      <Link to={`/project/${project.id}`} className="block h-full">
+      <Link to={`/project/${project.id}`} target="_blank" rel="noopener noreferrer" className="block h-full">
         <div className="aspect-video overflow-hidden relative">
           <img 
             src={project.preview_image_url} 
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 group-active:scale-105" // Add group-active for mobile touch
           />
-          <div className="absolute inset-0 bg-macaron-text/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
-            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg text-macaron-text transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 delay-100">
+          <div className="absolute inset-0 bg-macaron-text/10 opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
+            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg text-macaron-text transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 group-active:scale-100 group-active:opacity-100 transition-all duration-300 delay-100">
               <ArrowUpRight className="w-6 h-6 text-macaron-pinkHover" />
             </div>
           </div>
@@ -48,7 +49,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, index, onHove
         
         <div className="p-6">
           <h3 
-            className="text-xl font-bold mb-2 text-macaron-text group-hover:text-macaron-pinkHover transition-colors truncate"
+            className="text-xl font-bold mb-2 text-macaron-text group-hover:text-macaron-pinkHover group-active:text-macaron-pinkHover transition-colors truncate"
             title={project.title}
           >
             {project.title}

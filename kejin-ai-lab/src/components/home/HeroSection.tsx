@@ -95,6 +95,8 @@ export const HeroSection: React.FC = () => {
       {/* Floating Bubbles Background */}
       <FloatingBubbles />
 
+
+
       <div className="container mx-auto px-4 relative z-10 text-center">
         <motion.div
           style={{ y: y1 }}
@@ -139,12 +141,12 @@ export const HeroSection: React.FC = () => {
           <span className="animate-pulse inline-block w-1 h-5 bg-macaron-text ml-1 align-middle"></span>
         </p>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+          <div className="flex flex-row items-center justify-center gap-6">
             <motion.a 
               href="#projects"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-lg hover:shadow-xl hover:shadow-macaron-pinkHover/30 flex items-center gap-2"
+              className="px-6 sm:px-8 py-4 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-lg hover:shadow-xl hover:shadow-macaron-pinkHover/30 flex items-center gap-2 text-sm sm:text-base whitespace-nowrap"
             >
               {t('projects.viewProject')}
               <ArrowRight className="w-4 h-4" />
@@ -153,7 +155,7 @@ export const HeroSection: React.FC = () => {
               href="#contact"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 bg-white/50 text-macaron-text border border-white rounded-full font-medium transition-all shadow-sm hover:shadow-md backdrop-blur-sm hover:backdrop-blur-none hover:bg-transparent hover:text-macaron-pinkHover hover:border-macaron-pinkHover duration-300"
+              className="px-6 sm:px-8 py-4 bg-white/50 text-macaron-text border border-white rounded-full font-medium transition-all shadow-sm hover:shadow-md backdrop-blur-sm hover:backdrop-blur-none hover:bg-transparent hover:text-macaron-pinkHover hover:border-macaron-pinkHover duration-300 text-sm sm:text-base whitespace-nowrap"
             >
               {t('hero.contact')}
             </motion.a>

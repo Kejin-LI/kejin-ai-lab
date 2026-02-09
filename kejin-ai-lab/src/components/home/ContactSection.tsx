@@ -24,7 +24,7 @@ export const ContactSection: React.FC = () => {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-8 text-macaron-text">
-            {t('contact.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-macaron-pinkHover to-macaron-purple">{t('contact.titleHighlight')}</span>
+            {t('contact.title')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-macaron-pinkHover to-macaron-purple whitespace-nowrap">{t('contact.titleHighlight')}</span>
           </h2>
           <p className="text-macaron-textLight text-xl max-w-xl mx-auto mb-12">
             {t('contact.subtitle')}
