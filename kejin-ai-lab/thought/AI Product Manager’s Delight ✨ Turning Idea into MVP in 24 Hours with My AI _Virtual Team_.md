@@ -43,4 +43,3 @@ Based on feedback, I had Trae iterate quickly in the final 2 hours: adding custo
 Now my personal website has several such AI demos—they’re not just work achievement records, but also "hard currency" for communicating with peers. As AI product managers, we don’t need to master coding, but we must learn to "direct AI to work." Mastering these tools lets us achieve efficient "one-person team" execution. 🚀
 
 #AIProductManager #MVPLaunchGuide #AIToolPractices #PersonalWebsiteBuilding #PromptEngineering
-> （注：文档部分内容可能由 AI 生成）
