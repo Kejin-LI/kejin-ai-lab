@@ -1,7 +1,7 @@
 import React from 'react';
 import { Github, Twitter, Mail, MapPin, Link as LinkIcon, Hash, FolderOpen, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { MOCK_PROJECTS } from '../home/ProjectsGrid';
+import { PROJECTS_DATA } from '../home/ProjectsGrid';
 import { thoughts } from '../home/ThoughtsSection';
 import profileImg from '../../assets/profile.jpg';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -31,11 +31,11 @@ export const Sidebar: React.FC = () => {
         
         <div className="flex justify-around mb-6 text-center">
           <div>
-            <div className="font-bold text-lg text-macaron-text">{MOCK_PROJECTS.length}</div>
+            <div className="font-bold text-lg text-macaron-text">{PROJECTS_DATA.length}</div>
             <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.projects')}</div>
           </div>
           <div>
-            <div className="font-bold text-lg text-macaron-text">{thoughts.length}+</div>
+            <div className="font-bold text-lg text-macaron-text">{thoughts.length}</div>
             <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.insights')}</div>
           </div>
           <div>

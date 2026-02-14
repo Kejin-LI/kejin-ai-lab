@@ -32,7 +32,7 @@ export const translations = {
     contact: {
       title: "Let's Build Something",
       titleHighlight: "Amazing",
-      subtitle: "Whether you're seeking an AI Product Engineer capable of delivering end-to-end solutions, or want to discuss the future of AI, I'd love to hear from you."
+      subtitle: "I dream of becoming an AI Product Engineer capable of delivering end-to-end solutions. If you'd like to discuss the future of AI, I look forward to hearing from you."
     },
     comments: {
       title: "Comments",
@@ -104,7 +104,7 @@ export const translations = {
     contact: {
       title: "让我们创造",
       titleHighlight: "无限可能",
-      subtitle: "无论您是在寻找一位能独立闭环的 AI 产品工程师，还是想探讨 AI 的未来，期待您的来信。"
+      subtitle: "梦想成为一位能独立闭环的 AI 产品工程师，如果您想探讨 AI 的未来，期待您的来信。"
     },
     comments: {
       title: "留言板",

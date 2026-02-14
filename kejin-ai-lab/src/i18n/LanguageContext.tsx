@@ -11,10 +11,12 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  console.log('LanguageProvider: mounting');
   const [language, setLanguage] = useState<Language>('en');
 
   // Load from local storage
   useEffect(() => {
+    console.log('LanguageProvider: useEffect');
     const storedLang = localStorage.getItem('kejin_language') as Language;
     if (storedLang && (storedLang === 'en' || storedLang === 'zh')) {
       setLanguage(storedLang);

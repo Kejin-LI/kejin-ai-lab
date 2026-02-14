@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Header } from '../components/common/Header';
 import { Footer } from '../components/common/Footer';
 import { Sidebar } from '../components/common/Sidebar';
@@ -16,6 +17,23 @@ import { FloatingBubbles } from '../components/home/FloatingBubbles';
 
 const Home: React.FC = () => {
   const [currentBg, setCurrentBg] = useState<string>(DEFAULT_BG);
+  const location = useLocation();
+
+  useEffect(() => {
+    // Check if we need to scroll to a section
+    if (location.state && (location.state as any).scrollTo) {
+      const targetId = (location.state as any).scrollTo;
+      const element = document.getElementById(targetId);
+      if (element) {
+        // Add a small delay to ensure DOM is ready
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        // Clear state
+        window.history.replaceState({}, document.title);
+      }
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Github, Twitter, Menu, X, BrainCircuit, Sparkles, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext';
@@ -8,6 +8,8 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language, toggleLanguage, t } = useLanguage();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +18,19 @@ export const Header: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleNavigation = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      navigate('/', { state: { scrollTo: targetId } });
+    } else {
+      const element = document.getElementById(targetId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -43,15 +58,15 @@ export const Header: React.FC = () => {
           
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#projects" className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
+            <a href="#projects" onClick={(e) => handleNavigation(e, 'projects')} className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
               {t('nav.projects')}
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-macaron-pink transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
             </a>
-            <a href="#thoughts" className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
+            <a href="#thoughts" onClick={(e) => handleNavigation(e, 'thoughts')} className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
               {t('nav.thoughts')}
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-macaron-pink transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
             </a>
-            <a href="#contact" className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
+            <a href="#contact" onClick={(e) => handleNavigation(e, 'contact')} className="relative text-sm font-medium text-macaron-text hover:text-macaron-pink group py-1 transition-colors duration-200">
               {t('nav.contact')}
               <span className="absolute bottom-0 left-0 w-full h-[2px] bg-macaron-pink transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left rounded-full"></span>
             </a>
@@ -67,7 +82,7 @@ export const Header: React.FC = () => {
               <Globe className="w-4 h-4" />
               <span>{language === 'en' ? '中' : 'EN'}</span>
             </button>
-            <a href="#contact" className="px-5 py-2 bg-macaron-text text-white rounded-full text-sm font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30 transform hover:-translate-y-0.5">
+            <a href="#contact" onClick={(e) => handleNavigation(e, 'contact')} className="px-5 py-2 bg-macaron-text text-white rounded-full text-sm font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all duration-100 shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30 transform hover:-translate-y-0.5">
               {t('hero.contact')}
             </a>
           </div>
@@ -103,7 +118,7 @@ export const Header: React.FC = () => {
                 <a 
                   key={item.id}
                   href={`#${item.id}`}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => handleNavigation(e, item.id)}
                   className="text-2xl font-bold text-macaron-text py-4 hover:text-macaron-pink transition-colors"
                 >
                   {item.label}

@@ -9,7 +9,7 @@ export const ContactSection: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <section id="contact" className="p-12 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm relative overflow-hidden">
+    <section id="contact" className="p-12 bg-white/40 backdrop-blur-md rounded-3xl border border-white/50 shadow-sm relative overflow-hidden scroll-mt-24">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-32 h-32 bg-macaron-yellow/30 rounded-full blur-2xl" />
