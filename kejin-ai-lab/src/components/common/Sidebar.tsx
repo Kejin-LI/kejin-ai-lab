@@ -1,5 +1,5 @@
 import React from 'react';
-import { Github, Twitter, Mail, MapPin, Link as LinkIcon, Hash, FolderOpen, MessageCircle } from 'lucide-react';
+import { Github, Twitter, Mail, MapPin, Link as LinkIcon, Hash, FolderOpen, MessageCircle, Lightbulb, Coffee } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { PROJECTS_DATA } from '../home/ProjectsGrid';
 import { thoughts } from '../home/ThoughtsSection';
@@ -32,15 +32,24 @@ export const Sidebar: React.FC = () => {
         <div className="flex justify-around mb-6 text-center">
           <div>
             <div className="font-bold text-lg text-macaron-text">{PROJECTS_DATA.length}</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.projects')}</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider flex items-center justify-center gap-1">
+              <FolderOpen className="w-3 h-3" />
+              {t('sidebar.projects')}
+            </div>
           </div>
           <div>
             <div className="font-bold text-lg text-macaron-text">{thoughts.length}</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.insights')}</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider flex items-center justify-center gap-1">
+              <Lightbulb className="w-3 h-3" />
+              {t('sidebar.insights')}
+            </div>
           </div>
           <div>
             <div className="font-bold text-lg text-macaron-text">∞</div>
-            <div className="text-xs text-macaron-textLight uppercase tracking-wider">{t('sidebar.tea')}</div>
+            <div className="text-xs text-macaron-textLight uppercase tracking-wider flex items-center justify-center gap-1">
+              <Coffee className="w-3 h-3" />
+              {t('sidebar.tea')}
+            </div>
           </div>
         </div>
         

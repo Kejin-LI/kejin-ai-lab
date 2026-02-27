@@ -411,6 +411,129 @@ const ProjectDetailPage: React.FC = () => {
     };
   }
 
+  // Custom logic for Project details (id="3") - PM Chest
+  if (id === '3') {
+    activeContent = {
+      ...activeContent,
+      title: language === 'zh' 
+        ? 'PM救星：产品经理百宝箱' 
+        : 'PM Lifesaver: PM Chest',
+      tags: language === 'zh' 
+        ? ['需求分析', 'PRD生成', 'UI/UX'] 
+        : ['Requirement Analysis', 'PRD Gen', 'UI/UX'],
+      image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3d%20illustration%20of%20a%20magical%20treasure%20chest%20overflowing%20with%20glowing%20digital%20tools%20documents%20and%20ui%20prototypes%20macaron%20pastel%20colors%20blue%20pink%20yellow%20theme%20minimalist%20clean%20background%20high%20quality%20cute%20style&image_size=landscape_16_9",
+      body: (
+        <>
+          <h2 id="section-1" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '💢 PM日常：每天都在崩溃边缘反复横跳' : '💢 PM Daily Life: On the Verge of a Breakdown Every Day'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh' 
+              ? '谁懂啊家人们！产品经理的日常真的就是疯狂内耗+反复横跳的无限循环🤯 每天夹在业务、研发、设计三大阵营中间，既要满足业务方的各种需求设想，又要迁就研发的技术实现难度，还要配合设计的视觉审美，主打一个“两边都得哄，中间受委屈”，一天下来脑子嗡嗡的，精力直接被榨干！'
+              : 'Who gets it, guys! A product manager’s daily life is literally an endless cycle of constant overthinking and back-and-forth 🤯 Stuck between business, R&D, and design teams every day, we have to meet all the business team’s requirement ideas, accommodate the R&D team’s technical feasibility, and match the design team’s visual aesthetics. It’s all about "pleasing both sides and getting wronged in the middle" — by the end of the day, my brain is buzzing and my energy is completely drained!'}
+          </p>
+
+          <h2 id="section-2" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '🤯 PM四大核心痛点：每一个都能逼疯人' : '🤯 4 Core Pain Points of PMs: Each One Can Drive You Crazy'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '先说说最磨人的需求梳理，简直像拆盲盒，永远不知道下一个模糊需求会从哪冒出来！业务那边往往只甩一句“要个好用的”，既不说具体应用场景，也不明确核心功能，全靠你猜；而研发这边又极其严谨，追着你要明确的功能规格、逻辑边界，问“具体要啥功能”“触发条件是什么”，我夹在中间当双向翻译，一边帮业务提炼需求，一边跟研发解释逻辑，脑壳都要抠破，头发都掉了一把又一把～'
+              : 'First, let’s talk about the most frustrating part: sorting out requirements. It’s just like opening a blind box — you never know where the next vague requirement will come from! The business team usually just drops a sentence like "I want something useful" without specifying the actual use case or core functions, leaving you to guess. Meanwhile, the R&D team is super rigorous, pestering you for clear function specifications and logical boundaries: "What exactly do you want?" "What are the trigger conditions?" I’m stuck in the middle as a two-way translator, refining requirements with the business team and explaining logic to the R&D team. My head is about to explode, and I’m losing clumps of hair one after another～'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '紧接着是写PRD，更是渡劫级别的难度！逻辑要顺到没有一丝漏洞，格式要标准到符合团队所有规范，细节要全到覆盖每一个交互场景，熬了大半夜、改了好几版写出来的内容，分分钟被打回重写：“逻辑不够结构化”“交互细节没说清”“数据指标不明确”😭 每次返工都要重新梳理一遍思路，真的会谢，感觉自己不是产品经理，是反复修改文档的工具人！'
+              : 'Next up is writing PRDs — it’s like going through a trial! The logic has to be flawless, the format has to meet all team standards, and the details have to cover every interaction scenario. After staying up late and revising it several times, your work gets sent back in a heartbeat: "The logic isn’t structured enough" "The interaction details aren’t clear" "The data indicators are ambiguous" 😭 Every revision means re-organizing your thoughts all over again. I’m so done — sometimes I feel like I’m not a product manager, but a tool for revising documents repeatedly!'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '画原型也没好到哪去，直接逼出PM的隐藏技能——灵魂画手上线！对着原型工具一个个拖组件、调布局，拖到手指发酸、眼睛发花，改版本改到记不清哪版是最终版，有时候改着改着就忘了最初的设计思路。更崩溃的是，辛辛苦苦画完一整套原型，拿给研发看，对方却皱着眉说“看不懂这个交互逻辑”“这个布局实现不了”，瞬间感觉所有付出都打了水漂，白忙活一场～'
+              : 'Prototyping isn’t any better — it forces PMs to unlock a hidden skill: becoming a "soul artist"! Dragging components and adjusting layouts one by one in the prototyping tool until your fingers ache and your eyes go blurry. You revise versions so many times that you can’t remember which one is the final draft, and sometimes you even forget your original design ideas halfway. What’s more frustrating? After slaving away on a full set of prototypes, you show them to the R&D team, and they frown and say "I don’t understand this interaction logic" or "This layout isn’t feasible". Suddenly, all your hard work feels like it’s gone down the drain — total waste of time～'}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '最绝的还是需求评审环节，堪称PM的大型“社死现场”！演示交互全靠嘴说+手比划，一边指着原型图，一边反复解释：“点这里弹这个框，弹框里要显示这几个按钮，点击按钮后跳转至详情页”“滑一下跳那个页，跳转后要保留上一页的筛选条件”，我说得口干舌燥、唾沫横飞，听的人却一脸懵圈，频频点头却没真正get到交互逻辑，评审效率低到离谱，还得反复返工调整～'
+              : 'The worst part is the requirement review meeting, which is basically a PM’s public "social death" moment! Demonstrating interactions relies entirely on talking and gesturing. You point at the prototype and explain repeatedly: "Click here to pop up this box, which should show these buttons — clicking a button will jump to the details page" "Swipe to switch to that page, and it should keep the filter conditions from the previous page". You talk until your mouth is dry and you’re spitting, but the people listening just look confused, nodding frequently but not really getting the interaction logic. The review efficiency is ridiculously low, and you end up revising and adjusting repeatedly～'}
+          </p>
+
+          <h2 id="section-3" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '✨ 我设计的PM神器！推荐给所有同行' : '✨ My Designed PM Tool! Recommended to All Fellow PMs'}
+          </h2>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '作为每天被这些痛点折磨的PM，我干脆自己设计了一个Skill——PM Chest（产品经理百宝箱）✨ 专门解决咱们PM的核心烦恼，现在推荐给所有同行，再也不用被需求、PRD、原型这些事情逼疯，终于能从无效内耗里解脱出来了！'
+              : 'As a PM who’s tortured by these pain points every day, I simply designed a Skill myself — PM Chest (Product Manager’s Treasure Chest) ✨ It’s specifically made to solve our core PM troubles. Now I’m recommending it to all fellow PMs — no more stress from requirements, PRDs, or prototypes. Finally, we can break free from useless overthinking!'}
+          </p>
+
+          <h2 id="section-4" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '✅ 百宝箱核心优势：一步步帮你躺平' : '✅ Core Advantages of the Treasure Chest: Help You Work Effortlessly Step by Step'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '因为自己淋过雨，所以想给同行撑把伞～ 这个Skill完全懂PM的痛！不用自己瞎琢磨、瞎折腾，一步步帮你搞定从需求梳理到UI原型的所有麻烦，全程都有清晰的进度条提示，告诉你已完成、正在做和即将做的步骤，让你不慌不忙推进，再也不用手忙脚乱～ 大家可以点击上方的“在线演示”按钮，直接体验使用！'
+              : 'Since I’ve been through the struggle, I want to help my fellow PMs out～ This Skill truly understands PMs’ pain! No need to rack your brain or mess around — it helps you tackle everything from requirement sorting to UI prototyping step by step. There’s a clear progress bar at every stage, telling you which steps are done, which one you’re currently on, and which ones are pending. You can move forward calmly, no more rushing around～ Everyone can click the "Online Demo" button above to try it directly!'}
+          </p>
+          <ul className="list-none space-y-4 text-macaron-textLight mb-8">
+            <li>
+              {language === 'zh'
+                ? '✅ <strong>需求澄清：</strong>不管你说的需求多模糊、多零散，它都能帮你一点点抠细节、理逻辑，而且特别贴心的是，一次只问一个关键问题，不会一次性抛一堆问题让你头大，还能直接选“直接帮我决定”，懒人直接狂喜，再也不用费脑纠结细节！'
+                : '✅ <strong>Requirement Clarification:</strong> No matter how vague or scattered your requirements are, it helps you sort out the details and logic bit by bit. What’s super thoughtful? It only asks one key question at a time — no bombarding you with multiple questions that make your head spin. You can even choose "Decide for me directly" — total win for lazy people! No more wasting brainpower on trivial details!'}
+            </li>
+            <li>
+              {language === 'zh'
+                ? '✅ <strong>结构化PRD：</strong>不用再自己搭建模板、梳理逻辑，它会按行业标准模板一键生成完整PRD，包含业务流程、交互表格等所有核心内容，细节拉满，你只需要审阅确认，确认无误后直接给可复制的markdown文件，复制粘贴就能用，省去大量排版时间～'
+                : '✅ <strong>Structured PRDs:</strong> No need to build templates or organize logic yourself. It generates a complete PRD with industry-standard templates in one click, including all core content like business processes and interaction tables. The details are top-notch — you just need to review and confirm. Once confirmed, it directly provides a copyable Markdown file — copy and paste, and you’re good to go. Save tons of formatting time～'}
+            </li>
+            <li>
+              {language === 'zh'
+                ? '✅ <strong>可交互UI：</strong>不用再求着设计出图，自己选好喜欢的风格（极简风、商务风、科技风全都有，满足不同产品调性），它会直接出3种不同的视觉方案预览图让你挑，选好后还能调整细节，最后生成能直接演示的可交互原型，颜值和实用性双在线！'
+                : '✅ <strong>Interactive UI:</strong> No need to beg designers for mockups. Choose your favorite style (Minimalist, Business, Tech — all available to match different product tones), and it will generate 3 different visual previews for you to choose from. After selecting, you can adjust the details, and finally generate a fully interactive prototype that you can demonstrate directly. Both beauty and practicality are on point!'}
+            </li>
+          </ul>
+
+          <h2 id="section-5" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '💥 评审神器：再也不用嘴说手比划' : '💥 Review Game-Changer: No More Talking & Gesturing'}
+          </h2>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '需求评审直接甩原型链接就够了！再也不用嘴说手比划，研发打开链接就能直观看到所有交互逻辑、页面布局，不用再反复解释，研发看了都夸清晰，评审效率直接翻倍，再也不用因为沟通不畅耽误进度～'
+              : 'For requirement reviews, just share the prototype link! No more talking and gesturing — R&D can open the link and directly see all interaction logic and page layouts. No more repeated explanations — R&D will praise how clear it is, and review efficiency will double. No more delays due to poor communication～'}
+          </p>
+
+          <h2 id="section-6" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '💅 PM必冲！告别无效内耗' : '💅 A Must-Try for PMs! Say Goodbye to Useless Overthinking'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? 'PM们真的谁用谁香！不管是刚入门的新手PM，还是每天被需求缠身的资深PM，我设计的这个百宝箱都能帮你告别无效内耗，不用再被琐事消耗精力，把更多时间花在真正做产品、打磨核心体验上，摸鱼和高效工作两不耽误～ 赶紧点击上方“在线演示”试试，不好用你找我💅'
+              : 'Fellow PMs, this is a total game-changer! Whether you’re a new PM just starting out or a senior PM swamped with requirements every day, the treasure chest I designed can help you say goodbye to useless overthinking. Stop wasting energy on trivial matters — spend more time on actually building products and polishing core experiences. Balance work and leisure effortlessly～ Hurry up and click the "Online Demo" button above to try it. If it’s not useful, you can come find me 💅'}
+          </p>
+        </>
+      ),
+      sections: language === 'zh' ? [
+        { id: 'section-1', title: 'PM日常崩溃' },
+        { id: 'section-2', title: '四大核心痛点' },
+        { id: 'section-3', title: 'PM神器推荐' },
+        { id: 'section-4', title: '百宝箱优势' },
+        { id: 'section-5', title: '评审神器' },
+        { id: 'section-6', title: '告别内耗' },
+      ] : [
+        { id: 'section-1', title: 'PM Daily Life' },
+        { id: 'section-2', title: '4 Core Pain Points' },
+        { id: 'section-3', title: 'PM Tool' },
+        { id: 'section-4', title: 'Core Advantages' },
+        { id: 'section-5', title: 'Review Game-Changer' },
+        { id: 'section-6', title: 'Must-Try for PMs' },
+      ],
+      buttons: { 
+        demo: language === 'zh' ? "在线演示" : "Live Demo", 
+        code: language === 'zh' ? "查看代码" : "View Code" 
+      },
+      disclaimer: undefined
+    };
+  }
+
   // Custom logic for Thought details (id="thought-2")
   if (id === 'thought-2') {
     activeContent = {
@@ -677,7 +800,7 @@ const ProjectDetailPage: React.FC = () => {
               {currentContent.buttons.demo && (
                 <div className="flex flex-wrap gap-4 mb-8">
                   <a 
-                    href={id === '2' ? "https://kejin-li.github.io/museum-guide/" : "https://kejin-li.github.io/talent-platform/"}
+                    href={id === '2' ? "https://kejin-li.github.io/museum-guide/" : (id === '3' ? "https://coze.cn/store/agent/7359972322363719719" : "https://kejin-li.github.io/talent-platform/")}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-6 py-3 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30"
@@ -685,7 +808,12 @@ const ProjectDetailPage: React.FC = () => {
                     <ExternalLink className="w-4 h-4" />
                     {currentContent.buttons.demo}
                   </a>
-                  <a href="#" className="flex items-center gap-2 px-6 py-3 bg-white text-macaron-text border border-macaron-text/10 rounded-full font-medium hover:bg-macaron-blue/10 hover:text-macaron-blue hover:border-macaron-blue transition-all shadow-sm">
+                  <a 
+                    href={id === '3' ? "https://github.com/Kejin-LI/pm-chest/" : "#"} 
+                    target={id === '3' ? "_blank" : "_self"}
+                    rel={id === '3' ? "noopener noreferrer" : ""}
+                    className="flex items-center gap-2 px-6 py-3 bg-white text-macaron-text border border-macaron-text/10 rounded-full font-medium hover:bg-macaron-blue/10 hover:text-macaron-blue hover:border-macaron-blue transition-all shadow-sm"
+                  >
                     <Github className="w-4 h-4" />
                     {currentContent.buttons.code}
                   </a>
