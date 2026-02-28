@@ -476,19 +476,25 @@ const ProjectDetailPage: React.FC = () => {
           </p>
           <ul className="list-none space-y-4 text-macaron-textLight mb-8">
             <li>
-              {language === 'zh'
-                ? '✅ <strong>需求澄清：</strong>不管你说的需求多模糊、多零散，它都能帮你一点点抠细节、理逻辑，而且特别贴心的是，一次只问一个关键问题，不会一次性抛一堆问题让你头大，还能直接选“直接帮我决定”，懒人直接狂喜，再也不用费脑纠结细节！'
-                : '✅ <strong>Requirement Clarification:</strong> No matter how vague or scattered your requirements are, it helps you sort out the details and logic bit by bit. What’s super thoughtful? It only asks one key question at a time — no bombarding you with multiple questions that make your head spin. You can even choose "Decide for me directly" — total win for lazy people! No more wasting brainpower on trivial details!'}
+              {language === 'zh' ? (
+                <>✅ <strong>需求澄清：</strong>不管你说的需求多模糊、多零散，它都能帮你一点点抠细节、理逻辑，而且特别贴心的是，一次只问一个关键问题，不会一次性抛一堆问题让你头大，还能直接选“直接帮我决定”，懒人直接狂喜，再也不用费脑纠结细节！</>
+              ) : (
+                <>✅ <strong>Requirement Clarification:</strong> No matter how vague or scattered your requirements are, it helps you sort out the details and logic bit by bit. What’s super thoughtful? It only asks one key question at a time — no bombarding you with multiple questions that make your head spin. You can even choose "Decide for me directly" — total win for lazy people! No more wasting brainpower on trivial details!</>
+              )}
             </li>
             <li>
-              {language === 'zh'
-                ? '✅ <strong>结构化PRD：</strong>不用再自己搭建模板、梳理逻辑，它会按行业标准模板一键生成完整PRD，包含业务流程、交互表格等所有核心内容，细节拉满，你只需要审阅确认，确认无误后直接给可复制的markdown文件，复制粘贴就能用，省去大量排版时间～'
-                : '✅ <strong>Structured PRDs:</strong> No need to build templates or organize logic yourself. It generates a complete PRD with industry-standard templates in one click, including all core content like business processes and interaction tables. The details are top-notch — you just need to review and confirm. Once confirmed, it directly provides a copyable Markdown file — copy and paste, and you’re good to go. Save tons of formatting time～'}
+              {language === 'zh' ? (
+                <>✅ <strong>结构化PRD：</strong>不用再自己搭建模板、梳理逻辑，它会按行业标准模板一键生成完整PRD，包含业务流程、交互表格等所有核心内容，细节拉满，你只需要审阅确认，确认无误后直接给可复制的markdown文件，复制粘贴就能用，省去大量排版时间～</>
+              ) : (
+                <>✅ <strong>Structured PRDs:</strong> No need to build templates or organize logic yourself. It generates a complete PRD with industry-standard templates in one click, including all core content like business processes and interaction tables. The details are top-notch — you just need to review and confirm. Once confirmed, it directly provides a copyable Markdown file — copy and paste, and you’re good to go. Save tons of formatting time～</>
+              )}
             </li>
             <li>
-              {language === 'zh'
-                ? '✅ <strong>可交互UI：</strong>不用再求着设计出图，自己选好喜欢的风格（极简风、商务风、科技风全都有，满足不同产品调性），它会直接出3种不同的视觉方案预览图让你挑，选好后还能调整细节，最后生成能直接演示的可交互原型，颜值和实用性双在线！'
-                : '✅ <strong>Interactive UI:</strong> No need to beg designers for mockups. Choose your favorite style (Minimalist, Business, Tech — all available to match different product tones), and it will generate 3 different visual previews for you to choose from. After selecting, you can adjust the details, and finally generate a fully interactive prototype that you can demonstrate directly. Both beauty and practicality are on point!'}
+              {language === 'zh' ? (
+                <>✅ <strong>可交互UI：</strong>不用再求着设计出图，自己选好喜欢的风格（极简风、商务风、科技风全都有，满足不同产品调性），它会直接出3种不同的视觉方案预览图让你挑，选好后还能调整细节，最后生成能直接演示的可交互原型，颜值和实用性双在线！</>
+              ) : (
+                <>✅ <strong>Interactive UI:</strong> No need to beg designers for mockups. Choose your favorite style (Minimalist, Business, Tech — all available to match different product tones), and it will generate 3 different visual previews for you to choose from. After selecting, you can adjust the details, and finally generate a fully interactive prototype that you can demonstrate directly. Both beauty and practicality are on point!</>
+              )}
             </li>
           </ul>
 
@@ -799,15 +805,17 @@ const ProjectDetailPage: React.FC = () => {
 
               {currentContent.buttons.demo && (
                 <div className="flex flex-wrap gap-4 mb-8">
-                  <a 
-                    href={id === '2' ? "https://kejin-li.github.io/museum-guide/" : (id === '3' ? "https://coze.cn/store/agent/7359972322363719719" : "https://kejin-li.github.io/talent-platform/")}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-6 py-3 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    {currentContent.buttons.demo}
-                  </a>
+                  {id !== '3' && (
+                    <a 
+                      href={id === '2' ? "https://kejin-li.github.io/museum-guide/" : "https://kejin-li.github.io/talent-platform/"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-6 py-3 bg-macaron-text text-white rounded-full font-medium hover:bg-gradient-to-r hover:from-macaron-pinkHover hover:to-macaron-purple transition-all shadow-md hover:shadow-lg hover:shadow-macaron-pinkHover/30"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      {currentContent.buttons.demo}
+                    </a>
+                  )}
                   <a 
                     href={id === '3' ? "https://github.com/Kejin-LI/pm-chest/" : "#"} 
                     target={id === '3' ? "_blank" : "_self"}
