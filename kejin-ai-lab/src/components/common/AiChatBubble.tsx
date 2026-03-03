@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 // to avoid exposing your API Key to the client. For a personal demo/portfolio, this is acceptable risk if you rotate keys.
 const DEEPSEEK_API_KEY = 'sk-ec74bd124745479bb8700a5e5d424c8f'; 
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
-const DAILY_LIMIT = 20;
+const DAILY_LIMIT = 5;
 
 const SYSTEM_PROMPT = `
 # Role
@@ -241,7 +241,7 @@ export const AiChatBubble: React.FC = () => {
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "😅 哎呀，今天聊得有点多啦！为了防止我的 CPU 烧坏（其实是省点 Token），我们明天再继续聊吧！感谢你的热情～👋",
+        content: "😅 哎哟，今天问太多啦，明天再来吧！李珂瑾的 tokens 快要被你薅完啦（钱包在滴血🩸）～",
       }]);
       return;
     }
