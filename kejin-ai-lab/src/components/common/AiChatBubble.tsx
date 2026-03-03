@@ -455,6 +455,76 @@ export const AiChatBubble: React.FC = () => {
         { role: 'user', content: userMessage.content }
       ];
 
+      // --- Try Secure Proxy First ---
+      // If we are on Vercel/Netlify, this should work and protect the key.
+      // If we are on GitHub Pages (static), this will 404 and we'll fallback.
+      try {
+        const proxyResponse = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: "deepseek-chat",
+            messages: apiMessages,
+          })
+        });
+
+        if (proxyResponse.ok && proxyResponse.body) {
+          // If proxy works, use its stream
+          const reader = proxyResponse.body.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+          let fullContent = '';
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            // DeepSeek stream format from proxy might differ slightly or be raw chunks
+            // But since we proxy it raw, we treat it as SSE if headers match, or raw text if not.
+            // Our proxy code pipes raw chunks. DeepSeek sends SSE format "data: {...}"
+            
+            buffer += chunk;
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+              if (line.trim() === '') continue;
+              if (line.trim() === 'data: [DONE]') continue;
+              
+              if (line.startsWith('data:')) {
+                const dataStr = line.slice(5).trim();
+                try {
+                  const data = JSON.parse(dataStr);
+                  const content = data.choices[0]?.delta?.content || '';
+                  
+                  if (content) {
+                    fullContent += content;
+                    setMessages(prev => prev.map(msg => 
+                      msg.id === assistantMessageId 
+                        ? { ...msg, content: fullContent } 
+                        : msg
+                    ));
+                  }
+                } catch (e) {
+                  // ignore parse errors
+                }
+              }
+            }
+          }
+          setIsLoading(false);
+          setMessages(prev => prev.map(msg => 
+            msg.id === assistantMessageId 
+              ? { ...msg, isStreaming: false } 
+              : msg
+          ));
+          return; // Success! Exit early.
+        }
+      } catch (proxyError) {
+        console.warn('Proxy failed, falling back to client-side key (less secure)');
+      }
+
+      // --- Client-Side Fallback (Original Logic) ---
       // Decrypt the key at runtime
       const apiKey = decryptKey(DEEPSEEK_API_KEY_ENCRYPTED);
       if (!apiKey) throw new Error('Failed to decrypt API key');
