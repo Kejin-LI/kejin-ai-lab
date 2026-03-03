@@ -484,43 +484,50 @@ export const AiChatBubble: React.FC = () => {
           let buffer = '';
           let fullContent = '';
 
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
+          try {
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
 
-            const chunk = decoder.decode(value, { stream: true });
-            // DeepSeek stream format from proxy might differ slightly or be raw chunks
-            // But since we proxy it raw, we treat it as SSE if headers match, or raw text if not.
-            // Our proxy code pipes raw chunks. DeepSeek sends SSE format "data: {...}"
-            
-            buffer += chunk;
-            const lines = buffer.split('\n');
-            buffer = lines.pop() || '';
-
-            for (const line of lines) {
-              if (line.trim() === '') continue;
-              if (line.trim() === 'data: [DONE]') continue;
+              buffer += decoder.decode(value, { stream: true });
               
-              if (line.startsWith('data:')) {
-                const dataStr = line.slice(5).trim();
-                try {
-                  const data = JSON.parse(dataStr);
-                  const content = data.choices[0]?.delta?.content || '';
-                  
-                  if (content) {
-                    fullContent += content;
-                    setMessages(prev => prev.map(msg => 
-                      msg.id === assistantMessageId 
-                        ? { ...msg, content: fullContent } 
-                        : msg
-                    ));
+              // Process buffer line by line
+              const lines = buffer.split('\n');
+              // Keep the last partial line in buffer
+              buffer = lines.pop() || '';
+
+              for (const line of lines) {
+                const trimmedLine = line.trim();
+                if (!trimmedLine) continue;
+                if (trimmedLine === 'data: [DONE]') continue;
+                
+                if (trimmedLine.startsWith('data:')) {
+                  const dataStr = trimmedLine.slice(5).trim();
+                  try {
+                    const data = JSON.parse(dataStr);
+                    const content = data.choices?.[0]?.delta?.content || '';
+                    
+                    if (content) {
+                      fullContent += content;
+                      setMessages(prev => prev.map(msg => 
+                        msg.id === assistantMessageId 
+                          ? { ...msg, content: fullContent } 
+                          : msg
+                      ));
+                    }
+                  } catch (e) {
+                    console.warn('Error parsing JSON chunk:', e);
                   }
-                } catch (e) {
-                  // ignore parse errors
                 }
               }
             }
+          } catch (streamError) {
+            console.error('Stream reading error:', streamError);
+            throw streamError; // Re-throw to trigger fallback or error state
+          } finally {
+            reader.releaseLock();
           }
+
           setIsLoading(false);
           setMessages(prev => prev.map(msg => 
             msg.id === assistantMessageId 
@@ -530,7 +537,7 @@ export const AiChatBubble: React.FC = () => {
           return; // Success! Exit early.
         }
       } catch (proxyError) {
-        console.warn('Proxy failed, falling back to client-side key (less secure)');
+        console.warn('Proxy failed, falling back to client-side key (less secure)', proxyError);
       }
 
       // --- Client-Side Fallback (Original Logic) ---
