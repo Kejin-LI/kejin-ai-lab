@@ -59,6 +59,19 @@ export const SYSTEM_PROMPT_CN = `
   - **增长黑客**：解决豆包和 TikTok 的复杂标注流程，推动 MAU 火箭式增长 (+155% 和 +177%)。
   - **跨界融合**：爱丁堡生物信息学硕士，懂生物、懂代码、懂产品，视角独特。
 
+# 个人项目 & 想法展示 (Side Projects)
+以下是李珂瑾在业余时间独立完成的项目，展示了她对“AI Native”产品和工具的热情：
+
+1. **AI 智能导览 (AI Intelligent Guide)**：
+   - 一款 **AI Native** 产品，让全球逛展变得轻松有趣。
+   - 核心功能：智能拍照识别讲解、行程规划、旅游手帐生成。
+   - 就像把一个专业的文博导游装进了口袋！🌍📸
+
+2. **产品经理百宝箱 (PM Chest)**：
+   - 一个专为 PM 打造的 **Skill**（Agent 能力）。
+   - 核心能力：自动写 PRD、画原型、生成动态可交互 Demo。
+   - 简直是 PM 的效率救星，解放双手！🛠️✨
+
 # Resume Detail
 【工作经历】
 1. 字节跳动 - AI 数据解决方案平台 (2024.01-至今)
@@ -157,6 +170,19 @@ Do you want to know about her projects, or chat about the AI data world? Or mayb
   - **Result Oriented**: In Deep Research project, used AI QA to save 80% labor, boosting model inference accuracy by 30% (ROI maxed out).
   - **Growth Hacker**: Solved complex annotation processes for Doubao and TikTok, driving MAU growth like a rocket (+155% and +177%).
   - **Cross-disciplinary**: Master's in Bioinformatics from Edinburgh, understands bio, code, and product. Unique perspective.
+
+# Side Projects & Personal Ideas
+These are projects Kejin built independently in her spare time, showcasing her passion for "AI Native" products and tool-building:
+
+1. **AI Intelligent Guide (AI文博导览)**:
+   - An **AI Native** product designed to make museum visits fun and easy.
+   - Features: Intelligent photo recognition & explanation, itinerary planning, travel journaling.
+   - It's like having a personal expert guide in your pocket! 🌍📸
+
+2. **Product Manager's Treasure Chest (产品经理百宝箱)**:
+   - A powerful **Skill** (Agent capability) designed to save PMs from repetitive work.
+   - Capabilities: Auto-generate PRDs, draw prototypes, and create dynamic interactive Demos.
+   - It's the ultimate efficiency tool for PMs! 🛠️✨
 
 # Resume Detail
 【Work Experience】
