@@ -6,7 +6,11 @@ import { useLanguage } from '../../i18n/LanguageContext';
 import { decryptKey } from '../../utils/security';
 
 // --- Configuration ---
-// TODO: Replace with your actual DeepSeek API Key (Obfuscated)
+// TODO: Replace with your Supabase Project URL if using Supabase Edge Functions
+// Example: 'https://xlaxuiz...supabase.co/functions/v1/chat'
+const SUPABASE_FUNCTION_URL = ''; 
+
+// TODO: Replace with your actual DeepSeek API Key (Obfuscated) - FALLBACK ONLY
 // WARNING: In a real production app, you should proxy this request through your own backend 
 // to avoid exposing your API Key to the client. For a personal demo/portfolio, this is acceptable risk if you rotate keys.
 const DEEPSEEK_API_KEY_ENCRYPTED = '=YGOjRjM0QWNlVTYwAzN4ImY5cDN1QzN0ITMkJGN3MWZts2c'; 
@@ -455,11 +459,16 @@ export const AiChatBubble: React.FC = () => {
         { role: 'user', content: userMessage.content }
       ];
 
-      // --- Try Secure Proxy First ---
-      // If we are on Vercel/Netlify, this should work and protect the key.
-      // If we are on GitHub Pages (static), this will 404 and we'll fallback.
+      // --- Try Secure Proxy First (Supabase or Vercel) ---
       try {
-        const proxyResponse = await fetch('/api/chat', {
+        let proxyUrl = '/api/chat'; // Default to Vercel/Local proxy
+        
+        // If Supabase URL is configured, use it
+        if (SUPABASE_FUNCTION_URL) {
+          proxyUrl = SUPABASE_FUNCTION_URL;
+        }
+
+        const proxyResponse = await fetch(proxyUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
