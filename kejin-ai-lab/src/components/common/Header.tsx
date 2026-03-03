@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Github, Twitter, Menu, X, BrainCircuit, Sparkles, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { AiChatBubble } from './AiChatBubble';
 
 export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,9 +108,9 @@ export const Header: React.FC = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-macaron-cream/95 backdrop-blur-lg pt-24 px-6 md:hidden"
+            className="fixed inset-0 z-40 bg-macaron-cream/95 backdrop-blur-lg pt-24 px-6 md:hidden flex flex-col items-center"
           >
-            <nav className="flex flex-col gap-4 text-center">
+            <nav className="flex flex-col gap-6 w-full text-center">
               {[
                 { id: 'projects', label: t('nav.projects') },
                 { id: 'thoughts', label: t('nav.thoughts') },
@@ -119,7 +120,7 @@ export const Header: React.FC = () => {
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={(e) => handleNavigation(e, item.id)}
-                  className="text-2xl font-bold text-macaron-text py-4 hover:text-macaron-pink transition-colors"
+                  className="text-2xl font-bold text-macaron-text py-2 hover:text-macaron-pink transition-colors"
                 >
                   {item.label}
                 </a>
@@ -128,6 +129,9 @@ export const Header: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      
+      {/* AI Chat Bubble - Global */}
+      <AiChatBubble />
     </>
   );
 };

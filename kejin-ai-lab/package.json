@@ -14,6 +14,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@coze/web-sdk": "^0.0.1-alpha.b6cd1a",
     "@headlessui/react": "^2.0.0",
     "@supabase/supabase-js": "^2.39.0",
     "clsx": "^2.1.1",
@@ -21,6 +22,7 @@
     "lucide-react": "^0.511.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-markdown": "^10.1.0",
     "react-router-dom": "^7.3.0",
     "tailwind-merge": "^3.0.2",
     "zustand": "^5.0.3"
