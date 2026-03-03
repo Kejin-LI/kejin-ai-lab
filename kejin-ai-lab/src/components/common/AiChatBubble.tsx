@@ -236,6 +236,13 @@ export const AiChatBubble: React.FC = () => {
         proxyUrl = SUPABASE_FUNCTION_URL;
       }
 
+      console.log('Sending request to:', proxyUrl); // DEBUG: Log URL
+      console.log('Request payload:', {
+        model: "deepseek-chat",
+        messages: apiMessages,
+        language: language || 'zh'
+      }); // DEBUG: Log payload
+
       const response = await fetch(proxyUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -247,8 +254,11 @@ export const AiChatBubble: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
+        const errorText = await response.text(); // Read error text from response
+        console.error('API Error Response:', response.status, errorText); // DEBUG: Log error details
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
       }
+
       
       // Increment daily usage only on success
       incrementDailyCount();
