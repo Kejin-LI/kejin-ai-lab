@@ -8,7 +8,7 @@ import { decryptKey } from '../../utils/security';
 // --- Configuration ---
 // TODO: Replace with your Supabase Project URL if using Supabase Edge Functions
 // Example: 'https://xlaxuiz...supabase.co/functions/v1/chat'
-const SUPABASE_FUNCTION_URL = ''; 
+const SUPABASE_FUNCTION_URL = 'https://hazifuwkvyqhcwlztzce.supabase.co/functions/v1/chat'; 
 
 // TODO: Replace with your actual DeepSeek API Key (Obfuscated) - FALLBACK ONLY
 // WARNING: In a real production app, you should proxy this request through your own backend 
