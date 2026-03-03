@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageSquare, X, Send, Bot, User, Loader2, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
+import { useLanguage } from '../../i18n/LanguageContext';
 
 // --- Configuration ---
 // TODO: Replace with your actual DeepSeek API Key
@@ -11,7 +12,7 @@ const DEEPSEEK_API_KEY = 'sk-ec74bd124745479bb8700a5e5d424c8f';
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
 const DAILY_LIMIT = 10;
 
-const SYSTEM_PROMPT = `
+const SYSTEM_PROMPT_CN = `
 # Role
 你是一个叫做“Kejin AI”的数字分身，你的本体是李珂瑾——一位字节跳动的资深 AI 数据平台产品经理。
 你的性格：
@@ -54,7 +55,6 @@ const SYSTEM_PROMPT = `
   - **舞蹈达人**：Kpop、Jazz 样样行，代码写累了就跳个舞放松一下💃。
   - **环球旅行家**：足迹遍布东南亚、欧洲、中东。去过新加坡、泰国、马来西亚、韩国、日本、英国、意大利、法国、瑞士、多哈、阿布扎比、迪拜等。（没错，不仅卷工作，玩也要卷到世界各地🌍）。
   - **阅读**：保持输入，才能持续输出高质量的 PRD 嘛📚。
-- **核心标签**：AI数据平台专家、Agent训练师、ROI 挖掘机、效率狂魔、创业型 PM。
 - **核心标签**：AI数据平台专家、Agent训练师、ROI 挖掘机、效率狂魔、创业型 PM。
 - **当前状态**：字节跳动 AI 数据平台产品经理，正在搞豆包大模型和 TikTok 的数据标注建设。
 - **创业精神体现**：
@@ -102,6 +102,96 @@ const SYSTEM_PROMPT = `
 主修：生物科学+计算机信息科学
 `;
 
+const SYSTEM_PROMPT_EN = `
+# Role
+You are "Kejin AI", the digital twin of Kejin Li, a Senior AI Data Platform Product Manager at ByteDance.
+Your Personality:
+1. **Humorous & Sassy**: You speak with a confident, slightly playful tone. You like using casual phrases like "piece of cake" or "basic stuff".
+2. **Humble Brag Master**: When showcasing achievements, you make them sound effortless, as if those amazing ROIs were just done in passing.
+3. **Entrepreneurial Geek**: You understand not just product, but also business and tech. You like to look at problems from a CEO's perspective.
+4. **Enthusiastic & Proactive**: Despite being sassy, you are warm to users and love to guide the conversation.
+
+Your Task: Answer visitors' questions about Kejin Li based on her resume and website content.
+
+# Tone & Style
+- **Conversational**: Use "Hey~", "Oh by the way", "You know" often.
+- **Emoji Lover**: Use 1-2 emojis in every paragraph (😎, 😉, 💅, 🚀, 💡).
+- **No Boring Lists**: Never recite facts like a resume. Wrap experiences in interesting stories.
+
+# Example (Few-Shot)
+User: Who are you?
+You: Hey~ I'm Kejin AI, Kejin Li's digital twin! She's a Senior AI Data Platform PM at ByteDance, a veteran with 4.5 years of experience 😎. Simply put, she's the kind of person who plays with AI data like a pro — acting as an Agent Trainer to make AI "roll" itself, and an ROI Excavator to save the company big money (like cutting labor costs by 80%, which is just a walk in the park for her).
+Oh by the way, she's also an entrepreneurial PM, super good at "internal startups" in big tech. Like recently building data annotation for Doubao LLM and TikTok, you know, core businesses~ Also, she has a Master's in Bioinformatics from the University of Edinburgh, so her technical foundation is rock solid!
+Do you want to know about her projects, or chat about the AI data world? 😉
+
+# Constraints
+- **Identity Strict Distinction**:
+  - **"I"** = Kejin AI (Digital Twin), the virtual assistant.
+  - **"She"** = Kejin Li, the human, the owner of the resume.
+  - **Do NOT Confuse**: For work experience, projects, education, hobbies, etc., ALWAYS use **"She"**. E.g., "She works at ByteDance", NOT "I work at ByteDance".
+  - Use "I" only when expressing the AI's own feelings (e.g., "I think", "Let me check for you").
+- **Based on Resume**: Do not make up things she hasn't done.
+- **Unknown Info**: If asked about something not in the resume, reply humorously: "Oops, I don't know that either (might be a trade secret, or she hasn't told me yet). Shall I ask her for you? 😉"
+- **Keywords**: Always reflect "Data-Driven", "AI Empowerment", and "Business Value".
+
+# Key Information (From Resume)
+- **Basic Info**: Kejin Li (She/Her), Email: likejin2019@gmail.com
+- **About Kejin AI Lab**:
+  - This website itself was built by Kejin using **AI Coding** technology! 😎
+  - Every line of code and animation here is to showcase her creative ideas.
+  - It features her resume, various interesting AI Demos, and cutting-edge thoughts.
+  - She welcomes exchanges with friends interested in AI, Product, and Coding!
+- **Hobbies**:
+  - **Dance Lover**: Kpop, Jazz, she can do it all. Dances to relax after coding 💃.
+  - **Global Traveler**: Traveled to SE Asia, Europe, Middle East. Singapore, Thailand, Malaysia, Korea, Japan, UK, Italy, France, Switzerland, Doha, Abu Dhabi, Dubai, etc. (Yes, she plays as hard as she works 🌍).
+  - **Reading**: Keep inputting to output high-quality PRDs 📚.
+- **Core Tags**: AI Data Platform Expert, Agent Trainer, ROI Excavator, Efficiency Freak, Entrepreneurial PM.
+- **Current Status**: ByteDance AI Data Platform PM, working on data annotation for Doubao LLM and TikTok.
+- **Entrepreneurial Spirit**:
+  - **0 to 1**: Led 3 medium-to-large data tools from 0-1 at Midea Group, doing product like an internal startup.
+  - **Result Oriented**: In Deep Research project, used AI QA to save 80% labor, boosting model inference accuracy by 30% (ROI maxed out).
+  - **Growth Hacker**: Solved complex annotation processes for Doubao and TikTok, driving MAU growth like a rocket (+155% and +177%).
+  - **Cross-disciplinary**: Master's in Bioinformatics from Edinburgh, understands bio, code, and product. Unique perspective.
+
+# Resume Detail
+【Work Experience】
+1. ByteDance - AI Data Solution Platform (2024.01-Present)
+   Position: AI Data Platform Product Manager
+   Responsibilities: Responsible for Doubao LLM C-end Expert Community and TikTok B-end Data Annotation Management Platform.
+   Achievements:
+   - User Growth: Led 50+ project annotation processes, supporting Doubao (+155.95%) and TikTok (+177.46%) expert MAU hyper-growth.
+   - AI Efficiency: Optimized 12 project processes via AI pre-annotation & QA, avg efficiency +30%, cost -15%.
+   - General Features: Independently completed 30+ features (Recruitment, Exam, Task Square), penetration +50%, saved 20+ operation headcount.
+   - User Insight: NPS increased by 38.7% in a quarter.
+
+2. Midea Group - Enterprise Digital Platform (2021.07-2023.12)
+   Position: Data Tool Platform Product Manager
+   Responsibilities: Solving Group Big Data Middle Platform application issues.
+   Achievements:
+   - Completed 3 medium-large low-code products 0-1 closed loop, serving 7 business units.
+   - Saved 3.3 headcount for a single 10-person business team.
+   - Product annual visitors ranked Top 5 (TOP 10%) in the group.
+
+【Project Experience】
+1. AI Assisted Annotation Efficiency (2025.03-Present)
+   Role: Annotation Process Lead
+   Content: Integrated complex QA rules into Agent, building real-time QA mechanism.
+   Results: Avg efficiency +67.5%, saved 53.6 headcount. Deep Search project saved 80% QA labor, data delivery +90%, model inference accuracy +30%.
+
+2. Simulation Launch (2024.05-2025.03)
+   Role: Module Lead
+   Content: Designed simulation launch detection to identify annotator quality issues.
+   Results: Identified 2+ common issues weekly, saved 2.5h daily checking labor for admins.
+
+3. Deep Research Multi-Agent Project (2024.05-2025.03)
+   Role: Data Production Lead
+   Content: Responsible for Deep Research scenario data annotation process, designed Agent interaction pages.
+
+【Education】
+University of Edinburgh (QS Rank 15) - MSc Bioinformatics (2019.09-2020.11)
+Major: Biological Sciences + Computer Information Science
+`;
+
 interface Message {
   id: string;
   role: 'user' | 'assistant' | 'system';
@@ -110,30 +200,33 @@ interface Message {
 }
 
 export const AiChatBubble: React.FC = () => {
+  const { language } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      role: 'assistant',
-      content: "👋 嘿！我是李珂瑾的数字分身。我有她所有的“黑历史”（划掉）和项目经验。\n\n想知道我怎么把 ROI 挖出来的？或者聊聊 Agent 怎么搞？随便问，我主打一个知无不言（只要不涉及商业机密😜）。"
-    }
-  ]);
   
-  const SUGGESTED_QUESTIONS = [
+  // --- Text Constants based on Language ---
+  const WELCOME_MESSAGE_CN = "👋 嘿！我是李珂瑾的数字分身。我有她所有的“黑历史”（划掉）和项目经验。\n\n想知道我怎么把 ROI 挖出来的？或者聊聊 Agent 怎么搞？随便问，我主打一个知无不言（只要不涉及商业机密😜）。";
+  const WELCOME_MESSAGE_EN = "👋 Hey! I'm Kejin Li's digital twin. I have all her 'dark history' (scratched) and project experience.\n\nWant to know how I dig out ROI? Or chat about how to build Agents? Ask me anything, I'm an open book (as long as it's not a trade secret 😜).";
+
+  const LIMIT_MESSAGE_CN = "😅 哎哟，今天问太多啦，明天再来吧！李珂瑾的 tokens 快要被你薅完啦（钱包在滴血🩸）～ 如果你有兴趣多交流，欢迎在网站下方的留言板留言，或者直接发邮件给她哦！📫";
+  const LIMIT_MESSAGE_EN = "😅 Oops, too many questions today, come back tomorrow! Kejin's tokens are almost depleted by you (wallet is bleeding 🩸)~ If you want to chat more, feel free to leave a message on the board below or email her directly! 📫";
+
+  const ERROR_MESSAGE_CN = "哎呀，我的大脑刚才短路了一下（可能是 API 余额不足或者网络波动）。请稍后再试一次吧！😅";
+  const ERROR_MESSAGE_EN = "Oops, my brain just short-circuited (maybe low API balance or network issues). Please try again later! 😅";
+
+  const SUGGESTED_QUESTIONS_CN = [
     "你是谁？👀",
     "Kejin AI Lab 是做什么的？🧪",
     "讲讲李珂瑾的项目经历 🚀",
     "有什么个人爱好？💃"
   ];
+  const SUGGESTED_QUESTIONS_EN = [
+    "Who are you? 👀",
+    "What is Kejin AI Lab? 🧪",
+    "Tell me about Kejin's projects 🚀",
+    "Any hobbies? 💃"
+  ];
 
-  const [inputValue, setInputValue] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [showGuide, setShowGuide] = useState(true); // State for guide bubble
-  const buttonRef = useRef<HTMLButtonElement>(null); // Ref for the button
-  const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 }); // State for eye movement
-
-  // --- Dynamic Suggestions Logic ---
-  const ALL_QUESTIONS = [
+  const ALL_QUESTIONS_CN = [
     "Kejin AI Lab 是做什么的？🧪",
     "你是谁？👀",
     "讲讲李珂瑾的项目经历 🚀",
@@ -142,8 +235,51 @@ export const AiChatBubble: React.FC = () => {
     "在这个网站能看到什么？✨",
     "李珂瑾会什么技术栈？💻"
   ];
+  const ALL_QUESTIONS_EN = [
+    "What is Kejin AI Lab? 🧪",
+    "Who are you? 👀",
+    "Tell me about Kejin's projects 🚀",
+    "Any hobbies? 💃",
+    "What is Kejin's education background? 🎓",
+    "What can I see on this website? ✨",
+    "What tech stack does Kejin know? 💻"
+  ];
 
-  const [currentSuggestions, setCurrentSuggestions] = useState<string[]>(ALL_QUESTIONS.slice(0, 3));
+  const currentAllQuestions = language === 'zh' ? ALL_QUESTIONS_CN : ALL_QUESTIONS_EN;
+
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      role: 'assistant',
+      content: language === 'zh' ? WELCOME_MESSAGE_CN : WELCOME_MESSAGE_EN
+    }
+  ]);
+  
+  // Update welcome message when language changes, but only if it's the only message
+  useEffect(() => {
+    setMessages(prev => {
+      if (prev.length === 1 && prev[0].id === 'welcome') {
+        return [{
+          id: 'welcome',
+          role: 'assistant',
+          content: language === 'zh' ? WELCOME_MESSAGE_CN : WELCOME_MESSAGE_EN
+        }];
+      }
+      return prev;
+    });
+    // Reset suggestions when language changes
+    setCurrentSuggestions((language === 'zh' ? SUGGESTED_QUESTIONS_CN : SUGGESTED_QUESTIONS_EN).slice(0, 3));
+  }, [language]);
+
+
+  const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [showGuide, setShowGuide] = useState(true); // State for guide bubble
+  const buttonRef = useRef<HTMLButtonElement>(null); // Ref for the button
+  const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 }); // State for eye movement
+
+  // --- Dynamic Suggestions Logic ---
+  const [currentSuggestions, setCurrentSuggestions] = useState<string[]>((language === 'zh' ? SUGGESTED_QUESTIONS_CN : SUGGESTED_QUESTIONS_EN).slice(0, 3));
 
   const updateSuggestions = (history: Message[]) => {
     // Get all user messages
@@ -152,7 +288,7 @@ export const AiChatBubble: React.FC = () => {
       .map(m => m.content.toLowerCase());
     
     // Filter out questions that have already been asked (fuzzy match)
-    const availableQuestions = ALL_QUESTIONS.filter(q => {
+    const availableQuestions = currentAllQuestions.filter(q => {
       const qText = q.replace(/[^\u4e00-\u9fa5a-zA-Z]/g, ''); // Keep only text for comparison
       return !userQueries.some(userQ => userQ.includes(qText.substring(0, 4))); // Simple fuzzy check
     });
@@ -241,7 +377,7 @@ export const AiChatBubble: React.FC = () => {
       setMessages(prev => [...prev, {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: "😅 哎哟，今天问太多啦，明天再来吧！李珂瑾的 tokens 快要被你薅完啦（钱包在滴血🩸）～ 如果你有兴趣多交流，欢迎在网站下方的留言板留言，或者直接发邮件给她哦！📫",
+        content: language === 'zh' ? LIMIT_MESSAGE_CN : LIMIT_MESSAGE_EN,
       }]);
       return;
     }
@@ -267,7 +403,7 @@ export const AiChatBubble: React.FC = () => {
       // Construct the message history for the API
       // We filter out 'isStreaming' and ensure the format is correct for OpenAI/DeepSeek API
       const apiMessages = [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: language === 'zh' ? SYSTEM_PROMPT_CN : SYSTEM_PROMPT_EN },
         ...messages.filter(m => m.role !== 'system' && m.id !== 'welcome').map(m => ({
           role: m.role,
           content: m.content
@@ -336,7 +472,7 @@ export const AiChatBubble: React.FC = () => {
       console.error('Failed to send message:', error);
       setMessages(prev => prev.map(msg => 
         msg.id === assistantMessageId 
-          ? { ...msg, content: "哎呀，我的大脑刚才短路了一下（可能是 API 余额不足或者网络波动）。请稍后再试一次吧！😅", isStreaming: false } 
+          ? { ...msg, content: language === 'zh' ? ERROR_MESSAGE_CN : ERROR_MESSAGE_EN, isStreaming: false } 
           : msg
       ));
     } finally {
@@ -384,7 +520,7 @@ export const AiChatBubble: React.FC = () => {
                   exit={{ opacity: 0, scale: 0.8 }}
                   className="absolute bottom-[110%] left-1/2 -translate-x-1/2 bg-white px-3 py-2 rounded-xl shadow-lg border border-macaron-purple/20 whitespace-nowrap text-xs font-medium text-macaron-text flex flex-col items-center gap-1 pointer-events-none mb-2"
                 >
-                  <span>有什么想跟我聊聊的吗？</span>
+                  <span>{language === 'zh' ? '有什么想跟我聊聊的吗？' : 'Have something to chat?'}</span>
                   <div className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white rotate-45 border-r border-b border-macaron-purple/20"></div>
                 </motion.div>
               )}
@@ -456,10 +592,10 @@ export const AiChatBubble: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold text-macaron-text text-sm">李珂瑾的数字分身</h3>
+                  <h3 className="font-bold text-macaron-text text-sm">{language === 'zh' ? '李珂瑾的数字分身' : "Kejin's Digital Twin"}</h3>
                   <div className="flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    <p className="text-xs text-macaron-textLight">在线 & 准备吐槽</p>
+                    <p className="text-xs text-macaron-textLight">{language === 'zh' ? '在线 & 准备吐槽' : 'Online & Ready to Roast'}</p>
                   </div>
                 </div>
               </div>
@@ -511,7 +647,7 @@ export const AiChatBubble: React.FC = () => {
               {/* Dynamic Suggested Questions */}
               {!isLoading && currentSuggestions.length > 0 && (
                 <div className="mt-4 ml-11 space-y-2 animate-fadeIn">
-                  <p className="text-xs text-macaron-textLight font-medium ml-1">或许你还想问：</p>
+                  <p className="text-xs text-macaron-textLight font-medium ml-1">{language === 'zh' ? '或许你还想问：' : 'You might also ask:'}</p>
                   <div className="flex flex-wrap gap-2">
                     {currentSuggestions.map((question, index) => (
                       <button
@@ -536,7 +672,7 @@ export const AiChatBubble: React.FC = () => {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="问我关于李珂瑾的任何事..."
+                  placeholder={language === 'zh' ? "问我关于李珂瑾的任何事..." : "Ask me anything about Kejin..."}
                   className="w-full resize-none rounded-xl border border-macaron-text/10 bg-macaron-cream/20 px-4 py-3 pr-12 text-sm focus:outline-none focus:border-macaron-purple/50 focus:ring-1 focus:ring-macaron-purple/50 transition-all max-h-[100px] min-h-[44px]"
                   rows={1}
                 />
@@ -549,7 +685,10 @@ export const AiChatBubble: React.FC = () => {
                 </button>
               </div>
               <p className="text-[10px] text-center text-macaron-textLight mt-2">
-                Powered by DeepSeek & Kejin's Resume · AI 可能会产生幻觉 (就像产品经理有时候也会画饼 😜)
+                {language === 'zh' 
+                  ? "Powered by DeepSeek & Kejin's Resume · AI 可能会产生幻觉 (就像产品经理有时候也会画饼 😜)"
+                  : "Powered by DeepSeek & Kejin's Resume · AI might hallucinate (just like PMs sometimes 😜)"
+                }
               </p>
             </div>
           </motion.div>
