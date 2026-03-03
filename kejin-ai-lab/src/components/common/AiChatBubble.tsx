@@ -221,7 +221,7 @@ export const AiChatBubble: React.FC = () => {
       // Note: System Prompt is now handled by the Backend (Supabase Edge Function)
       
       const apiMessages = [
-        ...messages.filter(m => m.role !== 'system' && m.id !== 'welcome').map(m => ({
+        ...messages.filter(m => m.role !== 'system' && m.id !== 'welcome' && m.content && m.content.trim() !== '').map(m => ({
           role: m.role,
           content: m.content
         })),
@@ -242,7 +242,7 @@ export const AiChatBubble: React.FC = () => {
         body: JSON.stringify({
           model: "deepseek-chat",
           messages: apiMessages,
-          language: language // Pass language to backend so it can select the right System Prompt
+          language: language || 'zh' // Pass language to backend so it can select the right System Prompt
         })
       });
 
