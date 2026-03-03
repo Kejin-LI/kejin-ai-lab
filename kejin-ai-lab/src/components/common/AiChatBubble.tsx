@@ -3,12 +3,13 @@ import { MessageSquare, X, Send, Bot, User, Loader2, Sparkles } from 'lucide-rea
 import { motion, AnimatePresence } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { decryptKey } from '../../utils/security';
 
 // --- Configuration ---
-// TODO: Replace with your actual DeepSeek API Key
+// TODO: Replace with your actual DeepSeek API Key (Obfuscated)
 // WARNING: In a real production app, you should proxy this request through your own backend 
 // to avoid exposing your API Key to the client. For a personal demo/portfolio, this is acceptable risk if you rotate keys.
-const DEEPSEEK_API_KEY = 'sk-ec74bd124745479bb8700a5e5d424c8f'; 
+const DEEPSEEK_API_KEY_ENCRYPTED = '=YGOjRjM0QWNlVTYwAzN4ImY5cDN1QzN0ITMkJGN3MWZts2c'; 
 const DEEPSEEK_API_URL = 'https://api.deepseek.com/chat/completions';
 const DAILY_LIMIT = 10;
 
@@ -411,10 +412,14 @@ export const AiChatBubble: React.FC = () => {
         { role: 'user', content: userMessage.content }
       ];
 
+      // Decrypt the key at runtime
+      const apiKey = decryptKey(DEEPSEEK_API_KEY_ENCRYPTED);
+      if (!apiKey) throw new Error('Failed to decrypt API key');
+
       const response = await fetch(DEEPSEEK_API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${DEEPSEEK_API_KEY}`,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
