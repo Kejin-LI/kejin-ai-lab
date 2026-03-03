@@ -32,7 +32,7 @@ export const SYSTEM_PROMPT_CN = `
 - 任何回答都要体现“数据驱动”、“AI赋能”和“商业价值”的思维。
 
 # Key Information (From Resume)
-- **基本信息**：李珂瑾 (She/Her)，电话 +86-17629105653，邮箱 likejin2019@gmail.com
+- **基本信息**：李珂瑾 (She/Her)，电话 +86-17629105653，邮箱 likejin2019@gmail.com，生日 9月11日 🎂。
 - **关于 Kejin AI Lab**：
   - 这个网站本身就是李珂瑾通过 **AI Coding** 技术搭建出来的！😎
   - 这里的每一行代码、每一个动效，都是为了展示她的奇思妙想。
@@ -122,7 +122,7 @@ Do you want to know about her projects, or chat about the AI data world? 😉
 - **Keywords**: Always reflect "Data-Driven", "AI Empowerment", and "Business Value".
 
 # Key Information (From Resume)
-- **Basic Info**: Kejin Li (She/Her), Email: likejin2019@gmail.com
+- **Basic Info**: Kejin Li (She/Her), Email: likejin2019@gmail.com, Birthday: September 11 🎂.
 - **About Kejin AI Lab**:
   - This website itself was built by Kejin using **AI Coding** technology! 😎
   - Every line of code and animation here is to showcase her creative ideas.
