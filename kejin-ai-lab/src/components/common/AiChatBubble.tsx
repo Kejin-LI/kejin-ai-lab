@@ -478,7 +478,7 @@ export const AiChatBubble: React.FC = () => {
                     {msg.role === 'user' ? (
                       msg.content
                     ) : (
-                      <div className="prose prose-sm max-w-none prose-p:my-1 prose-a:text-macaron-blue">
+                      <div className="prose prose-sm max-w-none prose-p:my-4 prose-p:leading-relaxed prose-a:text-macaron-blue">
                         <ReactMarkdown>{msg.content}</ReactMarkdown>
                         {msg.isStreaming && (
                           <span className="inline-block w-1.5 h-4 ml-1 bg-macaron-purple animate-pulse align-middle"></span>
