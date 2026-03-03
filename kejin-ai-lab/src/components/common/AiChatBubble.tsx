@@ -518,10 +518,10 @@ export const AiChatBubble: React.FC = () => {
                   initial={{ opacity: 0, y: 10, scale: 0.8 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="absolute bottom-[110%] left-1/2 -translate-x-1/2 bg-white px-3 py-2 rounded-xl shadow-lg border border-macaron-purple/20 whitespace-nowrap text-xs font-medium text-macaron-text flex flex-col items-center gap-1 pointer-events-none mb-2"
+                  className="absolute bottom-[115%] left-1/2 -translate-x-1/2 bg-white px-4 py-2.5 rounded-2xl shadow-xl border-2 border-macaron-purple text-xs font-bold text-macaron-text whitespace-nowrap flex flex-col items-center gap-1 pointer-events-none z-50"
                 >
                   <span>{language === 'zh' ? '有什么想跟我聊聊的吗？' : 'Have something to chat?'}</span>
-                  <div className="absolute bottom-[-5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-white rotate-45 border-r border-b border-macaron-purple/20"></div>
+                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-white rotate-45 border-r-2 border-b-2 border-macaron-purple"></div>
                 </motion.div>
               )}
             </AnimatePresence>
