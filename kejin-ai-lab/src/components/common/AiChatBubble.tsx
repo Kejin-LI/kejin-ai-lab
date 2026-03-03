@@ -66,13 +66,36 @@ export const AiChatBubble: React.FC = () => {
 
   const currentAllQuestions = language === 'zh' ? ALL_QUESTIONS_CN : ALL_QUESTIONS_EN;
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
+  const [messages, setMessages] = useState<Message[]>(() => {
+    // Initialize messages from localStorage if available, otherwise use welcome message
+    const savedMessages = localStorage.getItem('ai_chat_history');
+    if (savedMessages) {
+      try {
+        const parsed = JSON.parse(savedMessages);
+        // Ensure welcome message is updated based on current language if it's the only message
+        if (parsed.length === 1 && parsed[0].id === 'welcome') {
+          return [{
+            id: 'welcome',
+            role: 'assistant',
+            content: language === 'zh' ? WELCOME_MESSAGE_CN : WELCOME_MESSAGE_EN
+          }];
+        }
+        return parsed;
+      } catch (e) {
+        console.error('Failed to parse chat history:', e);
+      }
+    }
+    return [{
       id: 'welcome',
       role: 'assistant',
       content: language === 'zh' ? WELCOME_MESSAGE_CN : WELCOME_MESSAGE_EN
-    }
-  ]);
+    }];
+  });
+
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('ai_chat_history', JSON.stringify(messages));
+  }, [messages]);
   
   // Update welcome message when language changes, but only if it's the only message
   useEffect(() => {
