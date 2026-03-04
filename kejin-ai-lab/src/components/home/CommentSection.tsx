@@ -72,38 +72,12 @@ const AdminLoginModal: React.FC<{
     e.preventDefault();
     
     try {
-      // Use PBKDF2 (Password-Based Key Derivation Function 2) for higher security
-      // This makes brute-force attacks significantly harder compared to simple SHA-256
-      const enc = new TextEncoder();
-      const salt = enc.encode("Kejin_Salt_2024_#992"); // Unique salt to prevent rainbow table attacks
-      
-      const keyMaterial = await window.crypto.subtle.importKey(
-        "raw",
-        enc.encode(password),
-        { name: "PBKDF2" },
-        false,
-        ["deriveBits"]
-      );
-      
-      const derivedBits = await window.crypto.subtle.deriveBits(
-        {
-          name: "PBKDF2",
-          salt: salt,
-          iterations: 100000, // High iteration count increases computational cost for attackers
-          hash: "SHA-256"
-        },
-        keyMaterial,
-        512 // 64 bytes * 8 bits
-      );
-      
-      const hashArray = Array.from(new Uint8Array(derivedBits));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      
-      // The stored hash corresponds to the admin password
-      // It is computationally expensive to reverse this hash or find a collision
-      const SECRET_HASH = 'e44897595d2b9f0665a5a9b52b7340c0437cfcdc0b7d6eb929bd7b933ae3d826b059445f8109b566b3f9767927eb3e79faae5fd56bae790011ec30dfcdac60a9';
-      
-      if (hashHex === SECRET_HASH) {
+      // Verify password via Edge Function
+      const { error: verifyError } = await supabase.functions.invoke('verify-admin', {
+        body: { password }
+      });
+
+      if (!verifyError) {
         onLogin(password);
         onNotify('Admin verified successfully', 'success');
         onClose();
