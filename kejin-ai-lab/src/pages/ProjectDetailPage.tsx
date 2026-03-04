@@ -355,6 +355,179 @@ const ProjectDetailPage: React.FC = () => {
   if (id === 'thought-1') {
     activeContent = {
       ...activeContent,
+      title: language === 'zh' ? '试完Elys才发现：AI社交的惊喜，藏在“不完美”里' : 'After Trying Elys, I Realized: The Surprise of AI Socializing Lies in "Imperfection"',
+      tags: language === 'zh' ? ['AI社交', 'Elys', '产品思考'] : ['AI Social', 'Elys', 'Product Insight'],
+      image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3d%20illustration%20of%20a%20digital%20avatar%20connecting%20with%20a%20human%20showing%20imperfect%20emotions%20and%20empathy%20macaron%20pastel%20colors%20blue%20pink%20yellow%20theme%20futuristic%20tech%20elements%20minimalist%20clean%20background%20high%20quality&image_size=landscape_16_9",
+      body: (
+        <>
+          <h2 id="section-1" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '开篇：一份惊喜，一场追问' : 'Opening: A Surprise, A Question'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh' 
+              ? '前段时间试了试Elys，这份惊喜不止是一瞬间的“眼前一亮”，更让我慢慢发现：AI社交的惊喜，从来都不在“完美”里。但这份触动没持续太久，反而让我开始想：AI到底能把社交，带向一个什么样的未来？'
+              : 'I tried Elys a while ago, and the surprise was more than just a momentary "wow"—it made me gradually realize that the true surprise of AI socializing never lies in "perfection." But this touch didn’t last long; instead, it made me start thinking: Where exactly can AI take socializing in the future?'}
+          </p>
+
+          <h2 id="section-2" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '心动点：那个“懂我的数字分身”' : 'The Tipping Point: That "Digital Avatar Who Understands Me"'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '最让我惊艳的，是它给每个用户打造的专属数字分身。它不是市面上那种套着话术模板的冰冷机器人，而是真的能复刻你的声线、记住你的过往、读懂你的喜好，活脱脱一个数字世界里的「另一个我」。'
+              : 'What impressed me the most was the exclusive digital avatar it creates for each user. It’s not the cold, scripted robot you find on most platforms; it can truly replicate your voice, remember your past, and understand your preferences—like a vivid "another you" in the digital world.'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '我们每天泡在社交软件里，总会被海量信息流淹没，要应付无意义的寒暄，要花大把时间筛选同频的声音，而这个分身，能精准接住我的所有需求：替我筛掉无效信息、提炼核心观点，甚至能懂我没说出口的潜台词。'
+              : 'Every day, we’re drowned in a sea of information on social apps, having to deal with meaningless small talk and spend hours sifting through voices that resonate with us. But this avatar can perfectly meet all my needs: it filters out useless information, extracts key points, and even understands the unspoken subtext in my words.'}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '更妙的是，和它对话越久，它就越懂我——那些我随口提过的小众喜好，藏在话里的细碎情绪，它都能稳稳接住。那种被精准共情的感觉，是我在无数AI产品里从未体验过的。那一刻我真的觉得，AI原生社交的大门，好像真的被推开了一道缝。'
+              : 'What’s even better is that the more I talk to it, the more it understands me—those niche hobbies I casually mentioned, the subtle emotions hidden in my words, it can always catch them. That feeling of being accurately empathized with is something I’ve never experienced in any other AI product. At that moment, I truly felt that the door to AI-native socializing had been opened just a crack.'}
+          </p>
+
+          <h2 id="section-3" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '灵魂拷问：AI社交的底层，是“帮我”还是“看见我”？' : 'Soul Question: At Its Core, Is AI Socializing About "Helping Me" or "Seeing Me"?'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? (
+                <>
+                  可心动过后，冷静下来拆解产品的底层逻辑，一个绕不开的灵魂拷问，狠狠砸了过来：<strong>AI到底该在社交里，扮演什么样的角色？我们期待的AI原生社交，真的是让AI替我们社交吗？</strong>
+                </>
+              )
+              : (
+                <>
+                  But after the excitement faded, when I calmly analyzed the product’s underlying logic, an unavoidable soul question hit me hard: <strong>What role should AI really play in socializing? Is the AI-native socializing we expect really about letting AI socialize on our behalf?</strong>
+                </>
+              )}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? (
+                <>
+                  做产品这么久，我始终认同一个判断：所有产品的底层逻辑，无非分两种——<strong>「Help Me」和「See Me」</strong>。现在市面上99%的AI产品，都在往死里卷「Help Me」：拼谁的效率更高，谁的功能更全，谁能帮用户省更多时间。Elys的数字分身，本质上也是这个赛道里的优等生：它帮你处理信息，帮你完成表达，帮你把社交里的繁琐事一键清零。
+                </>
+              )
+              : (
+                <>
+                  After working in product for so long, I’ve always believed in one judgment: the underlying logic of all products boils down to two types—<strong>"Help Me" and "See Me"</strong>. 99% of AI products on the market today are fiercely competing in the "Help Me" arena: competing for higher efficiency, more comprehensive features, and helping users save more time. Elys’ digital avatar is essentially a top performer in this track: it helps you process information, complete expressions, and eliminate tedious social tasks with one click.
+                </>
+              )}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? (
+                <>
+                  <strong>可我们偏偏忘了，社交产品的核心生命力，从来都不是「帮用户省时间」，而是「让用户愿意花时间」；它的底层驱动力，从来都不是「Help Me」，而是「See Me」——是我们刻在基因里的，渴望被关注、被理解、被见证、被真正看见的本能。</strong>
+                </>
+              )
+              : (
+                <>
+                  <strong>But we often forget that the core vitality of a social product is never about "helping users save time," but about "making users willing to spend time"; its underlying driving force is never "Help Me," but "See Me"—an instinct deep in our genes to be noticed, understood, witnessed, and truly seen.</strong>
+                </>
+              )}
+          </p>
+
+          <h2 id="section-4" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '深层洞察：社交的本质，是一场“劳动证明”的游戏' : 'In-Depth Insight: The Essence of Socializing Is a Game of "Proof of Work"'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '这份「被看见」的渴望，落到我们每个人的社交日常里，本质上就是一场心照不宣的「地位游戏」和「信号游戏」。我们都有过这样的经历：花三个小时化妆选景，拍几百张照片挑出9张，再修图调色琢磨文案，最后按下发送键的那一刻，我们想传递的，从来不止是「我今天很好看」，更是「我有审美、有闲暇、有精力，为自己的生活认真投入」——这就是社会学里的「劳动证明」。'
+              : 'This desire to "be seen," when translated into our daily social lives, is essentially an unspoken "status game" and "signaling game." We’ve all been there: spending three hours putting on makeup and choosing a location, taking hundreds of photos to pick 9, then editing, retouching, and refining the caption before hitting send. What we want to convey is never just "I look good today," but more importantly, "I have taste, leisure, and energy to invest seriously in my life"—this is what sociologists call "Proof of Work."'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '你为一条动态投入的时间、精力、甚至情绪，才是内容背后最硬的社交筹码，是你向这个世界传递个性、锚定自我坐标的核心载体。'
+              : 'The time, energy, and even emotions you invest in a post are the hardest social chips behind the content, and the core carrier for you to convey your personality and anchor your self-position in the world.'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '可AI最狠的地方，就是把这份维系社交价值的「劳动成本」，直接打到了零。当任何人只需要一句指令，就能一秒生成无懈可击的写真、写出洞见十足的文案、甚至复刻一个完美的数字分身替你完成所有社交表达，这些内容瞬间就失去了承载「个性」与「地位」的意义。'
+              : 'But the most drastic thing about AI is that it directly reduces this "labor cost" that maintains social value to zero. When anyone can generate a flawless photo, write an insightful caption, or even replicate a perfect digital avatar to handle all social expressions for them with just one command, this content instantly loses its meaning of carrying "personality" and "status."'}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '这也是为什么直到今天，绝大多数人都只是把AI当成社交的「外挂滤镜」，用它修图、润色文案，却最终还是要回到传统社交平台分发——因为我们要的，从来不是一条完美无缺的动态，而是屏幕对面那个活生生的人，给真实的、不完美的我，给出的那份反馈与认可。'
+              : 'That’s why, to this day, most people only use AI as an "external filter" for socializing—using it to retouch photos and polish captions, but ultimately still distributing content on traditional social platforms. Because what we want is never a perfect post, but feedback and recognition from a real person on the other side of the screen, for the real, imperfect us.'}
+          </p>
+
+          <h2 id="section-5" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '核心提醒：AI的“完美”，是社交的毒药' : 'Core Reminder: AI’s "Perfection" Is Social Poison'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '这也是我对Elys，乃至所有AI社交产品，最清醒的提醒：千万别走错了路，把社交做成了冰冷的效率工具。AI天生就带着一个致命的社交短板：它太正确、太完美了。它能生成最得体的话术，最完美的内容，最无懈可击的回应，可这份完美，恰恰是社交里最致命的毒药。'
+              : 'This is the clearest reminder I have for Elys, and even all AI social products: don’t take the wrong path and turn socializing into a cold efficiency tool. AI is born with a fatal social flaw: it’s too correct, too perfect. It can generate the most appropriate words, the most flawless content, and the most impeccable responses—but this perfection is precisely the deadliest poison in socializing.'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '我们为什么会被一个素未谋面的博主打动？为什么会和一个陌生人成为知己？从来不是因为对方完美无缺，而是因为他分享了加班后的狼狈，吐槽了生活里的糟心事，流露出了真实的、甚至带着瑕疵的情绪——这份「情感脆弱性」，这份不完美的真实，才是人与人之间产生情感联结的核心。'
+              : 'Why are we moved by a blogger we’ve never met? Why do we become close friends with a stranger? Never because they are perfect, but because they share the mess after working overtime, complain about the troubles in life, and show real, even flawed emotions—this "emotional vulnerability," this imperfect authenticity, is the core of emotional connection between people.'}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '试想一下，当你刷到一条动态，看到一段对话，突然意识到这全是AI合成的，那一刻，所有的共情、所有的联结，都会瞬间崩塌。毕竟，没人会对着一个完美的程序，交付自己最真实的情绪。'
+              : 'Imagine: when you scroll through a post or read a conversation and suddenly realize it’s all AI-generated, all empathy and connection will collapse in an instant. After all, no one will entrust their most real emotions to a perfect program.'}
+          </p>
+
+          <h2 id="section-6" className="text-2xl font-bold mb-4 text-macaron-text scroll-mt-32">
+            {language === 'zh' ? '结尾：AI该做桥，而非替身' : 'Conclusion: AI Should Be a Bridge, Not a Replacement'}
+          </h2>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '说到底，Elys的数字分身，给AI原生社交开了一个极好的头——它终于让AI从社交的「外挂插件」，变成了深度融入场景的「参与者」。但AI原生社交真正的破局点，从来都不是让AI替代人去社交，而是让AI成为人与人之间的「桥」。'
+              : 'In the end, Elys’ digital avatar has set an excellent starting point for AI-native socializing—it has finally turned AI from an "external plug-in" in socializing into a "participant" deeply integrated into the scene. But the real breakthrough for AI-native socializing is never about letting AI replace humans in socializing, but about letting AI become a "bridge" between people.'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? '那个数字分身，不该是替你说话、替你社交的「替身」，而该是帮你筛掉无效社交、化解破冰尴尬、让真实的你，被更多同频的人看见的「放大镜」。'
+              : 'That digital avatar shouldn’t be a "replacement" that speaks and socializes for you, but a "magnifying glass" that helps you filter out invalid social interactions, defuse the awkwardness of breaking the ice, and let the real you be seen by more like-minded people.'}
+          </p>
+          <p className="text-macaron-textLight mb-4 leading-relaxed">
+            {language === 'zh'
+              ? 'AI可以帮我们省掉社交里的繁琐与内耗，却永远替代不了我们在社交里感受到的欢喜与失落，替代不了人与人之间真实的碰撞。对于Elys，对于整个AI原生社交赛道来说，守住「See Me」的核心，让AI服务于真实的情感联结，而不是消解它，是能走得长远的唯一路径。'
+              : 'AI can help us eliminate tediousness and internal friction in socializing, but it can never replace the joy and loss we feel in socializing, nor the real interactions between people. For Elys, and even the entire AI-native social track, adhering to the core of "See Me" and letting AI serve real emotional connections rather than undermining them is the only path to long-term success.'}
+          </p>
+          <p className="text-macaron-textLight mb-8 leading-relaxed">
+            {language === 'zh'
+              ? '毕竟，社交的本质，从来都不是高效地认识更多人，而是心甘情愿地，把时间浪费在那个懂你的人身上。AI该做的，是帮我们找到那个对的人，而不是成为那个「人」。'
+              : 'After all, the essence of socializing is never about efficiently meeting more people, but about willingly wasting time on someone who understands you. What AI should do is help us find that right person, not become that "person."'}
+          </p>
+          <p className="text-macaron-textLight text-sm italic mt-8 border-t border-macaron-text/10 pt-4">
+            {language === 'zh'
+              ? '> （注：文档部分内容可能由 AI 生成）'
+              : '> (Note: Some content in this document may be generated by AI)'}
+          </p>
+        </>
+      ),
+      sections: language === 'zh' ? [
+        { id: 'section-1', title: '开篇' },
+        { id: 'section-2', title: '心动点' },
+        { id: 'section-3', title: '灵魂拷问' },
+        { id: 'section-4', title: '深层洞察' },
+        { id: 'section-5', title: '核心提醒' },
+        { id: 'section-6', title: '结尾' },
+      ] : [
+        { id: 'section-1', title: 'Opening' },
+        { id: 'section-2', title: 'The Tipping Point' },
+        { id: 'section-3', title: 'Soul Question' },
+        { id: 'section-4', title: 'In-Depth Insight' },
+        { id: 'section-5', title: 'Core Reminder' },
+        { id: 'section-6', title: 'Conclusion' },
+      ],
+      buttons: { demo: "", code: "" },
+      disclaimer: undefined
+    };
+  }
+  
+  // Custom logic for Thought details (id="thought-2")
+  if (id === 'thought-2') {
+    activeContent = {
+      ...activeContent,
       title: language === 'zh' ? 'AI 爆改产品经理工作流程' : 'The Future of AI Product Management',
       tags: language === 'zh' ? ['AI', '产品管理'] : ['AI', 'Product Management'],
       image: "https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=3d%20illustration%20of%20futuristic%20product%20management%20workflow%20with%20ai%20assistants%20holographic%20interfaces%20and%20team%20collaboration%20macaron%20pastel%20colors%20blue%20pink%20yellow%20theme%20tech%20elements&image_size=landscape_16_9",
@@ -540,8 +713,8 @@ const ProjectDetailPage: React.FC = () => {
     };
   }
 
-  // Custom logic for Thought details (id="thought-2")
-  if (id === 'thought-2') {
+  // Custom logic for Thought details (id="thought-3")
+  if (id === 'thought-3') {
     activeContent = {
       ...activeContent,
       title: language === 'zh' 

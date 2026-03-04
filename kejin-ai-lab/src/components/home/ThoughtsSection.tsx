@@ -6,6 +6,14 @@ import { useLanguage } from '../../i18n/LanguageContext';
 
 export const thoughts = [
   {
+    title: "After Trying Elys, I Realized: The Surprise of AI Socializing Lies in \"Imperfection\"",
+    summary: "Why \"imperfect\" AI companions might be more engaging than perfect assistants.",
+    date: "Feb 10, 2026",
+    readTime: "6 min read",
+    tags: ["AI Social", "Elys", "Product Insight"],
+    color: "bg-macaron-purple/10 border-macaron-purple"
+  },
+  {
     title: "The Future of AI Product Management",
     summary: "How LLMs are reshaping the role of product managers and the skills needed to thrive.",
     date: "Feb 3, 2026",
@@ -30,6 +38,16 @@ export const ThoughtsSection: React.FC = () => {
     if (index === 0) {
       return {
         ...thought,
+        title: language === 'zh' ? '试完 Elys 才发现：AI 社交的惊喜，藏在“不完美”里' : 'After Trying Elys, I Realized: The Surprise of AI Socializing Lies in "Imperfection"',
+        summary: language === 'zh' ? '为什么“不完美”的 AI 伴侣可能比完美的助手更吸引人？深度体验 Elys 后的产品思考。' : 'Why "imperfect" AI companions might be more engaging than perfect assistants. Product insights after deeply experiencing Elys.',
+        tags: language === 'zh' ? ['AI社交', 'Elys', '产品思考'] : ['AI Social', 'Elys', 'Product Insight'],
+        date: language === 'zh' ? '2026年2月10日' : 'Feb 10, 2026',
+        readTime: language === 'zh' ? '6 分钟阅读' : '6 min read'
+      };
+    }
+    if (index === 1) {
+      return {
+        ...thought,
         title: language === 'zh' ? 'AI 爆改产品经理工作流程' : 'The Future of AI Product Management',
         summary: language === 'zh' ? '大模型如何重塑产品经理角色及必备技能' : 'How LLMs are reshaping the role of product managers and the skills needed to thrive.',
         tags: language === 'zh' ? ['AI', '产品管理'] : ['AI', 'Product Management'],
@@ -37,7 +55,7 @@ export const ThoughtsSection: React.FC = () => {
         readTime: language === 'zh' ? '3 分钟阅读' : '3 min read'
       };
     }
-    if (index === 1) {
+    if (index === 2) {
       return {
         ...thought,
         title: language === 'zh' 
