@@ -8,7 +8,7 @@ export const thoughts = [
   {
     title: "After Trying Elys, I Realized: The Surprise of AI Socializing Lies in \"Imperfection\"",
     summary: "Why \"imperfect\" AI companions might be more engaging than perfect assistants.",
-    date: "Feb 10, 2026",
+    date: "Mar 3, 2026",
     readTime: "6 min read",
     tags: ["AI Social", "Elys", "Product Insight"],
     color: "bg-macaron-purple/10 border-macaron-purple"
@@ -41,7 +41,7 @@ export const ThoughtsSection: React.FC = () => {
         title: language === 'zh' ? '试完 Elys 才发现：AI 社交的惊喜，藏在“不完美”里' : 'After Trying Elys, I Realized: The Surprise of AI Socializing Lies in "Imperfection"',
         summary: language === 'zh' ? '为什么“不完美”的 AI 伴侣可能比完美的助手更吸引人？深度体验 Elys 后的产品思考。' : 'Why "imperfect" AI companions might be more engaging than perfect assistants. Product insights after deeply experiencing Elys.',
         tags: language === 'zh' ? ['AI社交', 'Elys', '产品思考'] : ['AI Social', 'Elys', 'Product Insight'],
-        date: language === 'zh' ? '2026年2月10日' : 'Feb 10, 2026',
+        date: language === 'zh' ? '2026年3月3日' : 'Mar 3, 2026',
         readTime: language === 'zh' ? '6 分钟阅读' : '6 min read'
       };
     }
