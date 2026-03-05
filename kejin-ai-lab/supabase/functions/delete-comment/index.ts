@@ -21,9 +21,20 @@ Deno.serve(async (req) => {
       )
     }
 
+    const SECRET_HASH = Deno.env.get('ADMIN_PASSWORD_HASH');
+    const SALT_VALUE = Deno.env.get('ADMIN_PASSWORD_SALT');
+
+    if (!SECRET_HASH || !SALT_VALUE) {
+       console.error('Missing env vars: ADMIN_PASSWORD_HASH or ADMIN_PASSWORD_SALT');
+       return new Response(
+        JSON.stringify({ error: 'Server configuration error' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
     // Verify Password
     const enc = new TextEncoder();
-    const salt = enc.encode("Kejin_Salt_2024_#992"); // Must match client
+    const salt = enc.encode(SALT_VALUE); 
     
     const keyMaterial = await crypto.subtle.importKey(
       "raw",
@@ -46,8 +57,6 @@ Deno.serve(async (req) => {
     
     const hashArray = Array.from(new Uint8Array(derivedBits));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    
-    const SECRET_HASH = 'e44897595d2b9f0665a5a9b52b7340c0437cfcdc0b7d6eb929bd7b933ae3d826b059445f8109b566b3f9767927eb3e79faae5fd56bae790011ec30dfcdac60a9';
 
     if (hashHex !== SECRET_HASH) {
       return new Response(
