@@ -985,6 +985,7 @@ const ProjectDetailPage: React.FC = () => {
                       {currentContent.buttons.demo}
                     </a>
                   )}
+                  {id !== '2' && (
                   <a 
                     href={id === '3' ? "https://github.com/Kejin-LI/pm-chest/" : "#"} 
                     target={id === '3' ? "_blank" : "_self"}
@@ -994,6 +995,7 @@ const ProjectDetailPage: React.FC = () => {
                     <Github className="w-4 h-4" />
                     {currentContent.buttons.code}
                   </a>
+                  )}
                 </div>
               )}
 
