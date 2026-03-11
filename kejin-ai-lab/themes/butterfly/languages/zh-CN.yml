@@ -1,0 +1,46 @@
+language: 简体中文
+menu:
+  Home: / || fas fa-home
+  Archives: /archives/ || fas fa-archive
+  Tags: /tags/ || fas fa-tags
+  Categories: /categories/ || fas fa-folder-open
+  List:
+    Music: /music/ || fas fa-music
+    Movie: /movies/ || fas fa-video
+  Link: /link/ || fas fa-link
+  About: /about/ || fas fa-heart
+  Language: 语言 || fas fa-globe
+
+custom_menu:
+  Home: 首页
+  Projects: 项目
+  Thoughts: 随想
+  Contact: 联系
+  Language: 语言
+  English: English
+  简体中文: 简体中文
+
+aside:
+  articles: 文章
+  tags: 标签
+  categories: 分类
+  card_announcement: 公告
+  card_categories: 分类
+  card_tags: 标签
+  card_archives: 归档
+  card_recent_post: 最新文章
+  card_webinfo:
+    headline: 网站信息
+    article_name: 文章数目
+    runtime:
+      name: 已运行时间
+    site_wordcount: 本站总字数
+    site_uv_name: 本站访客数
+    site_pv_name: 本站总浏览量
+    last_push_date:
+      name: 最后更新时间
+  more: 更多...
+  date_suffix: " "
+  
+Follow Me: 关注我
+This is my Blog: 这是我的博客

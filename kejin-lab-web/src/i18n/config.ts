@@ -147,6 +147,11 @@ const resources = {
           model: "Model: Gemini-3-Pro"
         }
       },
+      common: {
+        thanksForReading: "Thanks for reading",
+        likeArticle: "Like this article",
+        liked: "Liked"
+      },
       projectDetail: {
         notFound: "Project Not Found",
         backToProjects: "Back to Projects",
@@ -305,6 +310,11 @@ const resources = {
           ide: "IDE：Trae",
           model: "模型：Gemini-3-Pro"
         }
+      },
+      common: {
+        thanksForReading: "感谢阅读",
+        likeArticle: "点赞文章",
+        liked: "已点赞"
       },
       projectDetail: {
         notFound: "未找到项目",

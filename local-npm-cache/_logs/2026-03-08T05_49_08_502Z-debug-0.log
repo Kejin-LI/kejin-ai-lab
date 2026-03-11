@@ -1,0 +1,62 @@
+0 verbose cli /usr/local/bin/node /usr/local/bin/npm
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/bytedance/.npmrc
+5 silly config load:file:/Users/bytedance/.npm-global/etc/npmrc
+6 verbose title npm init vite-init@latest kejin-lab-web --template react-ts
+7 verbose argv "init" "vite-init@latest" "--yes" "kejin-lab-web" "--" "--template" "react-ts"
+8 verbose logfile logs-max:10 dir:/Users/bytedance/Desktop/TREA/ai_lab/local-npm-cache/_logs/2026-03-08T05_49_08_502Z-
+9 verbose logfile /Users/bytedance/Desktop/TREA/ai_lab/local-npm-cache/_logs/2026-03-08T05_49_08_502Z-debug-0.log
+10 silly logfile done cleaning log files
+11 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+12 http fetch GET 200 https://registry.npmmirror.com/create-vite-init 227ms (cache miss)
+13 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+14 silly idealTree buildDeps
+15 silly fetch manifest create-vite-init@1.0.33
+16 silly packumentCache full:https://registry.npmmirror.com/create-vite-init cache-miss
+17 http fetch GET 200 https://registry.npmmirror.com/create-vite-init 93ms (cache miss)
+18 silly packumentCache full:https://registry.npmmirror.com/create-vite-init set size:12977 disposed:false
+19 silly placeDep ROOT create-vite-init@1.0.33 OK for:  want: 1.0.33
+20 silly reify moves {}
+21 silly audit bulk request { 'create-vite-init': [ '1.0.33' ] }
+22 http cache create-vite-init@https://registry.npmmirror.com/create-vite-init/-/create-vite-init-1.0.33.tgz 0ms (cache hit)
+23 silly tarball no local data for create-vite-init@https://registry.npmmirror.com/create-vite-init/-/create-vite-init-1.0.33.tgz. Extracting by manifest.
+24 http fetch POST 404 https://registry.npmmirror.com/-/npm/v1/security/advisories/bulk 39ms
+25 silly audit bulk request failed [object Object]
+26 http fetch POST 404 https://registry.npmmirror.com/-/npm/v1/security/audits/quick 38ms
+27 verbose audit error HttpErrorGeneral: 404 Not Found - POST https://registry.npmmirror.com/-/npm/v1/security/audits/quick - [NOT_IMPLEMENTED] /-/npm/v1/security/* not implemented yet
+27 verbose audit error     at /usr/local/lib/node_modules/npm/node_modules/npm-registry-fetch/lib/check-response.js:103:15
+27 verbose audit error     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+27 verbose audit error     at async [getReport] (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/audit-report.js:336:21)
+27 verbose audit error     at async AuditReport.run (/usr/local/lib/node_modules/npm/node_modules/@npmcli/arborist/lib/audit-report.js:106:19) {
+27 verbose audit error   headers: [Object: null prototype] {
+27 verbose audit error     server: [ 'Tengine' ],
+27 verbose audit error     date: [ 'Sun, 08 Mar 2026 05:49:09 GMT' ],
+27 verbose audit error     'content-type': [ 'application/json' ],
+27 verbose audit error     'transfer-encoding': [ 'chunked' ],
+27 verbose audit error     connection: [ 'keep-alive' ],
+27 verbose audit error     'strict-transport-security': [ 'max-age=5184000' ],
+27 verbose audit error     via: [ 'kunlun7.cn6425[,404666]' ],
+27 verbose audit error     'timing-allow-origin': [ '*' ],
+27 verbose audit error     eagleid: [ '3da0c01117729489494491505e' ],
+27 verbose audit error     'x-fetch-attempts': [ '1' ]
+27 verbose audit error   },
+27 verbose audit error   statusCode: 404,
+27 verbose audit error   code: 'E404',
+27 verbose audit error   method: 'POST',
+27 verbose audit error   uri: 'https://registry.npmmirror.com/-/npm/v1/security/audits/quick',
+27 verbose audit error   body: {
+27 verbose audit error     error: '[NOT_IMPLEMENTED] /-/npm/v1/security/* not implemented yet'
+27 verbose audit error   },
+27 verbose audit error   pkgid: undefined
+27 verbose audit error }
+28 silly audit error [object Object]
+29 silly audit report null
+30 http fetch GET 200 https://cdn.npmmirror.com/packages/create-vite-init/1.0.33/create-vite-init-1.0.33.tgz 428ms (cache miss)
+31 verbose cwd /Users/bytedance/Desktop/TREA/ai_lab
+32 verbose os Darwin 25.3.0
+33 verbose node v22.18.0
+34 verbose npm  v10.9.3
+35 verbose exit 0
+36 info ok

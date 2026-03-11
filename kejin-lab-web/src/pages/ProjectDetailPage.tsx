@@ -555,8 +555,8 @@ const ProjectDetailPage: React.FC = () => {
         <section className="bg-google-grey-50 py-16 md:py-24">
           <CommentSection 
             pageId={`project-${project.id}`} 
-            title="Discussion" 
-            description="Share your thoughts on this project."
+            title={t('projectDetail.discussion')}
+            description={t('projectDetail.shareThoughts')}
           />
         </section>
 

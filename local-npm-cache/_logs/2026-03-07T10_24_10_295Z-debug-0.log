@@ -1,0 +1,16 @@
+0 verbose cli /usr/local/bin/node /usr/local/lib/node_modules/npm/bin/npm-cli.js
+1 info using npm@10.9.3
+2 info using node@v22.18.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/bytedance/.npmrc
+5 silly config load:file:/Users/bytedance/.npm-global/etc/npmrc
+6 verbose title npm exec hexo clean
+7 verbose argv "exec" "--" "hexo" "clean"
+8 verbose logfile logs-max:10 dir:/Users/bytedance/Desktop/TREA/ai_lab/local-npm-cache/_logs/2026-03-07T10_24_10_295Z-
+9 verbose logfile /Users/bytedance/Desktop/TREA/ai_lab/local-npm-cache/_logs/2026-03-07T10_24_10_295Z-debug-0.log
+10 silly logfile done cleaning log files
+11 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+12 http fetch GET 200 https://registry.npmmirror.com/hexo 224ms (cache miss)
+13 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+14 http fetch GET 200 https://registry.npmmirror.com/npm 348ms
+15 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368

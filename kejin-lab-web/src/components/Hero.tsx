@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
   return (
     <section 
       id="home"
-      className="relative min-h-[100dvh] w-full overflow-hidden bg-gradient-to-b from-white to-google-grey-100 flex flex-col items-center justify-center"
+      className="relative min-h-[100dvh] w-full overflow-hidden flex flex-col items-center justify-center"
       onMouseMove={handleMouseMove}
     >
       {/* 0. Background Sphere Grid - Compact & Orbiting */}

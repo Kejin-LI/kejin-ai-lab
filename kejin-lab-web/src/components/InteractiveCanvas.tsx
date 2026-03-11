@@ -74,7 +74,7 @@ const InteractiveCanvas = () => {
       canvas.width = width;
       canvas.height = height;
       
-      const spacing = 120; // Increased spacing -> Fewer points (was 80)
+      const spacing = 100; // Decreased spacing -> More points (was 120)
       const cols = Math.ceil(width / spacing);
       const rows = Math.ceil(height / spacing);
       
@@ -97,7 +97,7 @@ const InteractiveCanvas = () => {
             // Increase size by 1x (from 1.25-2.0 to 2.5-4.0)
             size: Math.random() * 1.5 + 2.5, 
             phase: Math.random() * Math.PI * 2,
-            assignedAngle: Math.random() * Math.PI * 2 // Random uniform distribution angle
+            assignedAngle: Math.floor(Math.random() * 3) * (2 * Math.PI / 3) + (Math.random() - 0.5) * 0.5 // Triangle distribution
           });
         }
       }
@@ -132,33 +132,68 @@ const InteractiveCanvas = () => {
                  point.vx += (Math.random() - 0.5) * 0.05; 
                  point.vy += (Math.random() - 0.5) * 0.05;
              } else {
-                 // GATHER - Prism/Diamond Formation logic
-                 // Instead of a cloud, we pull points towards a specific geometric shape (Prism/Diamond).
+                 // GATHER - Triangle Formation logic
+                 // We pull points towards a specific geometric shape (Triangle).
                  // We use a pre-assigned random angle for each point to ensure uniform distribution around the shape.
                  
-                 const angle = point.assignedAngle; // Use the pre-assigned uniform angle!
+                 let angle = point.assignedAngle; 
                  
-                 // Prism shape formula (Diamond/Rhombus-like)
-                 // r = size / (|cos(theta)| + |sin(theta)|) for a square/diamond
-                 // We can adjust the exponents to make it sharper or softer.
-                 // Let's create a diamond shape: |x| + |y| = r
-                 // In polar: r = R / (|cos| + |sin|)
+                 // Triangle shape formula
+                 // We distribute points along 3 edges of an equilateral triangle
+                 // Center is mouse position
+                 // Side length = 200
                  
-                 const baseRadius = 100; // Size of the prism
-                 const distortion = Math.abs(Math.cos(angle)) + Math.abs(Math.sin(angle));
-                 const prismRadius = baseRadius / distortion;
+                 const sideLength = 200;
+                 const height = sideLength * Math.sqrt(3) / 2;
                  
-                 // Add some "layers" to the prism based on point size to give it volume
-                 // Smaller points go inside, larger points go outside
-                 const layerOffset = (point.size - 2) * 20; 
-                 const targetRadius = prismRadius + layerOffset + (Math.random() * 10);
+                 // 3 Vertices relative to center (0,0)
+                 // Top vertex
+                 const v1 = { x: 0, y: -height * 2/3 };
+                 // Bottom right
+                 const v2 = { x: sideLength / 2, y: height / 3 };
+                 // Bottom left
+                 const v3 = { x: -sideLength / 2, y: height / 3 };
                  
-                 const targetX = mouseRef.current.x - Math.cos(angle) * targetRadius;
-                 const targetY = mouseRef.current.y - Math.sin(angle) * targetRadius;
+                 // Determine which edge this point belongs to based on assignedAngle
+                 // assignedAngle is roughly 0, 2PI/3, 4PI/3 plus some jitter
+                 // Normalize angle to 0-2PI
+                 let normalizedAngle = (angle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+                 
+                 let start, end;
+                 
+                 // Divide into 3 segments
+                 if (normalizedAngle < 2 * Math.PI / 3) {
+                     // Edge 1: v1 -> v2 (Right edge)
+                     start = v1;
+                     end = v2;
+                 } else if (normalizedAngle < 4 * Math.PI / 3) {
+                     // Edge 2: v2 -> v3 (Bottom edge)
+                     start = v2;
+                     end = v3;
+                 } else {
+                     // Edge 3: v3 -> v1 (Left edge)
+                     start = v3;
+                     end = v1;
+                 }
+                 
+                 // Interpolate along the edge
+                 // Use the fractional part of the jitter to position along the line
+                 const t = (angle * 10) % 1; // Pseudo-random position along edge
+                 
+                 // Dynamic balancing: slightly shift t based on point index to ensure even spread
+                 // This is handled implicitly by random initialization, but we can add a small drift
+                 // to "fill gaps" if we tracked density, but random is usually sufficient for visual "uniformity"
+                 
+                 let targetX = start.x + (end.x - start.x) * t;
+                 let targetY = start.y + (end.y - start.y) * t;
+                 
+                 // Add mouse offset
+                 const finalTargetX = mouseRef.current.x + targetX;
+                 const finalTargetY = mouseRef.current.y + targetY;
                  
                  // Spring force - Sharper pull to maintain shape
-                 const ax = (targetX - point.x) * 0.001;
-                 const ay = (targetY - point.y) * 0.001;
+                 const ax = (finalTargetX - point.x) * 0.001;
+                 const ay = (finalTargetY - point.y) * 0.001;
                  
                  point.vx += ax;
                  point.vy += ay;

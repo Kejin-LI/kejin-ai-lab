@@ -1,0 +1,6 @@
+if theme.aside.card_categories.enable
+  - let currentLang = page.lang || page.language || config.language[0]
+  - let categories = site.categories.filter(cat => cat.posts.some(p => p.lang === currentLang))
+  if categories.length
+    .card-widget.card-categories
+      !=aside_categories(categories, { limit: theme.aside.card_categories.limit === 0 ? 0 : theme.aside.card_categories.limit || 8 , expand: theme.aside.card_categories.expand })

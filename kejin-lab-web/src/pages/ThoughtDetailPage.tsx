@@ -3,11 +3,13 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Clock, Calendar, Share2, MessageSquare, Send, ThumbsUp, User, Bookmark } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { cn } from '../lib/utils';
 import { supabase } from '../lib/supabase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import CommentSection from '../components/CommentSection';
+import AuthModal from '../components/AuthModal';
 
 // Reusing themes from ThoughtsPage (in a real app, this would be shared)
 const THOUGHT_THEMES = [
@@ -227,38 +229,179 @@ const ThoughtDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { t, i18n } = useTranslation();
   const [thought, setThought] = useState<any>(null);
-  const [comments, setComments] = useState([
-    { id: 1, user: "Alex Chen", avatar: "AC", content: "This is a fascinating perspective! I completely agree about the shift to intent-based interfaces.", date: "2 days ago", likes: 12 },
-    { id: 2, user: "Sarah Jones", avatar: "SJ", content: "Great read. I wonder how this will affect junior designers entering the field?", date: "1 day ago", likes: 8 }
-  ]);
-  const [newComment, setNewComment] = useState("");
+  
+  // Likes state
+  const [likes, setLikes] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [recentLikers, setRecentLikers] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
       setThought(getThoughtById(id, t, i18n));
+      fetchLikes(id);
     }
   }, [id, t, i18n.language]);
 
-  if (!thought) return <div className="min-h-screen pt-32 text-center">Loading...</div>;
+  // Check auth state
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser && id) {
+        checkIfLiked(currentUser.id, id);
+      }
+    });
 
-  const handlePostComment = () => {
-    if (!newComment.trim()) return;
-    setComments([
-      { 
-        id: Date.now(), 
-        user: "You", 
-        avatar: "ME", 
-        content: newComment, 
-        date: "Just now", 
-        likes: 0 
-      }, 
-      ...comments
-    ]);
-    setNewComment("");
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      const currentUser = session?.user ?? null;
+      setUser(currentUser);
+      if (currentUser && id) {
+        checkIfLiked(currentUser.id, id);
+      } else {
+        setIsLiked(false);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [id]);
+
+  const fetchLikes = async (pageId: string) => {
+    try {
+      // Get count
+      const { count, error } = await supabase
+        .from('page_likes')
+        .select('*', { count: 'exact', head: true })
+        .eq('page_id', `thought-${pageId}`);
+      
+      if (!error && count !== null) {
+        setLikes(count);
+      }
+
+      // Get recent likers
+      const { data: likers, error: likersError } = await supabase
+        .from('page_likes')
+        .select('avatar_url, nickname')
+        .eq('page_id', `thought-${pageId}`)
+        .order('created_at', { ascending: false })
+        .limit(10);
+
+      if (!likersError && likers) {
+        setRecentLikers(likers);
+      }
+    } catch (err) {
+      console.error("Error fetching likes:", err);
+    }
   };
+
+  const checkIfLiked = async (userId: string, pageId: string) => {
+    const { data } = await supabase
+      .from('page_likes')
+      .select('id')
+      .eq('page_id', `thought-${pageId}`)
+      .eq('user_id', userId)
+      .single();
+    
+    setIsLiked(!!data);
+  };
+
+  const handleLike = async () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    if (!thought) return;
+    
+    const pageId = `thought-${thought.id}`;
+
+    // Optimistic update
+    const prevLikes = likes;
+    const prevIsLiked = isLiked;
+    const prevLikers = recentLikers;
+
+    if (isLiked) {
+      setLikes(prev => Math.max(0, prev - 1));
+      setIsLiked(false);
+      setRecentLikers(prev => prev.filter(l => l.nickname !== (user.user_metadata?.full_name || user.email)));
+    } else {
+      setLikes(prev => prev + 1);
+      setIsLiked(true);
+      const newLiker = {
+        avatar_url: user.user_metadata?.avatar_url,
+        nickname: user.user_metadata?.full_name || user.email
+      };
+      setRecentLikers(prev => [newLiker, ...prev].slice(0, 10));
+      
+      // Confetti
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#4285F4', '#DB4437', '#F4B400', '#0F9D58'] // Google colors
+      });
+    }
+
+    try {
+      if (prevIsLiked) {
+        // Unlike
+        // Try to delete using both page_id formats to be safe
+        const { error } = await supabase
+          .from('page_likes')
+          .delete()
+          .eq('user_id', user.id)
+          .in('page_id', [pageId, thought.id]); // Handle both "thought-1" and "1"
+        
+        if (error) throw error;
+      } else {
+        // Like
+        // Check if already exists first to avoid duplicate key error
+        const { data: existingLike } = await supabase
+          .from('page_likes')
+          .select('id')
+          .eq('page_id', pageId)
+          .eq('user_id', user.id)
+          .single();
+
+        if (!existingLike) {
+            const { error } = await supabase
+            .from('page_likes')
+            .insert({
+                page_id: pageId,
+                user_id: user.id,
+                avatar_url: user.user_metadata?.avatar_url,
+                nickname: user.user_metadata?.full_name || user.email
+            });
+            
+            if (error) throw error;
+        }
+      }
+      
+      // Refresh to ensure sync
+      fetchLikes(thought.id);
+    } catch (error: any) {
+      console.error('Error toggling like:', error);
+      
+      // If table doesn't exist, keep the optimistic update (Demo mode)
+      if (error?.code === 'PGRST205' || error?.message?.includes('page_likes')) {
+        console.warn('Page Likes table missing. Running in demo mode (local state only).');
+        // Do not revert state
+      } else {
+        // Revert for other errors
+        setLikes(prevLikes);
+        setIsLiked(prevIsLiked);
+        setRecentLikers(prevLikers);
+      }
+    }
+  };
+
+  if (!thought) return <div className="min-h-screen pt-32 text-center">Loading...</div>;
 
   return (
     <div className="min-h-screen bg-white">
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
+
       {/* Navigation Bar Placeholder - Fixed */}
       <div className="fixed top-24 left-6 z-40 md:left-12">
         <Link 
@@ -355,14 +498,39 @@ const ThoughtDetailPage: React.FC = () => {
           
           <div className="mt-16 pt-8 border-t border-google-grey-200 flex items-center justify-center">
              <div className="flex flex-col items-center gap-4">
-                <p className="text-sm text-google-grey-500 font-medium uppercase tracking-widest">Thanks for reading</p>
-                <button className={cn(
+                <p className="text-sm text-google-grey-500 font-medium uppercase tracking-widest">{t('common.thanksForReading', 'Thanks for reading')}</p>
+                <button 
+                  onClick={handleLike}
+                  className={cn(
                   "flex items-center gap-2 px-6 py-3 rounded-full text-white font-bold transition-transform active:scale-95 hover:shadow-lg",
-                  thought.theme.iconBg
+                  thought.theme.iconBg,
+                  isLiked ? "ring-4 ring-offset-2 ring-google-grey-200" : ""
                 )}>
-                  <ThumbsUp className="w-5 h-5" />
-                  <span>Like this article</span>
+                  <ThumbsUp className={cn("w-5 h-5", isLiked ? "fill-current" : "")} />
+                  <span>{isLiked ? t('common.liked', 'Liked') : t('common.likeArticle', 'Like this article')} ({likes})</span>
                 </button>
+
+                {/* Recent Likers */}
+                {recentLikers.length > 0 && (
+                  <div className="flex items-center gap-2 mt-2">
+                    <div className="flex -space-x-2">
+                      {recentLikers.slice(0, 10).map((liker, i) => (
+                        <div key={i} className="w-8 h-8 rounded-full border-2 border-white overflow-hidden bg-gray-200" title={liker.nickname}>
+                          {liker.avatar_url ? (
+                            <img src={liker.avatar_url} alt={liker.nickname} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-gray-500">
+                              {liker.nickname?.[0]?.toUpperCase() || 'U'}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    {likes > 10 && (
+                      <span className="text-xs text-gray-500 font-medium">+{likes - 10}</span>
+                    )}
+                  </div>
+                )}
              </div>
           </div>
         </div>
@@ -372,8 +540,8 @@ const ThoughtDetailPage: React.FC = () => {
       <section className="bg-google-grey-50 py-16 md:py-24">
         <CommentSection 
           pageId={`thought-${thought.id}`} 
-          title="Discussion" 
-          description="Share your thoughts on this article."
+          title={i18n.language === 'zh' ? '讨论' : 'Discussion'}
+          description={i18n.language === 'zh' ? '分享您对这篇文章的想法。' : 'Share your thoughts on this article.'}
         />
       </section>
     </div>

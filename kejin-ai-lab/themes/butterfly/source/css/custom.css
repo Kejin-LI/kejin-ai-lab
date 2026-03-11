@@ -1,0 +1,323 @@
+/* =========================================
+   Google Labs Style v2: Neon & Glass (macOS Vibes)
+   ========================================= */
+
+:root {
+  /* Core Colors */
+  --labs-bg: #FFFFFF;
+  --labs-text: #000000;
+  --labs-pink: #FFD6F4; /* 浅粉 Banner */
+  --labs-green: #30FF8F; /* 霓虹绿按钮 */
+  
+  /* Accents */
+  --accent-purple: #9D85FF;
+  --accent-blue: #4F9DFF;
+  --accent-orange: #FF9F5A;
+  --accent-yellow: #F2FF4A;
+  
+  /* Dimensions */
+  --card-radius: 24px;
+  --btn-radius: 999px; /* Pill shape */
+  
+  /* macOS Glass */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --glass-blur: blur(20px);
+}
+
+/* 1. Global Reset & Typography */
+html {
+  background-color: #FFFFFF !important; /* Force white background to prevent dark mode black screen */
+}
+
+body {
+  background-color: transparent !important; /* Allow web_bg and canvas_nest to show through */
+  color: var(--labs-text);
+  font-family: 'Google Sans', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#web_bg { 
+  background-color: #FFFFFF !important; /* Force white background */
+  z-index: -2 !important; /* Ensure it is behind canvas_nest (z-index: -1) */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+/* 2. Hero Section Redesign (White + Blobs) */
+#page-header.full_page,
+#page-header:not(.post-bg) { /* Apply to all non-post headers (Home/Page) */
+  /* 白色背景 + 彩色斑块模拟 */
+  background-color: #FFFFFF !important;
+  background-image: 
+    radial-gradient(circle at 10% 30%, rgba(157, 133, 255, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at 90% 10%, rgba(48, 255, 143, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(255, 159, 90, 0.2) 0%, transparent 25%),
+    radial-gradient(circle at 20% 80%, rgba(79, 157, 255, 0.2) 0%, transparent 30%) !important;
+  background-size: 100% 100%;
+  padding-top: 0; /* Remove padding to allow absolute positioning */
+  position: relative;
+}
+
+/* Pink Banner at Top - Background handled by JS Canvas now */
+#page-header.full_page::before,
+#page-header:not(.post-bg)::before {
+  content: ""; /* Text removed as requested */
+  display: none; /* Hide element completely */
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px; /* Keep height for text centering */
+  background-color: transparent; /* Remove solid pink, let canvas show */
+  color: #000;
+  font-weight: 600;
+  font-size: 1.1rem;
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass through */
+}
+
+/* Ensure height is correct for Canvas */
+#page-header:not(.post-bg) {
+  height: 100vh;
+}
+
+/* Special handling for left-top brand name in header */
+#page-header .site-name {
+  font-size: 1.5rem !important;
+  color: #000 !important;
+  text-shadow: none !important;
+}
+
+/* Force Kejin AI Lab in header for ALL languages */
+html #page-header .site-name {
+  font-size: 0 !important;
+}
+html #page-header .site-name::after {
+  content: "Kejin AI Lab" !important;
+  font-size: 1.5rem !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Fix Hero Title replacement logic */
+/* Chinese Locale: AI 棱镜实验室 */
+html[lang^='zh'] #site-title {
+  font-size: 0 !important;
+  line-height: 1.2;
+}
+html[lang^='zh'] #site-title::after {
+  content: "AI 棱镜实验室" !important;
+  font-size: 5.5rem !important;
+  display: block !important;
+  color: #000 !important;
+  letter-spacing: -0.05em;
+  margin-top: 10px;
+  visibility: visible;
+}
+
+/* English/Other Locale: Prism AI */
+html:not([lang^='zh']) #site-title {
+  font-size: 0 !important;
+  line-height: 1.2;
+}
+html:not([lang^='zh']) #site-title::after {
+  content: "Prism AI" !important;
+  font-size: 5.5rem !important;
+  display: block !important;
+  color: #000 !important;
+  letter-spacing: -0.05em;
+  margin-top: 10px;
+  visibility: visible;
+}
+
+/* Navigation Bar Adjustments */
+#page-header #nav {
+  background: transparent !important;
+  box-shadow: none !important;
+  transition: all 0.3s;
+  z-index: 20;
+}
+#page-header #nav a {
+  color: #000 !important;
+  text-shadow: none !important;
+}
+
+/* Sticky Nav with Glass Effect */
+#page-header.nav-fixed #nav {
+  background: var(--glass-bg) !important;
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border-bottom: var(--glass-border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+}
+
+/* Hero Text - Positioned at Top */
+#site-info {
+  top: 45% !important; /* Move to center (slightly above absolute center for visual balance) */
+  transform: translateY(-50%);
+  padding: 0 !important;
+  width: 100%;
+  z-index: 15;
+}
+
+#site-title {
+  color: #000 !important;
+  font-size: 5.5rem !important;
+  letter-spacing: -0.05em;
+  margin-bottom: 24px !important;
+  text-shadow: none !important;
+  background: transparent !important; /* Ensure transparent */
+}
+#site-title::before { /* FEATURING */
+  /* Default content (English) */
+  content: "AI Product Engineer = Idea + AI Coding";
+  display: block;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+  margin-bottom: 10px;
+}
+
+/* Chinese content for specific lang attribute - using broader selector */
+html[lang^='zh'] #site-title::before {
+  content: "AI产品工程师 = 想法 + AI编程";
+  /* Restore subtitle size */
+  font-size: 1rem !important;
+  display: block;
+}
+
+/* Hide Prism AI text by setting font size to 0 */
+/* html[lang^='zh'] #site-title { ... } - REMOVED (Handled above) */
+
+/* Ensure the pseudo-element for Chinese title is visible and styled correctly */
+/* html[lang^='zh'] #site-title::after { ... } - REMOVED (Handled above) */
+
+@media screen and (max-width: 768px) {
+  html[lang^='zh'] #site-title::after { font-size: 3rem !important; }
+}
+
+#site-title::after { /* EXPERIMENT Badge - REMOVED for default/EN */
+  content: "";
+  display: none;
+}
+#site-subtitle {
+  color: #000 !important;
+  font-weight: 500;
+  font-size: 1.5rem !important;
+  opacity: 0.8;
+  text-shadow: none !important;
+}
+
+/* 3. Neon Green "Learn More" Button */
+#scroll-down {
+  bottom: 120px !important;
+  width: auto !important;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: none !important;
+}
+#scroll-down .scroll-down-effects {
+  background-color: var(--labs-green) !important;
+  color: #000 !important;
+  padding: 16px 40px;
+  border-radius: 999px;
+  font-size: 1.2rem !important;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(48, 255, 143, 0.4);
+  /* transform: rotate(-3deg); Removed rotation */
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  width: auto;
+}
+#scroll-down .scroll-down-effects:hover {
+  /* transform: rotate(0deg) scale(1.1) translateY(-5px); Removed animation */
+  transform: scale(1.05); /* minimal hover effect */
+  box-shadow: 0 20px 50px rgba(48, 255, 143, 0.5);
+}
+/* Replace Icon with Text */
+#scroll-down .scroll-down-effects::before {
+  content: "Learn More";
+  font-family: inherit;
+}
+/* Chinese for Learn More */
+html[lang^='zh'] #scroll-down .scroll-down-effects::before {
+  content: "了解更多";
+}
+#scroll-down .scroll-down-effects i { display: none; }
+
+
+/* 4. Cards: macOS Glass Style - Optimized */
+.card-widget, 
+.recent-post-item,
+#footer,
+.layout > div:first-child:not(.recent-posts) {
+  border-radius: var(--card-radius) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  /* Performance Optimization: Removed backdrop-filter from cards as they sit on white background */
+  /* backdrop-filter: blur(10px); */
+  /* -webkit-backdrop-filter: blur(10px); */
+  border: 1px solid rgba(0,0,0,0.05);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.card-widget:hover, 
+.recent-post-item:hover {
+  background: #fff !important;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+/* 5. Colorful Tags (Pill Shape) */
+.card-tag-cloud a {
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.card-tag-cloud a:nth-child(4n+1) { background: rgba(157, 133, 255, 0.1); color: var(--accent-purple) !important; }
+.card-tag-cloud a:nth-child(4n+2) { background: rgba(79, 157, 255, 0.1); color: var(--accent-blue) !important; }
+.card-tag-cloud a:nth-child(4n+3) { background: rgba(255, 159, 90, 0.1); color: var(--accent-orange) !important; }
+.card-tag-cloud a:nth-child(4n+4) { background: rgba(48, 255, 143, 0.15); color: #00a854 !important; }
+
+.card-tag-cloud a:hover {
+  transform: scale(1.1) rotate(2deg);
+  opacity: 1;
+}
+
+/* 6. Read More Button - Black Pill */
+.recent-post-item .article-meta .article-more-link a {
+  border-radius: 999px !important;
+  background: #000 !important;
+  color: #FFF !important;
+  font-weight: 600;
+  padding: 10px 28px;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s;
+}
+.recent-post-item .article-meta .article-more-link a:hover {
+  background: var(--accent-blue) !important;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(79, 157, 255, 0.4);
+}
+
+/* Fix Back to Top Button Icon Color */
+#go-up i, #rightside_config i {
+  color: #FFFFFF !important;
+}
+
+/* 7. Mobile Adjustments */
+@media screen and (max-width: 768px) {
+  #site-title { font-size: 3rem !important; }
+  #page-header.full_page::before { font-size: 0.9rem; padding: 0 20px; text-align: center; }
+  #scroll-down .scroll-down-effects { padding: 12px 30px; font-size: 1rem !important; }
+}

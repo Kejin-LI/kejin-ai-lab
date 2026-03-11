@@ -30,7 +30,7 @@ function App() {
       {!isAdminRoute && <Header />}
       
       {/* Main Content - Increased z-index to 40 to ensure fixed elements inside (like Try it Now button) are above Footer (z-10) */}
-      <main className={`relative z-40 ${isAdminRoute ? 'h-screen' : ''}`}>
+      <main className={`relative z-40 bg-transparent ${isAdminRoute ? 'h-screen' : ''}`}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/projects" element={<ProjectsPage />} />
