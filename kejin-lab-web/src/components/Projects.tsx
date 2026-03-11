@@ -176,9 +176,17 @@ const Projects: React.FC = () => {
                       {currentProject.title}
                     </h3>
                     
-                    <p className="text-base md:text-xl font-medium opacity-80 mb-6 md:mb-10 max-w-md leading-relaxed line-clamp-3 md:line-clamp-none">
-                      {currentProject.description}
-                    </p>
+                    <div className="relative group/desc">
+                      <p className="text-base md:text-xl font-medium opacity-80 mb-6 md:mb-10 max-w-md leading-relaxed line-clamp-3 transition-all duration-300">
+                        {currentProject.description}
+                      </p>
+                      {/* Hover Popup for Full Text */}
+                      <div className="absolute top-0 left-0 w-full bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-xl border border-black/5 opacity-0 invisible group-hover/desc:opacity-100 group-hover/desc:visible transition-all duration-300 z-50 transform scale-95 group-hover/desc:scale-100 origin-top-left">
+                        <p className="text-sm md:text-base font-medium text-google-grey-900 leading-relaxed">
+                          {currentProject.description}
+                        </p>
+                      </div>
+                    </div>
                     
                     <div>
                       <Link 
