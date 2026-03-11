@@ -37,6 +37,14 @@ const Header: React.FC = () => {
     return location.pathname.startsWith(path);
   };
 
+  const handleNavClick = (path: string, e: React.MouseEvent) => {
+    // If clicking Home link while already on Home, prevent default and scroll to top
+    if (path === '/' && location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -45,7 +53,11 @@ const Header: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Brand */}
-        <Link to="/" className="text-2xl font-bold tracking-tight text-google-grey-900 flex items-center gap-3">
+        <Link 
+          to="/" 
+          onClick={(e) => handleNavClick('/', e)}
+          className="text-2xl font-bold tracking-tight text-google-grey-900 flex items-center gap-3"
+        >
           <motion.div 
             className="w-8 h-8 relative flex items-center justify-center origin-bottom"
             whileHover={{ rotate: [0, -10, 10, -5, 5, 0] }}
@@ -65,6 +77,7 @@ const Header: React.FC = () => {
             <Link 
               key={link.key} 
               to={link.path} 
+              onClick={(e) => handleNavClick(link.path, e)}
               className={`px-4 py-2 rounded-full font-normal transition-all duration-200 ${
                 isCurrentPath(link.path)
                   ? 'bg-google-grey-900 text-white' 
