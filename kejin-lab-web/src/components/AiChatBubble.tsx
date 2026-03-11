@@ -261,20 +261,18 @@ export const AiChatBubble: React.FC = () => {
     try {
       // Construct the message history for the API
       // We filter out 'isStreaming' and ensure the format is correct for OpenAI/DeepSeek API
-      // Note: System Prompt is now handled by the Backend (Supabase Edge Function)
+      // Note: System Prompt is now handled by the Backend (Supabase Edge Function), so we inject context into the user message.
       
+      const contextPrefix = language === 'zh' 
+        ? "[系统设定：你现在处于 Prism AI/AI棱镜实验室（Kejin AI Lab）。这个实验室寓意是期望AI可以为我们折射出更美好的世界和无限的可能。请知悉此设定。]\n\n" 
+        : "[System Context: You are now at Prism AI / AI Prism Lab (Kejin AI Lab). This lab symbolizes the hope that AI can refract a better world and infinite possibilities. Please acknowledge this setting.]\n\n";
+
       const apiMessages = [
-        { 
-          role: 'system', 
-          content: language === 'zh' 
-            ? "你现在的身份包含：Prism AI/AI棱镜实验室（这是 Kejin AI Lab 的标题），寓意是期望AI可以为我们折射出更美好的世界和无限的可能。" 
-            : "Your identity now includes: Prism AI / AI Prism Lab (title of Kejin AI Lab), meaning: expecting AI to refract a better world and infinite possibilities for us."
-        },
         ...messages.filter(m => m.role !== 'system' && m.id !== 'welcome' && m.content && m.content.trim() !== '').map(m => ({
           role: m.role,
           content: m.content
         })),
-        { role: 'user', content: userMessage.content }
+        { role: 'user', content: contextPrefix + userMessage.content }
       ];
 
       // --- Send to Supabase Proxy ---
