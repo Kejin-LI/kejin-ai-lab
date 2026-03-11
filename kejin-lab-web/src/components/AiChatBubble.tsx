@@ -24,8 +24,8 @@ export const AiChatBubble: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   
   // --- Text Constants based on Language ---
-  const WELCOME_MESSAGE_CN = "👋 嘿！我是李珂瑾的数字分身。我有她所有的“黑历史”（划掉）和项目经验。\n\n想知道我怎么把 ROI 挖出来的？或者聊聊 Agent 怎么搞？随便问，我主打一个知无不言（只要不涉及商业机密😜）。";
-  const WELCOME_MESSAGE_EN = "👋 Hey! I'm Kejin Li's digital twin. I have all her 'dark history' (scratched) and project experience.\n\nWant to know how I dig out ROI? Or chat about how to build Agents? Ask me anything, I'm an open book (as long as it's not a trade secret 😜).";
+  const WELCOME_MESSAGE_CN = "👋 嘿！我是李珂瑾的数字分身。欢迎来到 Prism AI/AI棱镜实验室（Kejin AI Lab），这里的寓意是期望AI可以为我们折射出更美好的世界和无限的可能。\n\n我有她所有的“黑历史”（划掉）和项目经验。想知道我怎么把 ROI 挖出来的？或者聊聊 Agent 怎么搞？随便问，我主打一个知无不言（只要不涉及商业机密😜）。";
+  const WELCOME_MESSAGE_EN = "👋 Hey! I'm Kejin Li's digital twin. Welcome to Prism AI / AI Prism Lab (Kejin AI Lab), which symbolizes the hope that AI can refract a better world and infinite possibilities for us.\n\nI have all her 'dark history' (scratched) and project experience. Want to know how I dig out ROI? Or chat about how to build Agents? Ask me anything, I'm an open book (as long as it's not a trade secret 😜).";
 
   const LIMIT_MESSAGE_CN = "😅 哎哟，今天问太多啦，明天再来吧！李珂瑾的 tokens 快要被你薅完啦（钱包在滴血🩸）～ 如果你有兴趣多交流，欢迎在网站下方的留言板留言，或者直接发邮件给她哦！📫";
   const LIMIT_MESSAGE_EN = "😅 Oops, too many questions today, come back tomorrow! Kejin's tokens are almost depleted by you (wallet is bleeding 🩸)~ If you want to chat more, feel free to leave a message on the board below or email her directly! 📫";
@@ -264,6 +264,12 @@ export const AiChatBubble: React.FC = () => {
       // Note: System Prompt is now handled by the Backend (Supabase Edge Function)
       
       const apiMessages = [
+        { 
+          role: 'system', 
+          content: language === 'zh' 
+            ? "你现在的身份包含：Prism AI/AI棱镜实验室（这是 Kejin AI Lab 的标题），寓意是期望AI可以为我们折射出更美好的世界和无限的可能。" 
+            : "Your identity now includes: Prism AI / AI Prism Lab (title of Kejin AI Lab), meaning: expecting AI to refract a better world and infinite possibilities for us."
+        },
         ...messages.filter(m => m.role !== 'system' && m.id !== 'welcome' && m.content && m.content.trim() !== '').map(m => ({
           role: m.role,
           content: m.content
