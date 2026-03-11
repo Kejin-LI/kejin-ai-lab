@@ -32,6 +32,11 @@ const Header: React.FC = () => {
     { key: 'contact', label: t('nav.contact'), path: '/community' },
   ];
 
+  const isCurrentPath = (path: string) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -61,7 +66,7 @@ const Header: React.FC = () => {
               key={link.key} 
               to={link.path} 
               className={`px-4 py-2 rounded-full font-normal transition-all duration-200 ${
-                location.pathname === link.path 
+                isCurrentPath(link.path)
                   ? 'bg-google-grey-900 text-white' 
                   : 'text-google-grey-700 hover:text-google-grey-900 hover:bg-google-grey-100'
               }`}

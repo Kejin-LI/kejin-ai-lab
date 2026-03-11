@@ -1,11 +1,13 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence } from 'framer-motion';
 import Header from './components/Header';
 import InteractiveCanvas from './components/InteractiveCanvas';
 import AiChatBubble from './components/AiChatBubble';
 import ScrollToAnchor from './components/ScrollToAnchor';
 import Footer from './components/Footer';
+import Loader from './components/Loader';
 import Home from './pages/Home';
 import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
@@ -22,9 +24,25 @@ function App() {
   useDynamicTitle();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith('/admin');
+  const [loading, setLoading] = useState(true);
+
+  // Simulate initial loading
+  useEffect(() => {
+    // Only show loader on initial mount (hard refresh)
+    // or we could check session storage to only show once per session
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500); // 2.5s loading time to match animation
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <div className="min-h-screen bg-labs-bg text-labs-text font-sans selection:bg-labs-pink selection:text-black">
+      <AnimatePresence mode="wait">
+        {loading && <Loader key="loader" />}
+      </AnimatePresence>
+
       <ScrollToAnchor />
       {!isAdminRoute && <InteractiveCanvas />}
       {!isAdminRoute && <Header />}
