@@ -1,0 +1,32 @@
+/* Import Google Sans (or fallback) */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply bg-white text-google-grey-900 antialiased;
+  }
+  
+  body {
+    @apply bg-transparent font-sans;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism utility for Google-style cards */
+  .glass-panel {
+    @apply bg-white/80 border border-white/40 shadow-glass backdrop-blur-2xl;
+  }
+
+  .glass-card {
+    @apply bg-white/60 border border-white/60 shadow-glass backdrop-blur-2xl rounded-4xl transition-all duration-300 hover:bg-white/90 hover:-translate-y-1 hover:shadow-glass-hover;
+  }
+  
+  /* Google AI Gradient Text */
+  .text-gradient-ai {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-google-blue via-labs-purple to-google-red;
+  }
+}

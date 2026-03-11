@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <!-- Rounded Rectangle Background - Labs Pink -->
+  <rect width="64" height="64" rx="14" fill="#FFD6F4"/>
+  
+  <!-- Prism Icon - Google Black -->
+  <path fill="#202124" d="M32 12L14 48H50L32 12ZM32 18L44 42H20L32 18Z"/>
+  <!-- Light Beam Effect (Optional Detail) -->
+  <path fill="#202124" fill-opacity="0.3" d="M48 24L58 18M50 30L60 30M48 36L58 42" stroke="#202124" stroke-width="2" stroke-linecap="round"/>
+</svg>

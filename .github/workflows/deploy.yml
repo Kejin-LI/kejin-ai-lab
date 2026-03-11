@@ -19,16 +19,16 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
-          cache-dependency-path: kejin-ai-lab/package-lock.json
+          cache-dependency-path: kejin-lab-web/package-lock.json
 
       - run: npm ci
-        working-directory: kejin-ai-lab
+        working-directory: kejin-lab-web
       
       - run: npm run build
-        working-directory: kejin-ai-lab
+        working-directory: kejin-lab-web
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: kejin-ai-lab/dist
+          folder: kejin-lab-web/dist
           branch: gh-pages # The branch the action should deploy to.
