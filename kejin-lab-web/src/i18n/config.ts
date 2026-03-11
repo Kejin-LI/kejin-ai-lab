@@ -338,8 +338,8 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'en', // Default language
-    fallbackLng: 'en',
+    lng: (typeof navigator !== 'undefined' && navigator.language && navigator.language.startsWith('en')) ? 'en' : 'zh', // Detect language: English if en*, else Chinese
+    fallbackLng: 'zh',
     interpolation: {
       escapeValue: false // React already safes from xss
     }
