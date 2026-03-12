@@ -9,8 +9,8 @@ export const useDynamicTitle = () => {
 
     const updateMetaTags = () => {
       const description = isZh 
-        ? "Prism AI / AI棱镜实验室（Kejin AI Lab），这里的寓意是期望AI可以为我们折射出更美好的世界和无限的可能。探索构建自主智能体、创意工具与实验性界面。" 
-        : "Prism AI / AI Prism Lab (Kejin AI Lab), symbolizing the hope that AI can refract a better world and infinite possibilities for us. Exploring autonomous agents, creative tools, and experimental interfaces.";
+        ? "🤖 欢迎来到 Prism AI / AI 棱镜实验室！这里不生产无聊的代码，只折射未来的光。有会吐槽的数字分身、脑洞大开的 AI 原生应用，还有...还没想好，反正很酷！🚀" 
+        : "🤖 Welcome to Prism AI / AI Prism Lab! We don't ship boring code, we refract the future. Featuring a sassy Digital Twin, mind-bending AI-Native Apps, and... well, we're figuring it out, but it's cool! 🚀";
       
       const title = isZh 
         ? 'Kejin AI Lab - 探索 AI 原生交互的疆界' 
