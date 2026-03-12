@@ -395,7 +395,7 @@ export const AiChatBubble: React.FC = () => {
           setIsOpen(!isOpen);
           setShowGuide(false);
         }}
-        className="fixed bottom-6 right-6 z-50 p-0 bg-transparent rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group"
+        className="fixed bottom-16 right-6 z-50 p-0 bg-transparent rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 group"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
@@ -507,7 +507,7 @@ export const AiChatBubble: React.FC = () => {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-28 right-6 w-[350px] md:w-[400px] h-[500px] bg-white rounded-3xl shadow-2xl border border-white/60 backdrop-blur-md flex flex-col overflow-hidden z-50 font-sans"
+            className="fixed bottom-40 right-6 w-[350px] md:w-[400px] h-[500px] bg-white rounded-3xl shadow-2xl border border-white/60 backdrop-blur-md flex flex-col overflow-hidden z-50 font-sans"
           >
             {/* Header */}
             <div className="p-4 bg-gradient-to-r from-labs-purple/10 to-labs-blue/10 border-b border-google-grey-900/5 flex items-center justify-between">

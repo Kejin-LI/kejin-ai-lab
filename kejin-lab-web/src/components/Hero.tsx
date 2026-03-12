@@ -16,8 +16,8 @@ const Hero: React.FC = () => {
     stiffness: 400 
   });
   
-  const topWaveY = useTransform(smoothVelocityY, [-2000, 2000], [-150, 150]);
-  const bottomWaveY = useTransform(smoothVelocityY, [-2000, 2000], [5, -5]);
+  const topWaveY = useTransform(smoothVelocityY, [-2000, 2000], [-200, 200]);
+  const bottomWaveY = useTransform(smoothVelocityY, [-2000, 2000], [100, -100]);
 
   const handleMouseMove = (e: React.MouseEvent) => {
     mouseY.set(e.clientY);
@@ -41,20 +41,20 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
            {/* Pink Aurora */}
            <div
-             className="absolute top-[10%] left-[10%] w-[80vw] h-[80vw] md:w-[500px] md:h-[500px] bg-labs-pink/40 rounded-full blur-[60px] md:blur-[80px] mix-blend-multiply animate-aurora origin-center"
-             style={{ animationDelay: '0s', animationDuration: '25s' }}
+             className="absolute top-[10%] left-[10%] w-[80vw] h-[80vw] md:w-[500px] md:h-[500px] bg-labs-pink/60 rounded-full blur-[60px] md:blur-[80px] mix-blend-multiply animate-aurora origin-center"
+             style={{ animationDelay: '0s', animationDuration: '8s' }}
            />
            
            {/* Blue Aurora */}
            <div
-             className="absolute bottom-[20%] right-[10%] w-[90vw] h-[90vw] md:w-[600px] md:h-[600px] bg-labs-blue/20 rounded-full blur-[80px] md:blur-[100px] mix-blend-multiply animate-aurora origin-center"
-             style={{ animationDelay: '-5s', animationDuration: '30s' }}
+             className="absolute bottom-[20%] right-[10%] w-[90vw] h-[90vw] md:w-[600px] md:h-[600px] bg-labs-blue/40 rounded-full blur-[80px] md:blur-[100px] mix-blend-multiply animate-aurora origin-center"
+             style={{ animationDelay: '-2s', animationDuration: '10s' }}
            />
            
            {/* Purple Aurora */}
            <div
-             className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] md:w-[800px] md:h-[800px] bg-labs-purple/15 rounded-full blur-[100px] md:blur-[120px] mix-blend-multiply animate-aurora origin-center"
-             style={{ animationDelay: '-10s', animationDuration: '35s' }}
+             className="absolute top-[40%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[100vw] md:w-[800px] md:h-[800px] bg-labs-purple/35 rounded-full blur-[100px] md:blur-[120px] mix-blend-multiply animate-aurora origin-center"
+             style={{ animationDelay: '-5s', animationDuration: '12s' }}
            />
         </div>
 

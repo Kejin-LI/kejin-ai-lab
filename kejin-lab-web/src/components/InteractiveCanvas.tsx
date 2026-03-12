@@ -74,7 +74,7 @@ const InteractiveCanvas = () => {
       canvas.width = width;
       canvas.height = height;
       
-      const spacing = 100; // Decreased spacing -> More points (was 120)
+      const spacing = 80; // Further decreased spacing -> Even more points (was 100)
       const cols = Math.ceil(width / spacing);
       const rows = Math.ceil(height / spacing);
       
@@ -82,12 +82,15 @@ const InteractiveCanvas = () => {
       
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-          const x = i * spacing + spacing / 2 + (Math.random() - 0.5) * 50; // More random spread
-          const y = j * spacing + spacing / 2 + (Math.random() - 0.5) * 50;
+          // Add randomness but keep within grid cell to ensure coverage
+          // Increased jitter to break grid look but maintain density
+          const x = i * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.8; 
+          const y = j * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.8;
+          
           pointsRef.current.push({
             x,
             y,
-            baseX: x,
+            baseX: x, // We can use this to pull them back if they drift too far (optional)
             baseY: y,
             // Reduce initial velocity by 2x (from 0.01 to 0.005)
             // Visible drift but slow
@@ -192,15 +195,16 @@ const InteractiveCanvas = () => {
                  const finalTargetY = mouseRef.current.y + targetY;
                  
                  // Spring force - Sharper pull to maintain shape
-                 const ax = (finalTargetX - point.x) * 0.001;
-                 const ay = (finalTargetY - point.y) * 0.001;
+                 // Increased force from 0.001 to 0.005 for faster gathering
+                 const ax = (finalTargetX - point.x) * 0.01;
+                 const ay = (finalTargetY - point.y) * 0.01;
                  
                  point.vx += ax;
                  point.vy += ay;
                  
-                 // Stronger damping to freeze them in shape
-                 point.vx *= 0.80;
-                 point.vy *= 0.80;
+                 // Stronger damping to freeze them in shape (0.80 -> 0.70 to stop oscillation faster)
+                 point.vx *= 0.70;
+                 point.vy *= 0.70;
              }
          } else {
              // Reset velocity to base slow speed if outside interaction zone
@@ -254,7 +258,13 @@ const InteractiveCanvas = () => {
            ctx.beginPath();
            ctx.moveTo(point.x, point.y);
            ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-           ctx.strokeStyle = `rgba(100, 100, 255, ${(150 - mouseDist) / 150 * 0.5})`; // Scaled down alpha
+           
+           const alpha = (150 - mouseDist) / 150 * 0.5;
+           const gradient = ctx.createLinearGradient(point.x, point.y, mouseRef.current.x, mouseRef.current.y);
+           gradient.addColorStop(0, `rgba(255, 105, 180, ${alpha})`); // Pink at point
+           gradient.addColorStop(1, `rgba(138, 43, 226, ${alpha})`); // Purple at mouse
+           
+           ctx.strokeStyle = gradient;
            ctx.lineWidth = 0.5;
            ctx.stroke();
         }
