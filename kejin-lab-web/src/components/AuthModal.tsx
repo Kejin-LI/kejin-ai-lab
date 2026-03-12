@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Chrome, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface AuthModalProps {
 }
 
 const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
+  const { t, i18n } = useTranslation();
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
@@ -58,7 +60,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
         },
       });
       if (error) throw error;
-      setMessage({ type: 'success', text: 'Check your email for the login link!' });
+      setMessage({ type: 'success', text: i18n.language === 'zh' ? '请查收您的电子邮件以获取登录链接！' : 'Check your email for the login link!' });
     } catch (error: any) {
       setMessage({ type: 'error', text: error.message });
     } finally {
@@ -84,7 +86,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
             className="fixed left-1/2 top-1/2 w-full max-w-md bg-white rounded-3xl shadow-2xl p-8 z-[9999] border border-gray-100"
           >
             <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Join the Conversation</h2>
+              <h2 className="text-2xl font-bold text-gray-900">{i18n.language === 'zh' ? '加入讨论' : 'Join the Conversation'}</h2>
               <button 
                 onClick={onClose}
                 className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -127,7 +129,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                     />
                   </svg>
                 )}
-                Continue with Google
+                {i18n.language === 'zh' ? '使用 Google 账号继续' : 'Continue with Google'}
               </button>
 
               <div className="relative my-6">
@@ -135,14 +137,14 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   <div className="w-full border-t border-gray-200"></div>
                 </div>
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Or continue with email</span>
+                  <span className="px-2 bg-white text-gray-500">{i18n.language === 'zh' ? '或使用邮箱继续' : 'Or continue with email'}</span>
                 </div>
               </div>
 
               <form onSubmit={handleEmailLogin} className="space-y-4">
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                    Email address
+                    {i18n.language === 'zh' ? '电子邮箱' : 'Email address'}
                   </label>
                   <input
                     type="email"
@@ -160,13 +162,13 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
                   className="w-full flex items-center justify-center gap-2 py-3 px-4 bg-black text-white rounded-xl hover:bg-gray-800 transition-all font-bold shadow-lg shadow-black/20"
                 >
                   {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : <Mail className="w-5 h-5" />}
-                  Send Magic Link
+                  {i18n.language === 'zh' ? '发送登录链接' : 'Send Magic Link'}
                 </button>
               </form>
             </div>
             
             <p className="mt-6 text-center text-xs text-gray-500">
-              By continuing, you agree to our Terms of Service and Privacy Policy.
+              {i18n.language === 'zh' ? '继续即表示您同意我们的' : 'By continuing, you agree to our '}<a href="#" className="underline">{i18n.language === 'zh' ? '服务条款' : 'Terms of Service'}</a>{i18n.language === 'zh' ? '和' : ' and '}<a href="#" className="underline">{i18n.language === 'zh' ? '隐私政策' : 'Privacy Policy'}</a>.
             </p>
           </motion.div>
         </>
