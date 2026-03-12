@@ -79,6 +79,18 @@ const CommentCard: React.FC<CommentCardProps> = memo(({
 }) => {
   const { t, i18n } = useTranslation();
   const isOwner = user && comment.user_id === user.id;
+
+  // Debug logging for ownership issues
+  if (user && !isOwner && comment.nickname === (user.user_metadata?.full_name || user.email)) {
+    console.log('Ownership mismatch debug:', {
+      commentId: comment.id,
+      commentUserId: comment.user_id,
+      currentUserId: user.id,
+      userIdType: typeof comment.user_id,
+      currentIdType: typeof user.id
+    });
+  }
+
   const isReplying = replyTo === comment.id;
   const [replyContent, setReplyContent] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);

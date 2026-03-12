@@ -96,7 +96,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [pageId]);
+  }, [pageId, user?.id]);
 
   // Check auth state and fetch user likes
   useEffect(() => {
@@ -176,6 +176,17 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       }
         
       const { data, error } = await query;
+      
+      if (data) {
+        console.log('Fetched comments:', data.length);
+        if (data.length > 0) {
+          console.log('Sample comment:', { 
+            id: data[0].id, 
+            user_id: data[0].user_id, 
+            content: data[0].content 
+          });
+        }
+      }
       
       if (error) {
         // If error is related to missing column "page_id", fallback to fetch all
