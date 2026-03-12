@@ -17,10 +17,19 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
   const handleGoogleLogin = async () => {
     try {
       setLoading(true);
+      
+      // Determine the correct redirect URL based on environment
+      // For GitHub Pages, we need to include the repository name in the path
+      const isProduction = import.meta.env.PROD;
+      const origin = window.location.origin;
+      // If production (GitHub Pages), append /kejin-ai-lab, otherwise just use origin
+      const basePath = isProduction ? '/kejin-ai-lab' : '';
+      const redirectTo = `${origin}${basePath}/community`;
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/community`,
+          redirectTo: redirectTo,
         },
       });
       if (error) throw error;
@@ -36,10 +45,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
 
     try {
       setLoading(true);
+      
+      const isProduction = import.meta.env.PROD;
+      const origin = window.location.origin;
+      const basePath = isProduction ? '/kejin-ai-lab' : '';
+      const redirectTo = `${origin}${basePath}/community`;
+
       const { error } = await supabase.auth.signInWithOtp({
         email,
         options: {
-          emailRedirectTo: `${window.location.origin}/community`,
+          emailRedirectTo: redirectTo,
         },
       });
       if (error) throw error;
