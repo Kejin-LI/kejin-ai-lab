@@ -130,7 +130,7 @@ const Contact = () => {
               
               <div className="mt-auto w-full">
                 <Link 
-                  to="/community"
+                  to="/community#comments-section"
                   className="w-full py-3 px-4 rounded-xl border border-google-grey-200 hover:border-labs-orange hover:text-labs-orange font-medium transition-all flex items-center justify-center gap-2 group/btn text-sm md:text-base"
                 >
                   {t('community.cta', '前往留言板')}
