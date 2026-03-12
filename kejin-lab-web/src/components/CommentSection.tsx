@@ -396,7 +396,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({
       </p>
 
       {/* Comment Form */}
-      <div className="bg-white p-6 rounded-3xl shadow-lg border border-google-grey-100 mb-12 relative overflow-hidden">
+      <div id="comments-section" className="bg-white p-6 rounded-3xl shadow-lg border border-google-grey-100 mb-12 relative overflow-hidden">
         {user ? (
           <div className="flex items-center justify-between mb-4 pb-4 border-b border-google-grey-100">
             <div className="flex items-center gap-3">
