@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, ArrowUpRight, Copy, Check } from 'lucide-react';
+import { Mail, Linkedin, ArrowUpRight, Copy, Check, MessageSquare } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../lib/utils';
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const { t } = useTranslation();
@@ -22,7 +23,7 @@ const Contact = () => {
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[1000px] bg-gradient-to-b from-white to-transparent rounded-full opacity-50 blur-3xl -z-10" />
       
-      <div className="max-w-4xl mx-auto px-6 relative z-10">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -40,29 +41,29 @@ const Contact = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Email Card */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="group relative bg-white rounded-[2rem] p-8 border border-google-grey-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="group relative bg-white rounded-[2rem] p-8 border border-google-grey-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-labs-blue/5 to-labs-green/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]" />
             
-            <div className="relative z-10 flex flex-col h-full items-center text-center">
+            <div className="relative z-10 flex flex-col h-full items-center text-center flex-1">
               <div className="w-16 h-16 rounded-2xl bg-labs-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Mail className="w-8 h-8 text-google-blue" />
               </div>
               
-              <h3 className="text-2xl font-bold text-google-grey-900 mb-2">{t('contact.email.title')}</h3>
-              <p className="text-google-grey-600 mb-8">{t('contact.email.desc')}</p>
+              <h3 className="text-xl md:text-2xl font-bold text-google-grey-900 mb-2">{t('contact.email.title')}</h3>
+              <p className="text-sm md:text-base text-google-grey-600 mb-8">{t('contact.email.desc')}</p>
               
               <div className="mt-auto flex gap-3 w-full">
                 <a 
                   href={`mailto:${email}`}
-                  className="flex-1 py-3 px-4 rounded-xl bg-google-grey-900 text-white font-medium hover:bg-google-blue transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 py-3 px-4 rounded-xl bg-google-grey-900 text-white font-medium hover:bg-google-blue transition-colors flex items-center justify-center gap-2 text-sm md:text-base"
                 >
                   {t('contact.email.cta')}
                 </a>
@@ -79,32 +80,62 @@ const Contact = () => {
 
           {/* LinkedIn Card */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="group relative bg-white rounded-[2rem] p-8 border border-google-grey-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="group relative bg-white rounded-[2rem] p-8 border border-google-grey-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-labs-blue/5 to-labs-purple/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]" />
             
-            <div className="relative z-10 flex flex-col h-full items-center text-center">
+            <div className="relative z-10 flex flex-col h-full items-center text-center flex-1">
               <div className="w-16 h-16 rounded-2xl bg-[#0077b5]/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                 <Linkedin className="w-8 h-8 text-[#0077b5]" />
               </div>
               
-              <h3 className="text-2xl font-bold text-google-grey-900 mb-2">{t('contact.linkedin.title')}</h3>
-              <p className="text-google-grey-600 mb-8">{t('contact.linkedin.desc')}</p>
+              <h3 className="text-xl md:text-2xl font-bold text-google-grey-900 mb-2">{t('contact.linkedin.title')}</h3>
+              <p className="text-sm md:text-base text-google-grey-600 mb-8">{t('contact.linkedin.desc')}</p>
               
               <div className="mt-auto w-full">
                 <a 
                   href={linkedinUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-full py-3 px-4 rounded-xl border border-google-grey-200 hover:border-[#0077b5] hover:text-[#0077b5] font-medium transition-all flex items-center justify-center gap-2 group/btn"
+                  className="w-full py-3 px-4 rounded-xl border border-google-grey-200 hover:border-[#0077b5] hover:text-[#0077b5] font-medium transition-all flex items-center justify-center gap-2 group/btn text-sm md:text-base"
                 >
                   {t('contact.linkedin.cta')}
                   <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
                 </a>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Community Card (New) */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="group relative bg-white rounded-[2rem] p-8 border border-google-grey-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-labs-orange/5 to-labs-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[2rem]" />
+            
+            <div className="relative z-10 flex flex-col h-full items-center text-center flex-1">
+              <div className="w-16 h-16 rounded-2xl bg-labs-orange/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <MessageSquare className="w-8 h-8 text-labs-orange" />
+              </div>
+              
+              <h3 className="text-xl md:text-2xl font-bold text-google-grey-900 mb-2">{t('community.title', '社区留言')}</h3>
+              <p className="text-sm md:text-base text-google-grey-600 mb-8">{t('community.desc', '分享想法，留下足迹')}</p>
+              
+              <div className="mt-auto w-full">
+                <Link 
+                  to="/community"
+                  className="w-full py-3 px-4 rounded-xl border border-google-grey-200 hover:border-labs-orange hover:text-labs-orange font-medium transition-all flex items-center justify-center gap-2 group/btn text-sm md:text-base"
+                >
+                  {t('community.cta', '前往留言板')}
+                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+                </Link>
               </div>
             </div>
           </motion.div>
