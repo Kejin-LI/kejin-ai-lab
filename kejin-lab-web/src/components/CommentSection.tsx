@@ -267,7 +267,10 @@ const CommentSection: React.FC<CommentSectionProps> = ({
 
   const handleDeleteComment = useCallback(async (id: number) => {
     // Optimistically remove the comment from the UI immediately
-    setComments(prev => prev.filter(c => c.id !== id));
+    setComments(prev => {
+      // Also remove any replies to this comment
+      return prev.filter(c => c.id !== id && c.parent_id !== id);
+    });
 
     try {
       const { error } = await supabase
