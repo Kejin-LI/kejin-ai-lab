@@ -266,6 +266,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({
   }, [user, newComment, pageId]);
 
   const handleDeleteComment = useCallback(async (id: number) => {
+    // Optimistically remove the comment from the UI immediately
+    setComments(prev => prev.filter(c => c.id !== id));
+
     try {
       const { error } = await supabase
         .from('comments')
@@ -276,6 +279,8 @@ const CommentSection: React.FC<CommentSectionProps> = ({
     } catch (error) {
       console.error('Error deleting comment:', error);
       alert('Failed to delete comment.');
+      // Re-fetch comments if deletion failed to restore state
+      fetchComments();
     }
   }, []);
 
