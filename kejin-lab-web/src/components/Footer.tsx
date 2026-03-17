@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { GlitchText } from './GlitchText';
 import InteractiveCanvas from './InteractiveCanvas';
@@ -56,10 +56,10 @@ const Footer: React.FC = () => {
               <div className="flex flex-col gap-4">
                  <h4 className="font-bold">{t('footer.nav.title')}</h4>
                  <ul className="flex flex-col gap-2 text-gray-600">
-                    <li><a href="/" className="hover:text-black transition-colors">{t('footer.nav.home')}</a></li>
-                    <li><a href="/projects" className="hover:text-black transition-colors">{t('footer.nav.projects')}</a></li>
-                    <li><a href="/thoughts" className="hover:text-black transition-colors">{t('footer.nav.thoughts')}</a></li>
-                    <li><a href="/#contact" className="hover:text-black transition-colors">{t('footer.nav.contact')}</a></li>
+                    <li><Link to="/" className="hover:text-black transition-colors">{t('footer.nav.home')}</Link></li>
+                    <li><Link to="/projects" className="hover:text-black transition-colors">{t('footer.nav.projects')}</Link></li>
+                    <li><Link to="/thoughts" className="hover:text-black transition-colors">{t('footer.nav.thoughts')}</Link></li>
+                    <li><Link to="/community" className="hover:text-black transition-colors">{t('footer.nav.contact')}</Link></li>
                  </ul>
               </div>
               
