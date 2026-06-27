@@ -211,10 +211,25 @@ const getThoughtById = (id: string, t: any, i18n: any) => {
     {
       id: '4',
       title: t('thoughtsPage.article4.title', 'Micro-Interactions Matter'),
-      subtitle: "Delight in the Details",
-      content: `
-        <p class="lead">It's often the smallest details that make the biggest impact. A satisfying click sound, a subtle bounce animation, a helpful tooltip.</p>
-        <p>These micro-interactions tell the user: "We care about your experience." They turn a functional tool into a beloved product.</p>
+      subtitle: isZh ? "细节里的愉悦感" : "Delight in the Details",
+      content: isZh ? `
+        <p class="lead">真正让产品显得高级的，往往不是某个巨大的功能，而是那些几乎不会被用户单独说出口的细节：一次顺滑的状态过渡、一个恰到好处的反馈、一句帮用户少想一步的提示。</p>
+        <h3>微交互不是装饰，而是产品的语气</h3>
+        <p>按钮按下后有没有回应，加载时是否让人安心，操作成功后是否给出明确反馈，这些小动作共同构成了产品和用户说话的方式。它们不负责讲大道理，却会持续告诉用户：这个系统理解你正在做什么，也尊重你的注意力。</p>
+        <h3>好的细节能降低认知成本</h3>
+        <p>微交互最重要的价值，是让用户不需要猜。比如保存成功后的轻提示、拖拽时的吸附反馈、表单出错时的即时定位，都能把用户从“我是不是做错了”的不确定感里拉出来。</p>
+        <h3>克制比炫技更重要</h3>
+        <p>微交互不是越多越好。过度弹跳、过度动效、过度音效都会打断任务本身。真正好的微交互应该像光线一样存在：你能感受到它带来的清晰和舒适，但不会被它抢走注意力。</p>
+        <p>所以我始终觉得，微交互是产品可信度的一部分。它把一个“能用”的工具，变成一个“愿意继续用”的体验。</p>
+      ` : `
+        <p class="lead">The details that make a product feel polished are rarely the biggest features. They are the quiet moments: a smooth state transition, a precise confirmation, a small hint that saves the user one extra thought.</p>
+        <h3>Micro-interactions are the product’s tone of voice</h3>
+        <p>Does a button respond when pressed? Does loading feel calm and predictable? Does the interface clearly confirm that an action succeeded? These small responses shape how the product speaks to the user. They do not announce themselves, but they continuously say: the system understands what you are doing and respects your attention.</p>
+        <h3>Good details reduce cognitive load</h3>
+        <p>The real value of micro-interactions is that users do not have to guess. A subtle saved-state confirmation, snap feedback while dragging, or instant error positioning in a form can pull users out of uncertainty and keep them moving.</p>
+        <h3>Restraint matters more than spectacle</h3>
+        <p>More animation does not mean better interaction. Excessive bounce, sound, or motion can distract from the task. Good micro-interactions should feel like lighting: they make the experience clearer and more comfortable without stealing focus.</p>
+        <p>That is why I see micro-interactions as part of product trust. They turn a tool that merely works into an experience people are willing to return to.</p>
       `,
       date: t('thoughtsPage.article4.date', 'Dec 05, 2023'),
       readTime: t('thoughtsPage.article4.readTime', '4 min read'),

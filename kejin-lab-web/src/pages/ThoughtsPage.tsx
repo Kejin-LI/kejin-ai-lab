@@ -91,6 +91,16 @@ const ThoughtsPage: React.FC = () => {
       readTime: t('thoughtsPage.article3.readTime', '5 min read'),
       image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=product%20manager%20zen%20state%20organized%20documents%20peaceful%20workspace%20minimalist%20blue%20tones&image_size=landscape_16_9',
       theme: THOUGHT_THEMES[2] // Future Tech / Tools
+    },
+    {
+      id: '4',
+      title: t('thoughtsPage.article4.title', 'Micro-Interactions Matter'),
+      excerpt: t('thoughtsPage.article4.excerpt', 'The subtle details that turn a functional product into a delightful experience.'),
+      content: 'Full content here...',
+      date: t('thoughtsPage.article4.date', 'Dec 05, 2023'),
+      readTime: t('thoughtsPage.article4.readTime', '4 min read'),
+      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=sparkles%20and%20ripples%20micro%20interactions%20yellow%20tones%20minimalist%20abstract&image_size=landscape_16_9',
+      theme: THOUGHT_THEMES[3] // Product Thinking
     }
   ];
 

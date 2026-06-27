@@ -22,6 +22,7 @@ const Header: React.FC = () => {
 
   const toggleLang = (lang: string) => {
     i18n.changeLanguage(lang);
+    window.localStorage.setItem('kejin-lab-language', lang);
     setIsLangOpen(false);
   };
 

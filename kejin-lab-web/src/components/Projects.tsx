@@ -10,6 +10,24 @@ import { cn } from '../lib/utils';
 // Predefined themes to cycle through
 const PROJECT_THEMES = [
   {
+    category: 'AI Workspace',
+    bgColor: 'bg-[#E8E2FF]',
+    accentColor: 'text-google-grey-900',
+    buttonBorder: 'border-google-grey-900',
+  },
+  {
+    category: 'Agent Observability',
+    bgColor: 'bg-[#DDEBFF]',
+    accentColor: 'text-google-grey-900',
+    buttonBorder: 'border-google-grey-900',
+  },
+  {
+    category: 'Design Data',
+    bgColor: 'bg-[#DFF3F0]',
+    accentColor: 'text-google-grey-900',
+    buttonBorder: 'border-google-grey-900',
+  },
+  {
     category: 'AI Native APP',
     bgColor: 'bg-[#D4F976]', // Custom Lime
     accentColor: 'text-black',
@@ -54,28 +72,36 @@ const Projects: React.FC = () => {
 
   const getFallbackProjects = () => [
     {
+      id: 'ai-workspace',
+      title: t('projects.projectAIWorkspace.title'),
+      description: t('projects.projectAIWorkspace.desc'),
+      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=realistic%20premium%20AI%20workspace%20dashboard%20on%20a%20large%20desktop%20monitor%2C%20blue%20purple%20gradient%20glassmorphism%20cards%2C%20minimal%20Apple%20inspired%20interface%2C%20soft%20studio%20lighting%2C%20clean%20productivity%20workflow%20visualization&image_size=landscape_4_3',
+      link: 'https://kejin-li.github.io/AI-Workspace/',
+      theme: PROJECT_THEMES[0]
+    },
+    {
+      id: 'agent-synapse',
+      title: t('projects.projectAgentSynapse.title'),
+      description: t('projects.projectAgentSynapse.desc'),
+      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=premium%20AI%20agent%20observability%20dashboard%20on%20a%20large%20desktop%20screen%2C%20trace%20DAG%20timeline%2C%20health%20score%20cards%2C%20anomaly%20clusters%2C%20LLM%20quality%20review%20panel%2C%20deep%20navy%20and%20soft%20blue%20glassmorphism%2C%20clean%20Apple%20style%20enterprise%20analytics%20interface%2C%20high%20detail%2C%20no%20random%20text&image_size=landscape_4_3',
+      link: 'https://kejin-li.github.io/agent_trace_analysis/',
+      theme: PROJECT_THEMES[1]
+    },
+    {
+      id: 'figma-tracker',
+      title: t('projects.projectFigmaTracker.title'),
+      description: t('projects.projectFigmaTracker.desc'),
+      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=premium%20realistic%20product%20mockup%20of%20a%20Figma%20design%20page%20on%20a%20desktop%20screen%2C%20large%20recognizable%20Figma%20five%20color%20icon%20floating%20in%20the%20upper%20left%2C%20visible%20design%20canvas%20with%20frames%20and%20UI%20components%2C%20left%20layer%20sidebar%2C%20right%20properties%20panel%2C%20small%20plugin%20panel%20showing%20recording%20timeline%20and%20captured%20events%2C%20soft%20cyan%20background%2C%20clean%20Apple%20style%20glassmorphism%2C%20high%20detail%2C%20no%20random%20text&image_size=landscape_4_3',
+      link: 'https://ai59qcdpr4m.feishu.cn/wiki/F0uCwyqppigYOykTJOWcUcIEnGh',
+      theme: PROJECT_THEMES[2]
+    },
+    {
       id: '1',
       title: t('projects.project1.title'),
       description: t('projects.project1.desc'),
       image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=futuristic%20ai%20native%20app%20interface%20neon%20lime%20green%20dark%20theme%20cyberpunk%20style%20data%20visualization&image_size=landscape_4_3',
       link: '#',
-      theme: PROJECT_THEMES[0]
-    },
-    {
-      id: '2',
-      title: t('projects.project2.title'),
-      description: t('projects.project2.desc'),
-      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=creative%20coding%20ide%20interface%20pastel%20pink%20soft%20lighting%20glassmorphism%20floating%20code%20snippets&image_size=landscape_4_3',
-      link: '#',
-      theme: PROJECT_THEMES[1]
-    },
-    {
-      id: '3',
-      title: t('projects.project3.title'),
-      description: t('projects.project3.desc'),
-      image_url: 'https://copilot-cn.bytedance.net/api/ide/v1/text_to_image?prompt=professional%20expert%20matching%20platform%20clean%20blue%20white%20theme%20minimalist%20corporate%20style%20profile%20cards&image_size=landscape_4_3',
-      link: '#',
-      theme: PROJECT_THEMES[2]
+      theme: PROJECT_THEMES[3]
     }
   ];
 

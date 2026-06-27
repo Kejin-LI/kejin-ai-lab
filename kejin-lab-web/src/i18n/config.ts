@@ -2,6 +2,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+const getInitialLanguage = () => {
+  if (typeof window !== 'undefined') {
+    const storedLanguage = window.localStorage.getItem('kejin-lab-language');
+    if (storedLanguage === 'en' || storedLanguage === 'zh') {
+      return storedLanguage;
+    }
+  }
+
+  return (typeof navigator !== 'undefined' && navigator.language && navigator.language.startsWith('en')) ? 'en' : 'zh';
+};
+
 // Define translations
 const resources = {
   en: {
@@ -28,6 +39,18 @@ const resources = {
         description: "A collection of experiments exploring the intersection of AI, design, and human interaction.",
         viewDetails: "View Details",
         viewAll: "View All",
+        projectAIWorkspace: {
+          title: "Turing Arena专家工作台",
+          desc: "An intelligent collaboration platform that turns expert judgment, reasoning, and intervention processes into high-quality AI training data."
+        },
+        projectAgentSynapse: {
+          title: "Agent Synapse",
+          desc: "A diagnostic and analysis platform for AI Agents, turning traces, health scores, anomaly clusters, and AI reviews into evidence-based quality governance."
+        },
+        projectFigmaTracker: {
+          title: "Figma 轨迹采集",
+          desc: "A Figma plugin and Go backend pipeline that captures design process traces, final artwork structure, and preview assets for review and downstream analysis."
+        },
         project1: {
           title: "Tracing Journey: AI Museum Guide",
           desc: "An AI-native design app that combines smart photo explanations, itinerary planning, and travel journals to make global museum visits easy and fun."
@@ -192,6 +215,18 @@ const resources = {
         description: "一系列探索 AI、设计与人类交互交汇点的实验集合。",
         viewDetails: "查看详情",
         viewAll: "查看全部",
+        projectAIWorkspace: {
+          title: "Turing Arena专家工作台",
+          desc: "面向高阶专家与 AI 企业的智能协作平台，把专家判断、推理和纠错过程沉淀为高质量 AI 训练数据。"
+        },
+        projectAgentSynapse: {
+          title: "Agent Synapse",
+          desc: "面向 AI Agent 的诊断与分析平台，用执行链路、健康分、异常聚类和 AI 复盘支撑有证据的质量治理。"
+        },
+        projectFigmaTracker: {
+          title: "Figma 轨迹采集",
+          desc: "一套采集 Figma 设计过程与最终成稿的插件和 Go 后端链路，让设计过程从口述经验变成结构化数据。"
+        },
         project1: {
           title: "寻迹之旅：AI文博导览",
           desc: "一款 AI 原生设计APP，集智能拍照讲解、行程规划、旅游手帐等于一体，让全球逛展变轻松有趣的文博导览神器。"
@@ -338,7 +373,7 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: (typeof navigator !== 'undefined' && navigator.language && navigator.language.startsWith('en')) ? 'en' : 'zh', // Detect language: English if en*, else Chinese
+    lng: getInitialLanguage(),
     fallbackLng: 'zh',
     interpolation: {
       escapeValue: false // React already safes from xss
