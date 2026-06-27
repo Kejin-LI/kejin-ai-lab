@@ -876,7 +876,7 @@ const PROJECT_DETAILS: Record<string, any> = {
   'ai-workspace': {
     id: 'ai-workspace',
     title: {
-      en: 'Turing Arena专家工作台',
+      en: 'Turing Arena Expert Workbench',
       zh: 'Turing Arena专家工作台'
     },
     subtitle: {
@@ -964,7 +964,7 @@ const PROJECT_DETAILS: Record<string, any> = {
   'figma-tracker': {
     id: 'figma-tracker',
     title: {
-      en: 'Figma 轨迹采集',
+      en: 'Figma Trace Capture',
       zh: 'Figma 轨迹采集'
     },
     subtitle: {

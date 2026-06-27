@@ -40,7 +40,7 @@ const resources = {
         viewDetails: "View Details",
         viewAll: "View All",
         projectAIWorkspace: {
-          title: "Turing Arena专家工作台",
+          title: "Turing Arena Expert Workbench",
           desc: "An intelligent collaboration platform that turns expert judgment, reasoning, and intervention processes into high-quality AI training data."
         },
         projectAgentSynapse: {
@@ -48,7 +48,7 @@ const resources = {
           desc: "A diagnostic and analysis platform for AI Agents, turning traces, health scores, anomaly clusters, and AI reviews into evidence-based quality governance."
         },
         projectFigmaTracker: {
-          title: "Figma 轨迹采集",
+          title: "Figma Trace Capture",
           desc: "A Figma plugin and Go backend pipeline that captures design process traces, final artwork structure, and preview assets for review and downstream analysis."
         },
         project1: {
